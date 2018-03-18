@@ -1,0 +1,7 @@
+3/18/2018 10:50:00 AM Program started. All services are initialized
+3/18/2018 10:50:00 AM Fetching user data from data store.
+3/18/2018 10:50:00 AM Getting user access token
+3/18/2018 10:50:00 AM Getting server list
+3/18/2018 10:50:01 AM Writing server list to file
+3/18/2018 10:50:01 AM Writing server list and count to console
+3/18/2018 10:50:01 AM ---Program END---
