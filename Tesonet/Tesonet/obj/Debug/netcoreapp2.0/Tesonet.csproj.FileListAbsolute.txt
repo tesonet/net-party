@@ -1,0 +1,11 @@
+C:\Users\nikod\OneDrive\Stalinis kompiuteris\Tesonet Task\Tesonet\Tesonet\bin\Debug\netcoreapp2.0\Tesonet.deps.json
+C:\Users\nikod\OneDrive\Stalinis kompiuteris\Tesonet Task\Tesonet\Tesonet\bin\Debug\netcoreapp2.0\Tesonet.runtimeconfig.json
+C:\Users\nikod\OneDrive\Stalinis kompiuteris\Tesonet Task\Tesonet\Tesonet\bin\Debug\netcoreapp2.0\Tesonet.runtimeconfig.dev.json
+C:\Users\nikod\OneDrive\Stalinis kompiuteris\Tesonet Task\Tesonet\Tesonet\bin\Debug\netcoreapp2.0\Tesonet.dll
+C:\Users\nikod\OneDrive\Stalinis kompiuteris\Tesonet Task\Tesonet\Tesonet\obj\Debug\netcoreapp2.0\Tesonet.csprojResolveAssemblyReference.cache
+C:\Users\nikod\OneDrive\Stalinis kompiuteris\Tesonet Task\Tesonet\Tesonet\obj\Debug\netcoreapp2.0\Tesonet.csproj.CoreCompileInputs.cache
+C:\Users\nikod\OneDrive\Stalinis kompiuteris\Tesonet Task\Tesonet\Tesonet\obj\Debug\netcoreapp2.0\Tesonet.AssemblyInfoInputs.cache
+C:\Users\nikod\OneDrive\Stalinis kompiuteris\Tesonet Task\Tesonet\Tesonet\obj\Debug\netcoreapp2.0\Tesonet.AssemblyInfo.cs
+C:\Users\nikod\OneDrive\Stalinis kompiuteris\Tesonet Task\Tesonet\Tesonet\bin\Debug\netcoreapp2.0\Tesonet.pdb
+C:\Users\nikod\OneDrive\Stalinis kompiuteris\Tesonet Task\Tesonet\Tesonet\obj\Debug\netcoreapp2.0\Tesonet.dll
+C:\Users\nikod\OneDrive\Stalinis kompiuteris\Tesonet Task\Tesonet\Tesonet\obj\Debug\netcoreapp2.0\Tesonet.pdb
