@@ -27,7 +27,17 @@ namespace Tesonet
             else if (args[0] == "server_list" && args.Length == 1)
             {
                 _logService.Log("Fetching user data from data store.");
-                var userData = _fileService.ReadUserData();
+                string[] userData = null;
+                try
+                {
+                    userData = _fileService.ReadUserData();
+                }
+                catch(Exception ex)
+                {
+                    _logService.Log(ex.Message);
+                    _logService.Log("---Program END---");
+                    return;
+                }
 
                 _logService.Log("Getting user access token");
                 var token = _tesonetService.GetAccessToken(username: userData[0], password: userData[1]);
@@ -48,7 +58,17 @@ namespace Tesonet
             else if (args[0] == "server_list" && args[1] == "--local")
             {
                 _logService.Log("Reading servers from file");
-                var localServers = _fileService.ReadLocalServers();
+                string[] localServers = null;
+                try
+                {
+                    localServers = _fileService.ReadLocalServers();
+                }
+                catch(Exception ex)
+                {
+                    _logService.Log(ex.Message);
+                    _logService.Log("---Program END---");
+                    return;
+                }
 
                 _logService.Log("Writing server list and count to console");
                 Console.WriteLine("Total number of servers: {0}", localServers.Length);
@@ -62,6 +82,8 @@ namespace Tesonet
                 _logService.Log("Unkown command was given... Please try again.");
             }
             _logService.Log("---Program END---");
+
+            Console.ReadKey();
         }
     }
 }

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Tesonet": {
+      "commandName": "Project",
+      "commandLineArgs": "config --username tesonet --password partyanimal"
+    }
+  }
+}
