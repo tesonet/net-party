@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace PartyCli.Interfaces
 {
-    public interface IServersApi
+    public interface IServerApi
     {
         Task AuthorizeAsync(Credentials credentials);
 

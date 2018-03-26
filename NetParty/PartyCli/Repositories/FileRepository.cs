@@ -1,8 +1,5 @@
 ﻿using Newtonsoft.Json;
 using PartyCli.Interfaces;
-using PartyCli.Models;
-using PartyCli.Properties;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,33 +8,38 @@ using System.Text;
 
 namespace PartyCli.Repositories
 {
-    public class ServersRepository : IServersRepository
+    public class FileRepository<T> : IRepository<T>
     {
         private string path;
 
-        public ServersRepository()
+        public FileRepository()
         {
-            string directory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            path = Path.Combine(directory, Settings.Default.ServersFileName);
+            string directory = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Data");
+            Directory.CreateDirectory(directory);
+            path = Path.Combine(directory, $"{typeof(T).Name}.json");
         }
 
-        public IEnumerable<Server> GetAll()
+        public IEnumerable<T> GetAll()
         {
             try
             {
                 using (var reader = new StreamReader(path, Encoding.UTF8))
                 {
                     JsonSerializer serializer = new JsonSerializer();
-                    return (List<Server>)serializer.Deserialize(reader, typeof(List<Server>));
+                    return (List<T>)serializer.Deserialize(reader, typeof(List<T>));
                 }
             }
-            catch (FileNotFoundException)
+            catch (IOException ex)
             {
-                return Enumerable.Empty<Server>();
+                if (ex is FileNotFoundException || ex is DirectoryNotFoundException)
+                {
+                    return Enumerable.Empty<T>();
+                }
+                throw;
             }
         }
 
-        public void Update(IEnumerable<Server> servers)
+        public void Update(IEnumerable<T> servers)
         {
             using (var writer = new StreamWriter(path, false, Encoding.UTF8))
             {

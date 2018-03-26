@@ -3,25 +3,26 @@ using PartyCli.Interfaces;
 using PartyCli.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PartyCli.Commands
 {
-    public class ServerListCommand: ICommand
+    public class ServerListCommand
     {
-        IServersApi serversApi;
-        IServersRepository serversRepository;
-        ICredentialsRepository credentialsRepository;
-        IServersPresenter serversPresenter;
+        IServerApi serversApi;
+        IRepository<Server> serversRepository;
+        IRepository<Credentials> credentialsRepository;
+        IServerPresenter serversPresenter;
 
         CommandOption localOption;
 
-        public ServerListCommand(IServersApi serversApi, IServersRepository serversRepository, ICredentialsRepository credentialsRepository, IServersPresenter serversPresenter)
+        public ServerListCommand(IServerApi serversApi, IRepository<Server> serversRepository, IRepository<Credentials> credentialsRepository, IServerPresenter serversPresenter)
         {
-            this.serversApi = serversApi;
-            this.serversRepository = serversRepository;
-            this.credentialsRepository = credentialsRepository;
-            this.serversPresenter = serversPresenter;
+            this.serversApi = serversApi ?? throw new ArgumentNullException(nameof(serversApi)); 
+            this.serversRepository = serversRepository ?? throw new ArgumentNullException(nameof(serversRepository));
+            this.credentialsRepository = credentialsRepository ?? throw new ArgumentNullException(nameof(credentialsRepository));
+            this.serversPresenter = serversPresenter ?? throw new ArgumentNullException(nameof(serversPresenter));
         }
 
         public void Configure(CommandLineApplication command)
@@ -58,7 +59,7 @@ namespace PartyCli.Commands
 
         private async Task<IEnumerable<Server>> GetFromApi()
         {
-            var apiCredentials = credentialsRepository.Get();
+            var apiCredentials = credentialsRepository.GetAll().FirstOrDefault();
 
             if (apiCredentials == null)
             {

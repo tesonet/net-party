@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PartyCli.Api
 {
-    public class ServersApi : IServersApi
+    public class ServerApi : IServerApi
     {
         private readonly HttpClient client = new HttpClient();
 

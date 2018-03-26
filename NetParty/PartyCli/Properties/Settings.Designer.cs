@@ -40,23 +40,5 @@ namespace PartyCli.Properties {
                 return ((string)(this["ApiServersUri"]));
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Credentials.json")]
-        public string CredentialsFileName {
-            get {
-                return ((string)(this["CredentialsFileName"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Servers.json")]
-        public string ServersFileName {
-            get {
-                return ((string)(this["ServersFileName"]));
-            }
-        }
     }
 }

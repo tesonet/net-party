@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace PartyCli.Presenters
 {
-    public class ServersPresenter : IServersPresenter
+    public class ServerPresenter : IServerPresenter
     {
         public void Display(IEnumerable<Server> servers)
         {
             int count = 0;
             foreach (var server in servers)
             {
-                Console.WriteLine($"Name: {server.Name}, Distance: {server.Distance}");
+                Console.WriteLine($"Name: {server.Name}");
                 count++;
             }
             Console.WriteLine($"Number of servers: {count}");

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace PartyCli.Interfaces
 {
-    public interface IServersPresenter
+    public interface IServerPresenter
     {
         void Display(IEnumerable<Server> servers);
     }

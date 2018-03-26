@@ -1,8 +1,10 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PartyCli.Api;
 using PartyCli.Commands;
 using PartyCli.Interfaces;
+using PartyCli.Models;
 using PartyCli.Presenters;
 using PartyCli.Repositories;
 using System;
@@ -42,10 +44,17 @@ namespace PartyCli
             serviceCollection.AddTransient<ServerListCommand, ServerListCommand>();
 
             // Add services
-            serviceCollection.AddTransient<ICredentialsRepository, CredentialsRepository>();
-            serviceCollection.AddTransient<IServersRepository, ServersRepository>();
-            serviceCollection.AddTransient<IServersApi, ServersApi>();
-            serviceCollection.AddTransient<IServersPresenter, ServersPresenter>();
+            serviceCollection.AddTransient<IRepository<Credentials>, FileRepository<Credentials>>();
+            serviceCollection.AddTransient<IRepository<Server>, FileRepository<Server>>();
+            serviceCollection.AddTransient<IServerApi, ServerApi>();
+            serviceCollection.AddTransient<IServerPresenter, ServerPresenter>();
+
+            // Add configuration
+            IConfigurationRoot config = new ConfigurationBuilder()
+                .AddJsonFile(path: "AppSettings.json", optional: false, reloadOnChange: false)
+                .Build();
+
+            // serviceCollection.Configure<Settings>(config.GetSection("SettingsSection"))
         }
     }
 }

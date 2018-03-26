@@ -5,14 +5,14 @@ using System;
 
 namespace PartyCli.Commands
 {
-    public class ConfigCommand : ICommand
+    public class ConfigCommand
     {
-        ICredentialsRepository repository;
+        IRepository<Credentials> repository;
 
         CommandOption usernameOption;
         CommandOption passwordOption;
 
-        public ConfigCommand(ICredentialsRepository repository)
+        public ConfigCommand(IRepository<Credentials> repository)
         {
             this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
@@ -36,7 +36,7 @@ namespace PartyCli.Commands
                 Password = passwordOption.Value()
             };
 
-            repository.Update(credentials);
+            repository.Update(new[] { credentials });
             return 0;
         }
     }

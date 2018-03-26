@@ -8,11 +8,5 @@
     <Setting Name="ApiServersUri" Type="System.String" Scope="Application">
       <Value Profile="(Default)">http://playground.tesonet.lt/v1/servers</Value>
     </Setting>
-    <Setting Name="CredentialsFileName" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">Credentials.json</Value>
-    </Setting>
-    <Setting Name="ServersFileName" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">Servers.json</Value>
-    </Setting>
   </Settings>
 </SettingsFile>
