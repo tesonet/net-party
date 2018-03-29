@@ -7,6 +7,7 @@ using PartyCli.Interfaces;
 using PartyCli.Models;
 using PartyCli.Presenters;
 using PartyCli.Repositories;
+using Serilog;
 using System;
 
 namespace PartyCli
@@ -15,31 +16,46 @@ namespace PartyCli
     {
         static int Main(string[] args)
         {
+            // Add services
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
             var services = serviceCollection.BuildServiceProvider();
 
-            var app = new CommandLineApplication();
-            app.Name = "PartyCLI";
-            app.HelpOption();
+            var logger = services.GetService<ILogger>().ForContext<Program>();
 
-            app.Command("config", command => services.GetService<ConfigCommand>().Configure(command));
-            app.Command("server_list", command => services.GetService<ServerListCommand>().Configure(command));
+            // Configure CLI
+            var app = services.GetService<App>().Configure(new CommandLineApplication());
 
             try
             {
+                logger.Information("The application is started with {ArgumentCount} arguments: {Arguments}", args.Length, string.Join(" ", args));
+
                 return app.Execute(args);
             }
             catch (Exception ex)
             {
                 app.Error.WriteLine(ex.Message);
+                logger.Error("Error message: {ErrorMessage}. Details: {ErrorDetails}", ex.Message, ex.ToString());
                 return -1;
             }
         }
 
         private static void ConfigureServices(IServiceCollection serviceCollection)
         {
+            // Build configuration
+            IConfigurationRoot config = new ConfigurationBuilder()
+                .AddJsonFile(path: "AppSettings.json", optional: false, reloadOnChange: false)
+                .Build();
+
+            // Add logging
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(config)
+                .CreateLogger();
+     
+            serviceCollection.AddSingleton<ILogger>(Log.Logger);
+
             // Add commands
+            serviceCollection.AddTransient<App, App>();
             serviceCollection.AddTransient<ConfigCommand, ConfigCommand>();
             serviceCollection.AddTransient<ServerListCommand, ServerListCommand>();
 
@@ -49,12 +65,8 @@ namespace PartyCli
             serviceCollection.AddTransient<IServerApi, ServerApi>();
             serviceCollection.AddTransient<IServerPresenter, ServerPresenter>();
 
-            // Add configuration
-            IConfigurationRoot config = new ConfigurationBuilder()
-                .AddJsonFile(path: "AppSettings.json", optional: false, reloadOnChange: false)
-                .Build();
-
-            // serviceCollection.Configure<Settings>(config.GetSection("SettingsSection"))
+            // Add service configurations
+            //serviceCollection.Configure<Settings>(config.GetSection("SettingsSection"))
         }
     }
 }

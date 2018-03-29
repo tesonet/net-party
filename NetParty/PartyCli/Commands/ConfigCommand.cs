@@ -1,19 +1,22 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
 using PartyCli.Interfaces;
 using PartyCli.Models;
+using Serilog;
 using System;
 
 namespace PartyCli.Commands
 {
     public class ConfigCommand
     {
+        ILogger logger;
         IRepository<Credentials> repository;
 
         CommandOption usernameOption;
         CommandOption passwordOption;
 
-        public ConfigCommand(IRepository<Credentials> repository)
+        public ConfigCommand(ILogger logger, IRepository<Credentials> repository)
         {
+            this.logger = logger?.ForContext<ConfigCommand>() ?? throw new ArgumentNullException(nameof(logger));
             this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
@@ -36,7 +39,10 @@ namespace PartyCli.Commands
                 Password = passwordOption.Value()
             };
 
+            logger.Debug("Saving API authorization credentials to persistent data store");
             repository.Update(new[] { credentials });
+
+            logger.Information("API authorization credentials saved to persistent data store");
             return 0;
         }
     }
