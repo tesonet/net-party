@@ -46,7 +46,6 @@ How to get servers from API?
   Use dependency injection pattern and use IoC container  
   Use async APIs if available, don't block on async code  
 - Implement logging in your app
-- App should work without installing anything except .NET
 - Maybe You have an idea how it should interact with users? Do it! Its on you!
 - Have fun!
 
