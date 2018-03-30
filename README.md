@@ -40,13 +40,13 @@ How to get servers from API?
 - Get servers list from http://playground.tesonet.lt/v1/servers. Add header to this request: `Authorization: Bearer <token>`
 
 ## Few simple requirements
-- Use C# 7.0+ and .NET 4.6.1+/.NET Core 2.0+
+- Use C# 7.0+ and .NET 4.6.1+
 - Write high quality, beautiful code
 - Follow modern .NET development practices:  
   Use dependency injection pattern and use IoC container  
   Use async APIs if available, don't block on async code  
 - Implement logging in your app
-- App should work without installing anything except .NET/.NET Core
+- App should work without installing anything except .NET
 - Maybe You have an idea how it should interact with users? Do it! Its on you!
 - Have fun!
 
