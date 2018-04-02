@@ -1,7 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using PartyCli.Interfaces;
 using PartyCli.Models;
-using PartyCli.Properties;
+using PartyCli.Options;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -12,7 +13,13 @@ namespace PartyCli.Api
 {
     public class ServerApi : IServerApi
     {
+        private ServerApiOptions options;
         private readonly HttpClient client = new HttpClient();
+
+        public ServerApi(IOptions<ServerApiOptions> options)
+        {
+            this.options = options?.Value ?? throw new ArgumentNullException(nameof(options));
+        }
 
         public async Task AuthorizeAsync(Credentials credentials)
         {
@@ -23,7 +30,7 @@ namespace PartyCli.Api
             };
 
             var content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
-            var response = await client.PostAsync(Settings.Default.ApiTokensUri, content);
+            var response = await client.PostAsync(options.TokensUri, content);
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception($"Authorization request has failed! Status code: {response.StatusCode.ToString()}.");
@@ -39,7 +46,7 @@ namespace PartyCli.Api
 
         public async Task<IEnumerable<Server>> GetServersAsync()
         {
-            var response = await client.GetAsync(Settings.Default.ApiServersUri);
+            var response = await client.GetAsync(options.ServersUri);
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception($"Get servers request has failed! Status code: {response.StatusCode.ToString()}.");

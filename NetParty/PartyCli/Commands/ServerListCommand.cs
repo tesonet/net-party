@@ -1,4 +1,5 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
+using Microsoft.Extensions.DependencyInjection;
 using PartyCli.Interfaces;
 using PartyCli.Models;
 using Serilog;
@@ -17,8 +18,6 @@ namespace PartyCli.Commands
         IRepository<Credentials> credentialsRepository;
         IServerPresenter serversPresenter;
 
-        CommandOption localOption;
-
         public ServerListCommand(ILogger logger, IServerApi serversApi, IRepository<Server> serversRepository, IRepository<Credentials> credentialsRepository, IServerPresenter serversPresenter)
         {
             this.logger = logger?.ForContext<ServerListCommand>() ?? throw new ArgumentNullException(nameof(logger));
@@ -28,20 +27,20 @@ namespace PartyCli.Commands
             this.serversPresenter = serversPresenter ?? throw new ArgumentNullException(nameof(serversPresenter));
         }
 
-        public void Configure(CommandLineApplication command)
+        public static void Configure(CommandLineApplication command, IServiceProvider services)
         {
             command.Description = "Fetch servers from API and display them";
             command.HelpOption();
 
-            localOption = command.Option("-l|--local", "Use previously fetched data", CommandOptionType.NoValue);
+            var localOption = command.Option("-l|--local", "Use previously fetched data", CommandOptionType.NoValue);
 
-            command.OnExecute(async () => await Execute());
+            command.OnExecute(async () => await services.GetService<ServerListCommand>().Execute(localOption.HasValue()));
         }
         
-        private async Task<int> Execute()
+        private async Task<int> Execute(bool local)
         {
             IEnumerable<Server> servers;
-            if (localOption.HasValue())
+            if (local)
             {
                 servers = GetLocal();
             }

@@ -22,23 +22,5 @@ namespace PartyCli.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://playground.tesonet.lt/v1/tokens")]
-        public string ApiTokensUri {
-            get {
-                return ((string)(this["ApiTokensUri"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://playground.tesonet.lt/v1/servers")]
-        public string ApiServersUri {
-            get {
-                return ((string)(this["ApiServersUri"]));
-            }
-        }
     }
 }

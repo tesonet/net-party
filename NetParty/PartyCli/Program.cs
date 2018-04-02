@@ -5,6 +5,7 @@ using PartyCli.Api;
 using PartyCli.Commands;
 using PartyCli.Interfaces;
 using PartyCli.Models;
+using PartyCli.Options;
 using PartyCli.Presenters;
 using PartyCli.Repositories;
 using Serilog;
@@ -24,7 +25,7 @@ namespace PartyCli
             var logger = services.GetService<ILogger>().ForContext<Program>();
 
             // Configure CLI
-            var app = services.GetService<App>().Configure(new CommandLineApplication());
+            var app = App.Configure(new CommandLineApplication(), services);
 
             try
             {
@@ -40,7 +41,7 @@ namespace PartyCli
             }
         }
 
-        private static void ConfigureServices(IServiceCollection serviceCollection)
+        private static void ConfigureServices(IServiceCollection services)
         {
             // Build configuration
             IConfigurationRoot config = new ConfigurationBuilder()
@@ -52,21 +53,23 @@ namespace PartyCli
                 .ReadFrom.Configuration(config)
                 .CreateLogger();
      
-            serviceCollection.AddSingleton<ILogger>(Log.Logger);
+            services.AddSingleton<ILogger>(Log.Logger);
 
             // Add commands
-            serviceCollection.AddTransient<App, App>();
-            serviceCollection.AddTransient<ConfigCommand, ConfigCommand>();
-            serviceCollection.AddTransient<ServerListCommand, ServerListCommand>();
+            services.AddTransient<App, App>();
+            services.AddTransient<ConfigCommand, ConfigCommand>();
+            services.AddTransient<ServerListCommand, ServerListCommand>();
 
             // Add services
-            serviceCollection.AddTransient<IRepository<Credentials>, FileRepository<Credentials>>();
-            serviceCollection.AddTransient<IRepository<Server>, FileRepository<Server>>();
-            serviceCollection.AddTransient<IServerApi, ServerApi>();
-            serviceCollection.AddTransient<IServerPresenter, ServerPresenter>();
+            services.AddTransient<IRepository<Credentials>, FileRepository<Credentials>>();
+            services.AddTransient<IRepository<Server>, FileRepository<Server>>();
+            services.AddTransient<IServerApi, ServerApi>();
+            services.AddTransient<IServerPresenter, ServerPresenter>();
 
-            // Add service configurations
-            //serviceCollection.Configure<Settings>(config.GetSection("SettingsSection"))
+            // Add configuration options
+            services.AddOptions();
+            services.Configure<ServerApiOptions>(config.GetSection("Api").GetSection("ServerApi"));
+            FileRepository.Configure(config.GetSection("Repository").GetSection("FileRepository").Get<FileRepositoryOptions>());
         }
     }
 }
