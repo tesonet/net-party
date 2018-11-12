@@ -1,0 +1,7 @@
+﻿{
+  "LogFileName": "log-{Date}.log",
+  "FilesRepositoryPath": "FilesRepository",
+  "AuthApiUrl": "http://playground.tesonet.lt/v1/tokens",
+  "ServersApiUrl": "http://playground.tesonet.lt/v1/servers"
+
+}

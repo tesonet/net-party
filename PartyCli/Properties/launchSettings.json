@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "PartyCli": {
+      "commandName": "Project",
+      "commandLineArgs": "server_list  --local"
+    }
+  }
+}
