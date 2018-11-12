@@ -17,12 +17,11 @@ using PartyCli.Infrastructure.ServersApis;
 
 namespace PartyCli
 {
-    class Bootstraper
+    public class Bootstraper
     {
         private ServiceCollection services;
         public static ServiceProvider Provider { get; private set; }
 
-        private static IConfigurationRoot Configuration;
 
         public static void Configure()
         {
