@@ -2,7 +2,7 @@
   "profiles": {
     "PartyCli": {
       "commandName": "Project",
-      "commandLineArgs": "server_list "
+      "commandLineArgs": "server_list  --local"
     }
   }
 }

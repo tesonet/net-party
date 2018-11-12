@@ -67,7 +67,7 @@ namespace PartyCli.UnitTests
         }
 
         [Fact]
-        public void ServerListCommandHandler_IsHandling()
+        public void ServerListCommandHandler_IsHandlingNoParams()
         {
             var mockServersRepository = new Mock<IServersRepository>();
             var mockPresenter = new Mock<IPresenter>();
@@ -88,25 +88,96 @@ namespace PartyCli.UnitTests
                 .Returns( () => Task.FromResult(serversList));
 
             mockServersRepository
-                .Setup(x => x.AddRange(It.IsAny<IEnumerable<Server>>()))
-                .Callback<IEnumerable<Server>>(c => resultEntities = c);
+                .Setup(x => x.AddRange(It.IsAny<IEnumerable<Server>>()))                
+                .Callback<IEnumerable<Server>>(c => resultEntities = c)
+                ;
+
+            mockPresenter
+                .Setup(x => x.DisplayServers(It.IsAny<List<Server>>()))
+                .Callback<List<Server>>(m => displayServers = m);        
+
+            var serverListCommandHandler = new ServerListCommandHandler(mockServersApi.Object,
+                                                                    mockServersRepository.Object,
+                                                                    mockPresenter.Object,
+                                                                    mockLogger.Object);
+            var args = new string[] { "server_list" };
+
+            serverListCommandHandler.Handle(args);
+
+            Assert.Equal(serversList, resultEntities);
+            Assert.Equal(serversList, displayServers);       
+
+        }
+
+        [Fact]
+        public void ServerListCommandHandler_IsHandlingLocal()
+        {
+            var mockServersRepository = new Mock<IServersRepository>();
+            var mockPresenter = new Mock<IPresenter>();
+            var mockLogger = new Mock<ILogger>();
+            var mockServersApi = new Mock<IServersApi>();
+
+            IEnumerable<Server> resultEntities = null;
+            List<Server> displayServers = null;
+
+            List<Server> serversList = new List<Server>()
+            {
+                new Server(){ Name = "Germany #79", Distance = 157 },
+                new Server(){ Name = "United Kingdom #26", Distance = 1360 }
+            };
+
+           
+            mockServersRepository
+                .Setup(x => x.GetAll())
+                .Returns(() => serversList);
 
             mockPresenter
                 .Setup(x => x.DisplayServers(It.IsAny<List<Server>>()))
                 .Callback<List<Server>>(m => displayServers = m);
 
-            var args = new string[] { "server_list"};
-
-            var configCommandHandler = new ServerListCommandHandler(mockServersApi.Object,
+            var serverListCommandHandler = new ServerListCommandHandler(mockServersApi.Object,
                                                                     mockServersRepository.Object,
                                                                     mockPresenter.Object,
                                                                     mockLogger.Object);
+            var args = new string[] { "server_list", "--local" };
 
-            configCommandHandler.Handle(args);
+            serverListCommandHandler.Handle(args);
+           
+            Assert.Equal(serversList, displayServers);
 
-            Assert.Equal(serversList, resultEntities);
-            Assert.Equal(serversList, displayServers);       
+        }
 
+        [Theory]
+        [InlineData("server_list", "--global")]
+        [InlineData("server_list", "--local", "--oneMore")]      
+        public void ServerListCommandHandler_ThrowsIfBadParams(params string[] args)
+        {
+            var mockServersRepository = new Mock<IServersRepository>();
+            var mockPresenter = new Mock<IPresenter>();
+            var mockLogger = new Mock<ILogger>();
+            var mockServersApi = new Mock<IServersApi>();
+
+            var serverListCommandHandler = new ServerListCommandHandler(mockServersApi.Object,
+                                                                    mockServersRepository.Object,
+                                                                    mockPresenter.Object,
+                                                                    mockLogger.Object);
+     
+            Exception ex = Assert.Throws<PresentableExeption>(() => serverListCommandHandler.Handle(args));
+
+            Assert.Equal("Invalid arguments.", ex.Message);
+        }
+
+        [Fact]
+        public void UsuportedCommandHandler_Throws()
+        {
+            
+            var usuportedCommandHandler = new UnsuportedCommandHandler();
+
+            var args = new string[] { };
+
+            Exception ex = Assert.Throws<PresentableExeption>(() => usuportedCommandHandler.Handle(args));
+
+            Assert.Contains("Unsuported comand.\r\nSupported commands:\r\n", ex.Message);
         }
 
 

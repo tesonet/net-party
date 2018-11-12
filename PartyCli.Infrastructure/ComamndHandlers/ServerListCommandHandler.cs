@@ -60,7 +60,7 @@ namespace PartyCli.Infrastructure.ComamndHandlers
         private bool IsValidParams(string[] args)
         {
             return args.Length == 1 ||
-                   (args.Length == 2 && args[1] != "--local");
+                   (args.Length == 2 && args[1] == "--local");
         }
     }
 }
