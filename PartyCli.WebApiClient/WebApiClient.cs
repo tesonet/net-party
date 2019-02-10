@@ -14,6 +14,7 @@ namespace PartyCli.WebApiClient
 {
   public class WebApiClient : IWebApiClient
   {
+    private static readonly HttpClient _httpClient = new HttpClient();
     private readonly ILogger _logger;
     private readonly IWebApiClientSettings _settings;
 
@@ -34,11 +35,9 @@ namespace PartyCli.WebApiClient
 
       _logger.Info($"Downloading Servers from {url}");
 
-      using (var client = new HttpClient())
+      _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+      using (var response = await _httpClient.GetAsync(url))
       {
-        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-        var response = await client.GetAsync(url);
-
         _logger.Info($"Response StatusCode: {response.StatusCode}");
         response.EnsureSuccessStatusCode();
 
@@ -61,11 +60,10 @@ namespace PartyCli.WebApiClient
 
       _logger.Info($"Request access token from {url}");
 
-      using (var client = new HttpClient())
+      var jsonBody = JsonConvert.SerializeObject(new { username, password });
+      using (var content = new StringContent(jsonBody, Encoding.UTF8, "application/json"))
       {
-        var jsonBody = JsonConvert.SerializeObject(new { username, password });
-        HttpContent content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-        var response = await client.PostAsync(url, content);
+        var response = await _httpClient.PostAsync(url, content);
 
         _logger.Info($"Response StatusCode: {response.StatusCode}");
         response.EnsureSuccessStatusCode();
@@ -74,6 +72,7 @@ namespace PartyCli.WebApiClient
 
         token = JsonConvert.DeserializeObject<TokenDataContract>(jsonString);
       }
+
       _logger.Info($"Token is valid: { (string.IsNullOrWhiteSpace(token?.Token) ? "No" : "Yes")}");
       return token;
     }

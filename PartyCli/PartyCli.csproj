@@ -83,8 +83,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\ConfigCommandHandler.cs" />
+    <Compile Include="Commands\ServerListCommandHandler.cs" />
     <Compile Include="Infrastructure\ConsoleWriter.cs" />
     <Compile Include="Installers\DefaultInstaller.cs" />
+    <Compile Include="Interfaces\ICommandHandler.cs" />
     <Compile Include="Interfaces\IConsoleWriter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

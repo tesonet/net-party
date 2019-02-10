@@ -6,7 +6,8 @@ namespace PartyCli.Interfaces
 {
   public interface IConsoleWriter
   {
-    void DisplayServers(IEnumerable<Server> servers);
+    void DisplayInfo(string infoLine);
+    void DisplayServers(IEnumerable<Server> servers, string sourceName);
     void DisplayExceptionMessage(Exception ex);
   }
 }

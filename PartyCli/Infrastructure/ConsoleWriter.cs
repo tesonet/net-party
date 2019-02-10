@@ -15,13 +15,13 @@ namespace PartyCli.Infrastructure
       _logger = logger;
     }
 
-    public void DisplayServers(IEnumerable<Server> servers)
+    public void DisplayServers(IEnumerable<Server> servers, string sourceName)
     {
       var count = 0;
       Console.ForegroundColor = ConsoleColor.Green;
       try
       {
-        Console.WriteLine($"Server list:");
+        Console.WriteLine($"List of Servers from {sourceName}:");
         foreach (var server in servers)
         {
           count++;
@@ -47,6 +47,11 @@ namespace PartyCli.Infrastructure
       {
         Console.ResetColor();
       }
+    }
+
+    public void DisplayInfo(string infoLine)
+    {
+      Console.WriteLine(infoLine);
     }
   }
 }

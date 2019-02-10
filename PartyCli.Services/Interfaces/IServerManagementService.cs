@@ -12,5 +12,6 @@ namespace PartyCli.Services.Interfaces
     Task<ICollection<Server>> FetchServersAsync(bool local);
     void SaveCredentials(string username, string password);
     void SaveServers(IEnumerable<Server> servers);
+    void ClearServers();
   }
 }

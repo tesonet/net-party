@@ -32,7 +32,7 @@ namespace PartyCli.Services
     {
       if (local)
       {
-        _logger.Info("Fetching servers from storage");
+        _logger.Info("Fetching servers from data storage");
         return _serverRepository.FindAll();
       }
       else
@@ -54,7 +54,7 @@ namespace PartyCli.Services
 
     public void SaveCredentials(string username, string password)
     {
-      _logger.Info("Saving username and password to storage");
+      _logger.Info("Saving credentials to data storage");
       _credentialsRepository.Truncate();
 
       _credentialsRepository.InsertBulk(new List<Credentials>()
@@ -65,6 +65,7 @@ namespace PartyCli.Services
             Password = password,
           }
         });
+      _logger.Info("Credentials saved succesfully");
     }
 
     private async Task<string> GetAccessToken()
@@ -86,9 +87,15 @@ namespace PartyCli.Services
 
     public void SaveServers(IEnumerable<Server> servers)
     {
-      _logger.Info("Saving servers to storage");
-      _serverRepository.Truncate();
+      ClearServers();
+      _logger.Info("Saving servers to data storage");
       _serverRepository.InsertBulk(servers);
+    }
+
+    public void ClearServers()
+    {
+      _logger.Info("Deleting all servers from data storage");
+      _serverRepository.Truncate();
     }
   }
 }
