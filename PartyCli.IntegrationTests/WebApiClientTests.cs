@@ -32,13 +32,15 @@ namespace PartyCli.IntegrationTests
     }
 
     [Test]
-    public async Task WebApi_Should_Return_Servers()
+    public async Task WebApi_Should_Return_AccessToken_And_Servers()
     {
-      var webApi = new WebApiClient.WebApiClient(_settingsMock.Object, _loggerMock.Object);
-      var token = await webApi.GetTokenAsync("tesonet", "partyanimal");      
-      var servers = await webApi.GetServersAsync(token.Token);
+      var webApi = new WebApiClient.WebApiClient(_settingsMock.Object, 
+        _loggerMock.Object);
 
+      var token = await webApi.GetTokenAsync("tesonet", "partyanimal");
       Assert.IsNotEmpty(token.Token);
+
+      var servers = await webApi.GetServersAsync(token.Token);            
       Assert.IsTrue(servers.Any());
     }
   }

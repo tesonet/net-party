@@ -38,7 +38,7 @@ namespace PartyCli.WebApiClient
       _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
       using (var response = await _httpClient.GetAsync(url))
       {
-        _logger.Info($"Response StatusCode: {response.StatusCode}");
+        _logger.Debug($"Response StatusCode: {response.StatusCode}");
         response.EnsureSuccessStatusCode();
 
         var jsonString = await response.Content.ReadAsStringAsync();
@@ -65,7 +65,7 @@ namespace PartyCli.WebApiClient
       {
         var response = await _httpClient.PostAsync(url, content);
 
-        _logger.Info($"Response StatusCode: {response.StatusCode}");
+        _logger.Debug($"Response StatusCode: {response.StatusCode}");
         response.EnsureSuccessStatusCode();
 
         var jsonString = await response.Content.ReadAsStringAsync();

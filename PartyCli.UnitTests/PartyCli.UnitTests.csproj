@@ -14,7 +14,7 @@
     <FileAlignment>512</FileAlignment>
     <TestProjectType>UnitTest</TestProjectType>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <Deterministic>true</Deterministic>    
+    <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -62,7 +62,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ServicesTests.cs" />
+    <Compile Include="CommandHandlersTests.cs" />
+    <Compile Include="ServerManagementServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -80,6 +81,14 @@
     <ProjectReference Include="..\PartyCli.Services\PartyCli.Services.csproj">
       <Project>{2c32bd04-ddf4-4c3e-abb4-dd3990388bbe}</Project>
       <Name>PartyCli.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PartyCli.WebApiClient\PartyCli.WebApiClient.csproj">
+      <Project>{B32B3A19-BDA5-4300-AB0F-04623AA79EFC}</Project>
+      <Name>PartyCli.WebApiClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PartyCli\PartyCli.csproj">
+      <Project>{f992e821-9992-40c8-852a-b79e4bda2077}</Project>
+      <Name>PartyCli</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
