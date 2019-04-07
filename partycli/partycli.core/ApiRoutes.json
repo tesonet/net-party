@@ -1,0 +1,4 @@
+﻿{
+  "ServerUri": "http://playground.tesonet.lt/v1/servers",
+  "TokenUri": "http://playground.tesonet.lt/v1/tokens"
+}
