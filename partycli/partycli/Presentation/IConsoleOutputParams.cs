@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace partycli.Presentation
+﻿namespace partycli.Presentation
 {
     interface IConsoleOutputParams
     {

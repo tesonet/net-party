@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace partycli.Commands
+﻿namespace partycli.Commands
 {
-    interface ICommand
+    public interface ICommand
     {
     }
 }

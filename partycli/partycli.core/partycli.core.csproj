@@ -48,20 +48,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\CredentialsContract.cs" />
     <Compile Include="Contracts\ServerContract.cs" />
     <Compile Include="DataAccess\ApiClient.cs" />
     <Compile Include="DataAccess\ApiSettings.cs" />
     <Compile Include="DataAccess\IApiClient.cs" />
-    <Compile Include="DataAccess\IApiSettings.cs" />
     <Compile Include="Contracts\TokenContract.cs" />
     <Compile Include="Execution\Executor.cs" />
     <Compile Include="Execution\IExecutor.cs" />
-    <Compile Include="Logging\ILogger.cs" />
-    <Compile Include="Logging\Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ApiRoutes.json">
+    <None Include="ApiSettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
@@ -72,5 +70,6 @@
       <Name>partycli.core.Repositories</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

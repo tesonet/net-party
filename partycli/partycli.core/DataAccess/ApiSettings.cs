@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace partycli.core.DataAccess
+﻿namespace partycli.core.DataAccess
 {
-    class ApiSettings : IApiSettings
+    public class ApiSettings
     {
+        public ApiSettings()
+        {
+            ServerUri = "http://playground.tesonet.lt/v1/servers";
+            TokenUri = "http://playground.tesonet.lt/v1/tokens";
+        }
+
         public string ServerUri { get; set; }
         public string TokenUri { get; set; }
     }

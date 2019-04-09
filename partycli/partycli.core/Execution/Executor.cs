@@ -1,27 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using partycli.core.DataAccess;
 using partycli.core.Repositories.Model;
-using partycli.core.Logging;
 using partycli.core.Contracts;
 using partycli.core.Repositories.Storage;
+using log4net;
 
 namespace partycli.core.Execution
 {
     public class Executor : IExecutor
     {
-        IApiClient _apiClient;
-        IStorageManager _storageManager;
-        ILogger _logger;
+        readonly IApiClient _apiClient;
+        readonly IStorageManager _storageManager;
+        readonly ILog _logger;
 
-        public Executor(IApiClient apiClient, IStorageManager storageManager, ILogger logger)
+        public Executor(IApiClient apiClient, IStorageManager storageManager)
         {
+            _logger = LogManager.GetLogger(GetType());
             _apiClient = apiClient;
             _storageManager = storageManager;
-            _logger = logger;
         }
 
         public async Task<IEnumerable<Server>> FetchServers(bool local)
@@ -30,32 +28,21 @@ namespace partycli.core.Execution
 
             if (local)
             {
-                try
-                {
-                    servers = _storageManager.GetServers();
-                }
-                catch (Exception e)
-                {
-                    _logger.Error("Error fetching from local repository.", e);
-                }
+                servers = _storageManager.GetServers();
             }
             else
             {
-                try
-                {
-                    var credentials = _storageManager.GetCredentials();
-                    var token = await _apiClient.GetToken(credentials);
-                    var serverContracts = await _apiClient.GetServers(token);
+                var credentials = _storageManager.GetCredentials();
 
-                    servers = serverContracts.Select(c => new Server() { Name = c.Name, Distance = c.Distance });
-                    _storageManager.StoreServers(servers);
-                }
+                var token = await _apiClient.GetToken(
+                    new CredentialsContract() {
+                        Username = credentials.Username,
+                        Password = credentials.Password
+                    });
+                var serverContracts = await _apiClient.GetServers(token);
 
-                catch (Exception e)
-                {
-                    _logger.Error("Error fetching servers.", e);
-                    throw;
-                }
+                servers = serverContracts.Select(c => new Server() { Name = c.Name, Distance = c.Distance }).ToList();
+                _storageManager.StoreServers(servers);
             }
             
             return servers;
@@ -63,15 +50,7 @@ namespace partycli.core.Execution
 
         public void SaveCredentials(Credentials credentials)
         {
-            try
-            {
-                _storageManager.SaveCredentials(credentials);
-            }
-            catch (Exception)
-            {
-                _logger.Error("Error saving credentials.");
-                throw;
-            }
+            _storageManager.SaveCredentials(credentials);
         }
     }
 }
