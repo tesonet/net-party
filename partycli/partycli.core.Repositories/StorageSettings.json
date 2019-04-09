@@ -1,0 +1,4 @@
+﻿{
+  "ServerSavePath": "./Servers.json",
+  "CredentialsSavePath" : "./Creds.json"
+}
