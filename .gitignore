@@ -1,0 +1,6 @@
+src/.vs/
+src/*/obj/
+src/*/bin/
+*.user
+*.cache
+
