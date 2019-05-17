@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.28803.452
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetParty.Application", "NetParty.Application\NetParty.Application.csproj", "{BB49D088-26E9-4601-983F-0E29D3B6349C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B7BBEB30-F6C6-4FC7-9AAA-C6D8A19310F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetParty.Application.Tests", "..\..\tests\NetParty.Application.Tests\NetParty.Application.Tests.csproj", "{FA4D8C71-9065-4BE6-B3AE-1EB60440AB86}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +19,16 @@ Global
 		{BB49D088-26E9-4601-983F-0E29D3B6349C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB49D088-26E9-4601-983F-0E29D3B6349C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB49D088-26E9-4601-983F-0E29D3B6349C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA4D8C71-9065-4BE6-B3AE-1EB60440AB86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA4D8C71-9065-4BE6-B3AE-1EB60440AB86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA4D8C71-9065-4BE6-B3AE-1EB60440AB86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA4D8C71-9065-4BE6-B3AE-1EB60440AB86}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FA4D8C71-9065-4BE6-B3AE-1EB60440AB86} = {B7BBEB30-F6C6-4FC7-9AAA-C6D8A19310F9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3D02C1A0-39E2-4504-BD46-BCBFA4CB26E9}

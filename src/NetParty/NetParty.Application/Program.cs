@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Autofac;
+using NetParty.Application.DI;
+using Serilog;
 
 namespace NetParty.Application
 {
@@ -10,6 +9,12 @@ namespace NetParty.Application
     {
         static void Main(string[] args)
         {
+            using (var scope = ServicesContainer.Container.BeginLifetimeScope())
+            {
+
+            }
+
+            Console.ReadLine();
         }
     }
 }
