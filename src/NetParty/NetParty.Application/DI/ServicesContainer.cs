@@ -16,14 +16,9 @@ namespace NetParty.Application.DI
         {
             var builder = new ContainerBuilder();
 
-            builder
-                .Register(c => 
-                    new LoggerConfiguration() 
-                    .MinimumLevel.Debug()
-                    .WriteTo.ColoredConsole()
-                    .CreateLogger())
-                .As<ILogger>()
-                .SingleInstance();
+            builder.RegisterModule<LogModule>();
+            builder.RegisterModule<HandlersModule>();
+            builder.RegisterModule<ServicesModule>();
 
             Container = builder.Build();
         }
