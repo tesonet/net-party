@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using NetParty.Clients;
 using NetParty.Clients.Interfaces;
+using System.Configuration;
 
 namespace NetParty.Application.DI
 {
@@ -8,7 +9,9 @@ namespace NetParty.Application.DI
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.Register(c => new TesonetClient("http://playground.tesonet.lt"))
+            builder.Register(c => new TesonetClient(
+                    ConfigurationManager.ConnectionStrings["tesonetApi"].ConnectionString
+                ))
                 .As<ITesonetClient>()
                 .SingleInstance();
         }

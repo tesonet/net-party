@@ -6,11 +6,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{33F8A29C-9006-410D-9F6D-83A5F0BF91F0}</ProjectGuid>
+    <ProjectGuid>{D9C8CE45-B163-4873-BEEF-777320457187}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NetParty.Services.Tests</RootNamespace>
-    <AssemblyName>NetParty.Services.Tests</AssemblyName>
+    <RootNamespace>NetParty.Clients.Tests</RootNamespace>
+    <AssemblyName>NetParty.Clients.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -40,27 +40,31 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.12.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NUnit.3.12.0\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CredentialsServiceTests.cs" />
+    <Compile Include="TesonetClientTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\src\NetParty.Application\App.config">
+      <Link>App.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\NetParty.Contracts\NetParty.Contracts.csproj">
-      <Project>{20f56c78-c980-4e24-8e8d-6a2ccc8bb003}</Project>
-      <Name>NetParty.Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\NetParty.Services\NetParty.Services.csproj">
-      <Project>{8e335cb7-b03d-43b0-8a30-0a2ca6fa30e4}</Project>
-      <Name>NetParty.Services</Name>
+    <ProjectReference Include="..\..\src\NetParty.Clients\NetParty.Clients.csproj">
+      <Project>{47b3f766-3634-4998-a55d-489e90340b16}</Project>
+      <Name>NetParty.Clients</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

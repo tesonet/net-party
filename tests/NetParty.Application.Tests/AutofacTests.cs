@@ -8,42 +8,42 @@ using NUnit.Framework;
 
 namespace NetParty.Application.Tests
 {
-        [TestFixture]
-        public class AutofacTest
+    [TestFixture]
+    public class AutofacTest
+    {
+        [Test]
+        public void TestAutofacRegistrations()
         {
-            [Test]
-            public void TestAutofacRegistrations()
+            IContainer container = ServicesContainer.Container;
+
+            IEnumerable<IServiceWithType> autofacServices = container.ComponentRegistry.Registrations.SelectMany(x => x.Services).OfType<IServiceWithType>();
+            foreach (IServiceWithType svc in autofacServices)
             {
-                IContainer container = ServicesContainer.Container;
+                Console.WriteLine("Resolving registration: '{0}'", svc);
 
-                IEnumerable<IServiceWithType> autofacServices = container.ComponentRegistry.Registrations.SelectMany(x => x.Services).OfType<IServiceWithType>();
-                foreach (IServiceWithType svc in autofacServices)
+                IServiceWithType serviceWithType = svc;
+
+                Assert.DoesNotThrow(() =>
                 {
-                    Console.WriteLine("Resolving registration: '{0}'", svc);
+                    object resolvedService;
 
-                    IServiceWithType serviceWithType = svc;
-
-                    Assert.DoesNotThrow(() =>
+                    KeyedService keyedService = serviceWithType as KeyedService;
+                    if (keyedService != null)
                     {
-                        object resolvedService;
+                        resolvedService = container.ResolveKeyed(keyedService.ServiceKey, serviceWithType.ServiceType);
+                    }
+                    else
+                    {
+                        resolvedService = container.Resolve(serviceWithType.ServiceType);
+                    }
 
-                        KeyedService keyedService = serviceWithType as KeyedService;
-                        if (keyedService != null)
-                        {
-                            resolvedService = container.ResolveKeyed(keyedService.ServiceKey, serviceWithType.ServiceType);
-                        }
-                        else
-                        {
-                            resolvedService = container.Resolve(serviceWithType.ServiceType);
-                        }
+                    if (resolvedService == null)
+                        throw new Exception("Autofac service not found: " + serviceWithType.ServiceType.Name);
+                },
 
-                        if (resolvedService == null)
-                            throw new Exception("Autofac service not found: " + serviceWithType.ServiceType.Name);
-                    },
-                    
-                    String.Format("Failed to resolve autofac service '{0}' or one of it's dependencies", serviceWithType)
-                    );
-                }
+                String.Format("Failed to resolve autofac service '{0}' or one of it's dependencies", serviceWithType)
+                );
             }
         }
+    }
 }
