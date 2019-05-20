@@ -1,4 +1,5 @@
-﻿using GuardNet;
+﻿using FluentValidation;
+using GuardNet;
 using NetParty.Contracts.Requests.Base;
 using Serilog;
 using System;
@@ -9,13 +10,33 @@ namespace NetParty.Handlers.Base
     public abstract class BaseHandler<TRequest> : IHandler<TRequest>
         where TRequest : BaseRequest
     {
-        public ILogger Logger { get; set; }
+        private ILogger logger;
+        public ILogger Logger
+        {
+            get
+            {
+                if (logger == null)
+                {
+                    logger = new LoggerConfiguration().CreateLogger();
+                }
+                
+                return logger;
+            }
+            set
+            {
+                logger = value;
+            }
+        }
+
+        public IValidator<TRequest> Validator { get; set; }
 
         public async Task HandleAsync(TRequest request)
         {
             Guard.NotNull(request, nameof(request));
 
             Logger.Information("Started execute {0}...", typeof(TRequest).Name);
+
+            ValidaterRequest(request);
 
             try
             {
@@ -24,7 +45,17 @@ namespace NetParty.Handlers.Base
             }
             catch (Exception ex)
             {
-                Logger.Error(ex, "Error while executin {0}!", nameof(TRequest));
+                logger.Error(ex, "Error while executin {0}!", nameof(TRequest));
+            }
+        }
+
+        private void ValidaterRequest(TRequest request)
+        {
+            var validationReult = Validator.Validate(request);
+
+            if (!validationReult.IsValid)
+            {
+                throw new ValidationException(validationReult.Errors);
             }
         }
 

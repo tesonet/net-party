@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using FluentValidation;
 using Serilog;
 
 namespace NetParty.Application.DI
@@ -21,6 +22,12 @@ namespace NetParty.Application.DI
             builder.RegisterModule<ServicesModule>();
             builder.RegisterModule<ClientsModule>();
             builder.RegisterModule<RepositoriesModule>();
+
+            builder
+                .RegisterAssemblyTypes(typeof(ServicesContainer).Assembly)
+                .Where(t => t.IsClosedTypeOf(typeof(IValidator<>)))
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope();
 
             Container = builder.Build();
         }

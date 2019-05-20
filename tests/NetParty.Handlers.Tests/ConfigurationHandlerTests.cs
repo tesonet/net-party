@@ -1,5 +1,7 @@
-﻿using Moq;
+﻿using FluentValidation;
+using Moq;
 using NetParty.Contracts.Requests;
+using NetParty.Contracts.Requests.Validators;
 using NetParty.Services.Interfaces;
 using NUnit.Framework;
 using System;
@@ -29,11 +31,12 @@ namespace NetParty.Handlers.Tests
         public void RequiredFielsTests()
         {
             Mock<ICredentialsService> credentialsServiceMock = new Mock<ICredentialsService>();
-
+            
             var handler = new ConfigurationHandler(credentialsServiceMock.Object);
+            handler.Validator = new ConfigurationRequestValidator();
 
             ConfigurationRequest request = new ConfigurationRequest();
-            Assert.ThrowsAsync<ArgumentNullException>(() => handler.HandleAsync(request));
+            Assert.ThrowsAsync<ValidationException>(() => handler.HandleAsync(request));
         }
     }
 }
