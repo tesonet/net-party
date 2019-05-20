@@ -1,8 +1,7 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
-using NetParty.Application;
+using NetParty.Contracts;
 using NUnit.Framework;
 
 namespace NetParty.Services.Tests
@@ -18,7 +17,13 @@ namespace NetParty.Services.Tests
         {
             CredentialsService credentialsService = new CredentialsService();
 
-            await credentialsService.SaveCredentialsAsync("TestUser", "TestPassword");
+            var credentials = new Credentials
+            {
+                UserName = "TestUser",
+                Password = "TestPassword"
+            };
+
+            await credentialsService.SaveCredentialsAsync(credentials);
 
             Assert.IsTrue(File.Exists(SecretFilePath));
 
@@ -32,7 +37,13 @@ namespace NetParty.Services.Tests
         {
             CredentialsService credentialsService = new CredentialsService();
 
-            await credentialsService.SaveCredentialsAsync("TestUser", "TestPassword");
+            var credentials = new Credentials
+            {
+                UserName = "TestUser",
+                Password = "TestPassword"
+            };
+
+            await credentialsService.SaveCredentialsAsync(credentials);
 
             Assert.IsTrue(File.Exists(SecretFilePath));
 

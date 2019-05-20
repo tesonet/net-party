@@ -1,0 +1,55 @@
+﻿using GuardNet;
+using NetParty.Contracts;
+using NetParty.Services.Interfaces;
+using NetParty.Utils;
+using System;
+using System.IO;
+using System.Reflection;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
+
+namespace NetParty.Services
+{
+    public class CredentialsService : ICredentialsService, IDisposable
+    {
+        private const string FileName = "Secrets.sec";
+        private readonly string SecretFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), FileName);
+
+        public async Task SaveCredentialsAsync(Credentials credentials)
+        {
+            Guard.NotNull(credentials, nameof(credentials));
+
+            var secretUserInfo = ProtectedData.Protect(credentials.ToByteArray(), null, DataProtectionScope.CurrentUser);
+
+            using (FileStream sourceStream = new FileStream(SecretFilePath,
+              FileMode.Append, FileAccess.Write, FileShare.None,
+              bufferSize: 4096, useAsync: true))
+            {
+                await sourceStream.WriteAsync(secretUserInfo, 0, secretUserInfo.Length);
+            }
+        }
+
+        public async Task<Credentials> GetCredentialsAsync()
+        {
+            byte[] buffer;
+
+            using (FileStream sourceStream = new FileStream(SecretFilePath,
+                FileMode.Open, FileAccess.Read, FileShare.None,
+                bufferSize: 4096, useAsync: true))
+            {
+                buffer = new byte[sourceStream.Length];
+                await sourceStream.ReadAsync(buffer, 0, (int)sourceStream.Length);
+            }
+
+            var unprotectedData = ProtectedData.Unprotect(buffer, null, DataProtectionScope.CurrentUser);
+            var credentials = unprotectedData.ToObjectType<Credentials>();
+
+            return credentials;
+        }
+
+        public void Dispose()
+        {
+            File.Delete(SecretFilePath);
+        }
+    }
+}
