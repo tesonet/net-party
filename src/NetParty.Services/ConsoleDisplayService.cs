@@ -23,5 +23,10 @@ namespace NetParty.Services
             table.Write();
             Console.WriteLine();
         }
+
+        public void DisplayText(string text)
+        {
+            Console.WriteLine(text);
+        }
     }
 }

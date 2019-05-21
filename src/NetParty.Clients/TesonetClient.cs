@@ -24,7 +24,8 @@ namespace NetParty.Clients
             ServerDto[] response = await _client.GetAsync("v1/servers")
                 .WithBearerAuthentication(token)
                 .WithOptions(true)
-                .AsArray<ServerDto>();
+                .AsArray<ServerDto>()
+                .ConfigureAwait(false);
 
             return response;
         }
@@ -46,7 +47,7 @@ namespace NetParty.Clients
             if (!response.IsSuccessStatusCode)
                 throw new Exception(response.Message.ReasonPhrase);
 
-            var jObject = await response.AsRawJsonObject();
+            var jObject = await response.AsRawJsonObject().ConfigureAwait(false);
 
             return jObject["token"].ToString();
         }

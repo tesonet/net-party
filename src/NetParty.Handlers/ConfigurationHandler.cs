@@ -11,15 +11,20 @@ namespace NetParty.Handlers
     public class ConfigurationHandler : BaseHandler<ConfigurationRequest>
     {
         private readonly ICredentialsRepository _credentialsRepository;
+        private readonly IDisplayService _displayService;
 
-        public ConfigurationHandler(ICredentialsRepository credentialsRepository)
+        public ConfigurationHandler(
+            ICredentialsRepository credentialsRepository, 
+            IDisplayService displayService)
         {
             Guard.NotNull(credentialsRepository, nameof(credentialsRepository));
+            Guard.NotNull(displayService, nameof(displayService));
 
             _credentialsRepository = credentialsRepository;
+            _displayService = displayService;
         }
 
-        public override Task HandleBaseAsync(ConfigurationRequest request)
+        public override async Task HandleBaseAsync(ConfigurationRequest request)
         {
             var credentials = new Credentials
             {
@@ -27,7 +32,9 @@ namespace NetParty.Handlers
                 Password = request.Password
             };
 
-            return _credentialsRepository.SaveCredentialsAsync(credentials);
+            await _credentialsRepository.SaveCredentialsAsync(credentials).ConfigureAwait(false);
+
+            _displayService.DisplayText("Welcome to NetParty. Let's go to see servers list 'NetParty.Application.exe server_list'!");
         }
     }
 }

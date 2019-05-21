@@ -25,7 +25,7 @@ namespace NetParty.Repositories.File
               FileMode.Append, FileAccess.Write, FileShare.None,
               bufferSize: 4096, useAsync: true))
             {
-                await sourceStream.WriteAsync(secretUserInfo, 0, secretUserInfo.Length);
+                await sourceStream.WriteAsync(secretUserInfo, 0, secretUserInfo.Length).ConfigureAwait(false);
             }
         }
 
@@ -38,7 +38,7 @@ namespace NetParty.Repositories.File
                 bufferSize: 4096, useAsync: true))
             {
                 buffer = new byte[sourceStream.Length];
-                await sourceStream.ReadAsync(buffer, 0, (int)sourceStream.Length);
+                await sourceStream.ReadAsync(buffer, 0, (int)sourceStream.Length).ConfigureAwait(false);
             }
 
             var unprotectedData = ProtectedData.Unprotect(buffer, null, DataProtectionScope.CurrentUser);

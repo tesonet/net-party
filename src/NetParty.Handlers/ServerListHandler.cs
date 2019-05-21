@@ -39,15 +39,18 @@ namespace NetParty.Handlers
 
             if (request.Local)
             {
-                servers = await _serversRepository.GetServersAsync();
+                Logger.Debug("Getting servers from local storage...");
+                servers = await _serversRepository.GetServersAsync().ConfigureAwait(false);
             }
             else
             {
-                string token = await _securityService.GetTokenAsync();
+                Logger.Debug("Getting servers from tesonet server...");
+                string token = await _securityService.GetTokenAsync().ConfigureAwait(false);
 
-                ServerDto[] data = await _tesonetClient.GetServersAsync(token);
+                ServerDto[] data = await _tesonetClient.GetServersAsync(token).ConfigureAwait(false);
 
-                servers = await _serversRepository.SaveServersAsync(data);
+                Logger.Debug("Storing servers list into local storage...");
+                servers = await _serversRepository.SaveServersAsync(data).ConfigureAwait(false);
             }
 
             _displayService.DisplayTable(servers);

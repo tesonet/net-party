@@ -48,7 +48,7 @@ namespace NetParty.Handlers.Tests
             await handler.HandleBaseAsync(new ServerListRequest
             {
                 Local = true
-            });
+            }).ConfigureAwait(false);
 
             securityServiceMock.Verify(x => x.GetTokenAsync(), Times.Never);
             tesonetClientMock.Verify(x => x.GetServersAsync(It.IsAny<string>()), Times.Never);
@@ -90,7 +90,7 @@ namespace NetParty.Handlers.Tests
                 displayServiceMock.Object
             );
 
-            await handler.HandleBaseAsync(new ServerListRequest());
+            await handler.HandleBaseAsync(new ServerListRequest()).ConfigureAwait(false);
 
             securityServiceMock.Verify(x => x.GetTokenAsync(), Times.Once);
             tesonetClientMock.Verify(x => x.GetServersAsync(userToken), Times.Once);

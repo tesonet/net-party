@@ -23,7 +23,7 @@ namespace NetParty.Handlers.Base
         {
             Guard.NotNull(request, nameof(request));
 
-            Logger.Information("Started execute {0}...", typeof(TRequest).Name);
+            Logger.Debug("Started execute {0}...", typeof(TRequest).Name);
 
             RequestValidator(request);
 

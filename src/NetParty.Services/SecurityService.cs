@@ -26,13 +26,13 @@ namespace NetParty.Services
 
         public async Task<string> GetTokenAsync()
         {
-            Credentials credentials = await _credentialsRepository.GetCredentialsAsync();
+            Credentials credentials = await _credentialsRepository.GetCredentialsAsync().ConfigureAwait(false);
             if (credentials == null)
                 throw new CredentialsException();
 
             var token = await _tesonetClient.GetTokenAsync(
                 credentials.UserName, 
-                credentials.Password);
+                credentials.Password).ConfigureAwait(false);
 
             return token;
         }

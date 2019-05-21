@@ -24,7 +24,7 @@ namespace NetParty.Repositories.Tests
                 Password = "TestPassword"
             };
 
-            await credentialsRepository.SaveCredentialsAsync(credentials);
+            await credentialsRepository.SaveCredentialsAsync(credentials).ConfigureAwait(false);
 
             Assert.IsTrue(System.IO.File.Exists(_filePath));
 
@@ -44,11 +44,11 @@ namespace NetParty.Repositories.Tests
                 Password = "TestPassword"
             };
 
-            await credentialsRepository.SaveCredentialsAsync(credentials);
+            await credentialsRepository.SaveCredentialsAsync(credentials).ConfigureAwait(false);
 
             Assert.IsTrue(System.IO.File.Exists(_filePath));
 
-            var credentialsFromFile = await credentialsRepository.GetCredentialsAsync();
+            var credentialsFromFile = await credentialsRepository.GetCredentialsAsync().ConfigureAwait(false);
 
             Assert.AreEqual(credentials.UserName, credentialsFromFile.UserName);
             Assert.AreEqual(credentials.Password, credentialsFromFile.Password);

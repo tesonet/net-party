@@ -26,7 +26,7 @@ namespace NetParty.Repositories.Tests
                     Distance = 1234
                 }
             };
-            await serversRepository.SaveServersAsync(data);
+            await serversRepository.SaveServersAsync(data).ConfigureAwait(false);
 
             Assert.IsTrue(System.IO.File.Exists(_filePath));
         }
@@ -44,11 +44,11 @@ namespace NetParty.Repositories.Tests
                     Distance = 1234
                 }
             };
-            await serversRepository.SaveServersAsync(data);
+            await serversRepository.SaveServersAsync(data).ConfigureAwait(false);
 
             Assert.IsTrue(System.IO.File.Exists(_filePath));
 
-            var dataFromFile = await serversRepository.GetServersAsync();
+            var dataFromFile = await serversRepository.GetServersAsync().ConfigureAwait(false);
 
             Assert.AreEqual(data[0].Name, dataFromFile[0].Name);
             Assert.AreEqual(data[0].Distance, dataFromFile[0].Distance);

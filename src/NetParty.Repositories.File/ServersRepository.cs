@@ -22,7 +22,7 @@ namespace NetParty.Repositories.File
                 bufferSize: 4096, useAsync: true))
             {
                 buffer = new byte[sourceStream.Length];
-                await sourceStream.ReadAsync(buffer, 0, (int)sourceStream.Length);
+                await sourceStream.ReadAsync(buffer, 0, (int)sourceStream.Length).ConfigureAwait(false);
             }
 
             var data = buffer.ToObjectType<ServerDto[]>();
@@ -40,7 +40,7 @@ namespace NetParty.Repositories.File
              FileMode.Append, FileAccess.Write, FileShare.None,
              bufferSize: 4096, useAsync: true))
             {
-                await sourceStream.WriteAsync(dataBytes, 0, dataBytes.Length);
+                await sourceStream.WriteAsync(dataBytes, 0, dataBytes.Length).ConfigureAwait(false);
             }
 
             return data;

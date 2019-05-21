@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using Autofac;
 using CommandLine;
@@ -15,9 +14,30 @@ namespace NetParty.Application
     {
         public static void Main(string[] args)
         {
-            Parser.Default.ParseArguments<ConfigOption, ServerListOption>(args)
+            var result = ParseActions(args);
+
+            while (result)
+            {
+                var argument = Console.ReadLine();
+
+                if(argument == "exit")
+                    return;
+
+                if (String.IsNullOrEmpty(argument))
+                {
+                    Console.WriteLine("Please enter valid action name");
+                    break;
+                }
+
+                result = ParseActions(argument.Split(' ').ToArray());
+            }
+        }
+
+        private static bool ParseActions(string[] args)
+        {
+            return Parser.Default.ParseArguments<ConfigOption, ServerListOption>(args)
                 .MapResult(
-                    (ConfigOption opt) => 
+                    (ConfigOption opt) =>
                     {
                         var handler = ServicesContainer.Container.Resolve<IHandler<ConfigurationRequest>>();
                         var request = new ConfigurationRequest
@@ -50,9 +70,6 @@ namespace NetParty.Application
 
                         return true;
                     });
-
-            if (Debugger.IsAttached)
-                Console.ReadLine();
         }
     }
 }

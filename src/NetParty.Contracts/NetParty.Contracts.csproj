@@ -54,6 +54,7 @@
     <Compile Include="Requests\ConfigurationRequest.cs" />
     <Compile Include="Requests\ServerListRequest.cs" />
     <Compile Include="Requests\Validators\ConfigurationRequestValidator.cs" />
+    <Compile Include="Requests\Validators\ServerListRequestValidator.cs" />
     <Compile Include="ServerDto.cs" />
   </ItemGroup>
   <ItemGroup>

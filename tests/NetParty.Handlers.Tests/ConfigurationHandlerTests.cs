@@ -17,7 +17,8 @@ namespace NetParty.Handlers.Tests
         [Test]
         public void ConstructorTest()
         {
-            Assert.Throws<ArgumentNullException>(() => new ConfigurationHandler(null));
+            Assert.Throws<ArgumentNullException>(() => new ConfigurationHandler(null, null));
+            Assert.Throws<ArgumentNullException>(() => new ConfigurationHandler(new Mock<ICredentialsRepository>().Object, null));
         }
 
         [Test]
@@ -25,7 +26,7 @@ namespace NetParty.Handlers.Tests
         {
             var credentialsServiceMock = new Mock<ICredentialsRepository>();
 
-            var handler = new ConfigurationHandler(credentialsServiceMock.Object);
+            var handler = new ConfigurationHandler(credentialsServiceMock.Object, new Mock<IDisplayService>().Object);
             Assert.ThrowsAsync<ArgumentNullException>(() => handler.HandleAsync(null));
         }
 
@@ -35,7 +36,7 @@ namespace NetParty.Handlers.Tests
         {
             var credentialsServiceMock = new Mock<ICredentialsRepository>();
 
-            var handler = new ConfigurationHandler(credentialsServiceMock.Object)
+            var handler = new ConfigurationHandler(credentialsServiceMock.Object, new Mock<IDisplayService>().Object)
             {
                 Validator = new ConfigurationRequestValidator()
             };
@@ -51,18 +52,20 @@ namespace NetParty.Handlers.Tests
             var testPassword = "TestPassword";
 
             var credentialsServiceMock = new Mock<ICredentialsRepository>();
+            var displayServiceMock = new Mock<IDisplayService>();
 
-            var handler = new ConfigurationHandler(credentialsServiceMock.Object);
+            var handler = new ConfigurationHandler(credentialsServiceMock.Object, displayServiceMock.Object);
             await handler.HandleBaseAsync(new ConfigurationRequest
             {
                 UserName = userName,
                 Password = testPassword
-            });
+            }).ConfigureAwait(false);
 
             credentialsServiceMock.Verify(x => x.GetCredentialsAsync(), Times.Never);
             credentialsServiceMock.Verify(x => x.SaveCredentialsAsync(
                 It.Is<Credentials>(c => c.Password == testPassword && c.UserName == userName)), 
                 Times.Once);
+            displayServiceMock.Verify(x => x.DisplayText("Welcome to NetParty. Let's go to see servers list 'NetParty.Application.exe server_list'!"), Times.Once);
         }
     }
 }
