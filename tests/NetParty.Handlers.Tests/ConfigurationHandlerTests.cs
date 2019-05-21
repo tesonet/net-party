@@ -5,6 +5,8 @@ using NetParty.Contracts.Requests.Validators;
 using NetParty.Services.Interfaces;
 using NUnit.Framework;
 using System;
+using System.Threading.Tasks;
+using NetParty.Contracts;
 
 namespace NetParty.Handlers.Tests
 {
@@ -20,7 +22,7 @@ namespace NetParty.Handlers.Tests
         [Test]
         public void RequestNullTests()
         {
-            Mock<ICredentialsService> credentialsServiceMock = new Mock<ICredentialsService>();
+            var credentialsServiceMock = new Mock<ICredentialsService>();
 
             var handler = new ConfigurationHandler(credentialsServiceMock.Object);
             Assert.ThrowsAsync<ArgumentNullException>(() => handler.HandleAsync(null));
@@ -30,7 +32,7 @@ namespace NetParty.Handlers.Tests
         [Test]
         public void RequiredFieldsTests()
         {
-            Mock<ICredentialsService> credentialsServiceMock = new Mock<ICredentialsService>();
+            var credentialsServiceMock = new Mock<ICredentialsService>();
 
             var handler = new ConfigurationHandler(credentialsServiceMock.Object)
             {
@@ -39,6 +41,27 @@ namespace NetParty.Handlers.Tests
 
             ConfigurationRequest request = new ConfigurationRequest();
             Assert.ThrowsAsync<ValidationException>(() => handler.HandleAsync(request));
+        }
+
+        [Test]
+        public async Task SaveCredentialsTest()
+        {
+            var userName = "TestUser";
+            var testPassword = "TestPassword";
+
+            var credentialsServiceMock = new Mock<ICredentialsService>();
+
+            var handler = new ConfigurationHandler(credentialsServiceMock.Object);
+            await handler.HandleBaseAsync(new ConfigurationRequest
+            {
+                UserName = userName,
+                Password = testPassword
+            });
+
+            credentialsServiceMock.Verify(x => x.GetCredentialsAsync(), Times.Never);
+            credentialsServiceMock.Verify(x => x.SaveCredentialsAsync(
+                It.Is<Credentials>(c => c.Password == testPassword && c.UserName == userName)), 
+                Times.Once);
         }
     }
 }
