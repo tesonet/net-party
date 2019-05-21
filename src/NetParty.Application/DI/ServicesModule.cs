@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using NetParty.Application.Services;
 using NetParty.Services;
 using NetParty.Services.Interfaces;
 

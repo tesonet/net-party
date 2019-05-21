@@ -1,11 +1,11 @@
-﻿using GuardNet;
-using NetParty.Application.Exceptions;
+﻿using System.Threading.Tasks;
+using GuardNet;
 using NetParty.Clients.Interfaces;
 using NetParty.Contracts;
 using NetParty.Services.Interfaces;
-using System.Threading.Tasks;
+using NetParty.Utils.Exceptions;
 
-namespace NetParty.Application.Services
+namespace NetParty.Services
 {
     public class SecurityService : ISecurityService
     {

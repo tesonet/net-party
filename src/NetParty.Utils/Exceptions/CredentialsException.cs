@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NetParty.Application.Exceptions
+namespace NetParty.Utils.Exceptions
 {
     public class CredentialsException : Exception
     {

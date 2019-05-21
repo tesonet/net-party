@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using FluentValidation;
-using Serilog;
+using NetParty.Contracts.Requests.Validators;
 
 namespace NetParty.Application.DI
 {
@@ -24,7 +24,7 @@ namespace NetParty.Application.DI
             builder.RegisterModule<RepositoriesModule>();
 
             builder
-                .RegisterAssemblyTypes(typeof(ServicesContainer).Assembly)
+                .RegisterAssemblyTypes(typeof(ConfigurationRequestValidator).Assembly)
                 .Where(t => t.IsClosedTypeOf(typeof(IValidator<>)))
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();

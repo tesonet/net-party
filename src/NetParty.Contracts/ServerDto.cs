@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace NetParty.Contracts
+﻿namespace NetParty.Contracts
 {
 
     public class ServerDto

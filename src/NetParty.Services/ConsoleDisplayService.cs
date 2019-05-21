@@ -9,7 +9,7 @@ namespace NetParty.Services
 
     public class ConsoleDisplayService : IDisplayService
     {
-        public void DiplsayTable(ServerDto[] servers)
+        public void DisplayTable(ServerDto[] servers)
         {
             Guard.NotNull(servers, nameof(servers));
 

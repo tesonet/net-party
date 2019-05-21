@@ -4,8 +4,14 @@ using System.Text;
 
 namespace NetParty.Utils
 {
-    public static class ObjectExtentions
+    public static class ObjectExtensions
     {
+        private static readonly JsonSerializer Serializer;
+        static ObjectExtensions()
+        {
+            Serializer = JsonSerializer.Create();
+        }
+
         public static byte[] ToByteArray(this object obj)
         {
             if (obj == null)
@@ -14,8 +20,7 @@ namespace NetParty.Utils
             MemoryStream ms = new MemoryStream();
             using (StreamWriter writer = new StreamWriter(ms))
             {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.Serialize(writer, obj);
+                Serializer.Serialize(writer, obj);
             }
 
             return ms.ToArray();
@@ -29,7 +34,7 @@ namespace NetParty.Utils
 
             using (var stream = new MemoryStream(data))
             using (var reader = new StreamReader(stream, Encoding.UTF8))
-                return JsonSerializer.Create().Deserialize(reader, typeof(T)) as T;
+                return Serializer.Deserialize(reader, typeof(T)) as T;
         }
     }
 }

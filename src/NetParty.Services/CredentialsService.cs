@@ -13,7 +13,7 @@ namespace NetParty.Services
     public class CredentialsService : ICredentialsService, IDisposable
     {
         private const string FileName = "Secrets.sec";
-        private readonly string SecretFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), FileName);
+        private readonly string _filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), FileName);
 
         public async Task SaveCredentialsAsync(Credentials credentials)
         {
@@ -21,7 +21,7 @@ namespace NetParty.Services
 
             var secretUserInfo = ProtectedData.Protect(credentials.ToByteArray(), null, DataProtectionScope.CurrentUser);
 
-            using (FileStream sourceStream = new FileStream(SecretFilePath,
+            using (FileStream sourceStream = new FileStream(_filePath,
               FileMode.Append, FileAccess.Write, FileShare.None,
               bufferSize: 4096, useAsync: true))
             {
@@ -33,7 +33,7 @@ namespace NetParty.Services
         {
             byte[] buffer;
 
-            using (FileStream sourceStream = new FileStream(SecretFilePath,
+            using (FileStream sourceStream = new FileStream(_filePath,
                 FileMode.Open, FileAccess.Read, FileShare.None,
                 bufferSize: 4096, useAsync: true))
             {
@@ -49,7 +49,7 @@ namespace NetParty.Services
 
         public void Dispose()
         {
-            File.Delete(SecretFilePath);
+            File.Delete(_filePath);
         }
     }
 }

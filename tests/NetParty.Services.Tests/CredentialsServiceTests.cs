@@ -10,7 +10,7 @@ namespace NetParty.Services.Tests
     public class CredentialsServiceTests
     {
         private const string FileName = "Secrets.sec";
-        private readonly string SecretFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), FileName);
+        private readonly string _filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), FileName);
 
         [Test]
         public async Task CredentialsFileCreatedAndDeletedTest()
@@ -25,11 +25,11 @@ namespace NetParty.Services.Tests
 
             await credentialsService.SaveCredentialsAsync(credentials);
 
-            Assert.IsTrue(File.Exists(SecretFilePath));
+            Assert.IsTrue(File.Exists(_filePath));
 
             credentialsService.Dispose();
 
-            Assert.IsFalse(File.Exists(SecretFilePath));
+            Assert.IsFalse(File.Exists(_filePath));
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace NetParty.Services.Tests
 
             await credentialsService.SaveCredentialsAsync(credentials);
 
-            Assert.IsTrue(File.Exists(SecretFilePath));
+            Assert.IsTrue(File.Exists(_filePath));
 
         }
     }

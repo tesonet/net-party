@@ -28,12 +28,14 @@ namespace NetParty.Handlers.Tests
 
 
         [Test]
-        public void RequiredFielsTests()
+        public void RequiredFieldsTests()
         {
             Mock<ICredentialsService> credentialsServiceMock = new Mock<ICredentialsService>();
-            
-            var handler = new ConfigurationHandler(credentialsServiceMock.Object);
-            handler.Validator = new ConfigurationRequestValidator();
+
+            var handler = new ConfigurationHandler(credentialsServiceMock.Object)
+            {
+                Validator = new ConfigurationRequestValidator()
+            };
 
             ConfigurationRequest request = new ConfigurationRequest();
             Assert.ThrowsAsync<ValidationException>(() => handler.HandleAsync(request));

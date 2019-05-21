@@ -4,6 +4,6 @@ namespace NetParty.Services.Interfaces
 {
     public interface IDisplayService
     {
-        void DiplsayTable(ServerDto[] servers);
+        void DisplayTable(ServerDto[] servers);
     }
 }

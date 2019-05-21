@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using NetParty.Application.Handlers;
 using NetParty.Contracts.Requests;
 using NetParty.Handlers;
 using NetParty.Handlers.Base;

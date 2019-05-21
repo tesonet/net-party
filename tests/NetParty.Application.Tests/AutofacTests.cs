@@ -25,23 +25,13 @@ namespace NetParty.Application.Tests
 
                 Assert.DoesNotThrow(() =>
                 {
-                    object resolvedService;
-
                     KeyedService keyedService = serviceWithType as KeyedService;
-                    if (keyedService != null)
-                    {
-                        resolvedService = container.ResolveKeyed(keyedService.ServiceKey, serviceWithType.ServiceType);
-                    }
-                    else
-                    {
-                        resolvedService = container.Resolve(serviceWithType.ServiceType);
-                    }
+                    var resolvedService = keyedService != null ? container.ResolveKeyed(keyedService.ServiceKey, serviceWithType.ServiceType) : container.Resolve(serviceWithType.ServiceType);
 
                     if (resolvedService == null)
                         throw new Exception("Autofac service not found: " + serviceWithType.ServiceType.Name);
                 },
-
-                String.Format("Failed to resolve autofac service '{0}' or one of it's dependencies", serviceWithType)
+                    $"Failed to resolve autofac service '{serviceWithType}' or one of it's dependencies"
                 );
             }
         }

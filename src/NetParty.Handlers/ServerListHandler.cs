@@ -1,13 +1,13 @@
-﻿using GuardNet;
+﻿using System.Threading.Tasks;
+using GuardNet;
 using NetParty.Clients.Interfaces;
 using NetParty.Contracts;
 using NetParty.Contracts.Requests;
 using NetParty.Handlers.Base;
 using NetParty.Repositories.Core;
 using NetParty.Services.Interfaces;
-using System.Threading.Tasks;
 
-namespace NetParty.Application.Handlers
+namespace NetParty.Handlers
 {
     public class ServerListHandler : BaseHandler<ServerListRequest>
     {
@@ -33,7 +33,7 @@ namespace NetParty.Application.Handlers
             _displayService = displayService;
         }
 
-        public async override Task HandleBaseAsync(ServerListRequest request)
+        public override async Task HandleBaseAsync(ServerListRequest request)
         {
             ServerDto[] servers;
 
@@ -50,7 +50,7 @@ namespace NetParty.Application.Handlers
                 servers = await _serversRepository.SaveServersAsync(data);
             }
 
-            _displayService.DiplsayTable(servers);
+            _displayService.DisplayTable(servers);
         }
     }
 }

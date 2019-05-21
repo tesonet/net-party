@@ -36,8 +36,7 @@ namespace NetParty.Clients
 
             var requestData = new
             {
-                username = userName,
-                password = password
+                username = userName, password
             };
 
             IResponse response = await _client.PostAsync("v1/tokens")

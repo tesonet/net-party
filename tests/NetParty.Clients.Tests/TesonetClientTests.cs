@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Configuration;
-using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace NetParty.Clients.Tests

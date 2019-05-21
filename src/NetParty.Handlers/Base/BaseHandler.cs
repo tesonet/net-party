@@ -10,22 +10,11 @@ namespace NetParty.Handlers.Base
     public abstract class BaseHandler<TRequest> : IHandler<TRequest>
         where TRequest : BaseRequest
     {
-        private ILogger logger;
+        private ILogger _logger;
         public ILogger Logger
         {
-            get
-            {
-                if (logger == null)
-                {
-                    logger = new LoggerConfiguration().CreateLogger();
-                }
-                
-                return logger;
-            }
-            set
-            {
-                logger = value;
-            }
+            get => _logger ?? (_logger = new LoggerConfiguration().CreateLogger());
+            set => _logger = value;
         }
 
         public IValidator<TRequest> Validator { get; set; }
@@ -36,7 +25,7 @@ namespace NetParty.Handlers.Base
 
             Logger.Information("Started execute {0}...", typeof(TRequest).Name);
 
-            ValidaterRequest(request);
+            RequestValidator(request);
 
             try
             {
@@ -45,17 +34,17 @@ namespace NetParty.Handlers.Base
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "Error while executin {0}!", nameof(TRequest));
+                _logger.Error(ex, "Error while execution {0}!", nameof(TRequest));
             }
         }
 
-        private void ValidaterRequest(TRequest request)
+        private void RequestValidator(TRequest request)
         {
-            var validationReult = Validator.Validate(request);
+            var validationResult = Validator.Validate(request);
 
-            if (!validationReult.IsValid)
+            if (!validationResult.IsValid)
             {
-                throw new ValidationException(validationReult.Errors);
+                throw new ValidationException(validationResult.Errors);
             }
         }
 

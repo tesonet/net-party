@@ -11,13 +11,13 @@ namespace NetParty.Repositories.File
     public class ServersRepository : IServersRepository
     {
         private const string FileName = "Servers.data";
-        private readonly string FilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), FileName);
+        private readonly string _filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), FileName);
 
         public async Task<ServerDto[]> GetServersAsync()
         {
             byte[] buffer;
 
-            using (FileStream sourceStream = new FileStream(FilePath,
+            using (FileStream sourceStream = new FileStream(_filePath,
                 FileMode.Open, FileAccess.Read, FileShare.None,
                 bufferSize: 4096, useAsync: true))
             {
@@ -36,7 +36,7 @@ namespace NetParty.Repositories.File
 
             var dataBytes = data.ToByteArray();
 
-            using (FileStream sourceStream = new FileStream(FilePath,
+            using (FileStream sourceStream = new FileStream(_filePath,
              FileMode.Append, FileAccess.Write, FileShare.None,
              bufferSize: 4096, useAsync: true))
             {
