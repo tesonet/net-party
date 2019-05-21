@@ -6,11 +6,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{33F8A29C-9006-410D-9F6D-83A5F0BF91F0}</ProjectGuid>
+    <ProjectGuid>{1FCCAF28-74C2-456D-984E-DEE4C07CAAC3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NetParty.Services.Tests</RootNamespace>
-    <AssemblyName>NetParty.Services.Tests</AssemblyName>
+    <RootNamespace>NetParty.Repositories.Tests</RootNamespace>
+    <AssemblyName>NetParty.Repositories.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -47,20 +47,26 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CredentialsRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <Compile Include="ServersRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\NetParty.Contracts\NetParty.Contracts.csproj">
       <Project>{20f56c78-c980-4e24-8e8d-6a2ccc8bb003}</Project>
       <Name>NetParty.Contracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\NetParty.Services\NetParty.Services.csproj">
-      <Project>{8e335cb7-b03d-43b0-8a30-0a2ca6fa30e4}</Project>
-      <Name>NetParty.Services</Name>
+    <ProjectReference Include="..\..\src\NetParty.Repositories.Core\NetParty.Repositories.Core.csproj">
+      <Project>{05158b49-8d01-4c6c-a17f-c68f5296f427}</Project>
+      <Name>NetParty.Repositories.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\NetParty.Repositories.File\NetParty.Repositories.File.csproj">
+      <Project>{5aaade60-e0a6-4316-885f-cf2c299215f3}</Project>
+      <Name>NetParty.Repositories.File</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

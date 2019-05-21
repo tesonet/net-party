@@ -7,6 +7,7 @@ using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
 using NetParty.Contracts;
+using NetParty.Repositories.Core;
 
 namespace NetParty.Handlers.Tests
 {
@@ -22,7 +23,7 @@ namespace NetParty.Handlers.Tests
         [Test]
         public void RequestNullTests()
         {
-            var credentialsServiceMock = new Mock<ICredentialsService>();
+            var credentialsServiceMock = new Mock<ICredentialsRepository>();
 
             var handler = new ConfigurationHandler(credentialsServiceMock.Object);
             Assert.ThrowsAsync<ArgumentNullException>(() => handler.HandleAsync(null));
@@ -32,7 +33,7 @@ namespace NetParty.Handlers.Tests
         [Test]
         public void RequiredFieldsTests()
         {
-            var credentialsServiceMock = new Mock<ICredentialsService>();
+            var credentialsServiceMock = new Mock<ICredentialsRepository>();
 
             var handler = new ConfigurationHandler(credentialsServiceMock.Object)
             {
@@ -49,7 +50,7 @@ namespace NetParty.Handlers.Tests
             var userName = "TestUser";
             var testPassword = "TestPassword";
 
-            var credentialsServiceMock = new Mock<ICredentialsService>();
+            var credentialsServiceMock = new Mock<ICredentialsRepository>();
 
             var handler = new ConfigurationHandler(credentialsServiceMock.Object);
             await handler.HandleBaseAsync(new ConfigurationRequest

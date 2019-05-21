@@ -1,16 +1,16 @@
-﻿using GuardNet;
-using NetParty.Contracts;
-using NetParty.Services.Interfaces;
-using NetParty.Utils;
-using System;
+﻿using System;
 using System.IO;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using GuardNet;
+using NetParty.Contracts;
+using NetParty.Repositories.Core;
+using NetParty.Utils;
 
-namespace NetParty.Services
+namespace NetParty.Repositories.File
 {
-    public class CredentialsService : ICredentialsService, IDisposable
+    public class CredentialsRepository : ICredentialsRepository, IDisposable
     {
         private const string FileName = "Secrets.sec";
         private readonly string _filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), FileName);
@@ -49,7 +49,7 @@ namespace NetParty.Services
 
         public void Dispose()
         {
-            File.Delete(_filePath);
+            System.IO.File.Delete(_filePath);
         }
     }
 }

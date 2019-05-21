@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using NetParty.Repositories.Core;
+using NetParty.Repositories.File;
 using NetParty.Services;
 using NetParty.Services.Interfaces;
 
@@ -8,8 +10,8 @@ namespace NetParty.Application.DI
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<CredentialsService>()
-                .As<ICredentialsService>()
+            builder.RegisterType<CredentialsRepository>()
+                .As<ICredentialsRepository>()
                 .OwnedByLifetimeScope();
 
             builder.RegisterType<SecurityService>()

@@ -3,19 +3,20 @@ using GuardNet;
 using NetParty.Contracts;
 using NetParty.Handlers.Base;
 using NetParty.Contracts.Requests;
+using NetParty.Repositories.Core;
 using NetParty.Services.Interfaces;
 
 namespace NetParty.Handlers
 {
     public class ConfigurationHandler : BaseHandler<ConfigurationRequest>
     {
-        private readonly ICredentialsService _credentialsService;
+        private readonly ICredentialsRepository _credentialsRepository;
 
-        public ConfigurationHandler(ICredentialsService credentialsService)
+        public ConfigurationHandler(ICredentialsRepository credentialsRepository)
         {
-            Guard.NotNull(credentialsService, nameof(credentialsService));
+            Guard.NotNull(credentialsRepository, nameof(credentialsRepository));
 
-            _credentialsService = credentialsService;
+            _credentialsRepository = credentialsRepository;
         }
 
         public override Task HandleBaseAsync(ConfigurationRequest request)
@@ -26,7 +27,7 @@ namespace NetParty.Handlers
                 Password = request.Password
             };
 
-            return _credentialsService.SaveCredentialsAsync(credentials);
+            return _credentialsRepository.SaveCredentialsAsync(credentials);
         }
     }
 }

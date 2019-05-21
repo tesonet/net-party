@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using NetParty.Contracts;
 
-namespace NetParty.Services.Interfaces
+namespace NetParty.Repositories.Core
 {
-    public interface ICredentialsService
+    public interface ICredentialsRepository
     {
         Task SaveCredentialsAsync(Credentials credentials);
         Task<Credentials> GetCredentialsAsync();
