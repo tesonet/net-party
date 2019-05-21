@@ -32,6 +32,7 @@ namespace NetParty.Handlers
                 Password = request.Password
             };
 
+            Logger.Debug("Saving credentials into local storage...");
             await _credentialsRepository.SaveCredentialsAsync(credentials).ConfigureAwait(false);
 
             _displayService.DisplayText("Welcome to NetParty. Let's go to see servers list 'NetParty.Application.exe server_list'!");

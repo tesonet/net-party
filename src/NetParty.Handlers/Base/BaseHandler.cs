@@ -27,6 +27,7 @@ namespace NetParty.Handlers.Base
 
             RequestValidator(request);
 
+            var watch = System.Diagnostics.Stopwatch.StartNew();
             try
             {
                 await HandleBaseAsync(request)
@@ -35,6 +36,12 @@ namespace NetParty.Handlers.Base
             catch (Exception ex)
             {
                 _logger.Error(ex, "Error while execution {0}!", nameof(TRequest));
+            }
+            finally
+            {
+                watch.Stop();
+
+                _logger.Debug($"Time taken to execute {typeof(TRequest).Name}: {watch.Elapsed.TotalMilliseconds}ms");
             }
         }
 
