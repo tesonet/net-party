@@ -16,11 +16,13 @@ namespace NetParty.Application
         {
             var result = ParseActions(args);
 
+            string argument;
+
             while (result)
             {
-                var argument = Console.ReadLine();
+                argument = Console.ReadLine();
 
-                if(argument == "exit")
+                if (argument == "exit")
                     return;
 
                 if (String.IsNullOrEmpty(argument))
@@ -31,6 +33,11 @@ namespace NetParty.Application
 
                 result = ParseActions(argument.Split(' ').ToArray());
             }
+
+            Console.WriteLine("'exit'?");
+            argument = Console.ReadLine();
+            if (argument == "exit")
+                return;
         }
 
         private static bool ParseActions(string[] args)
@@ -46,7 +53,15 @@ namespace NetParty.Application
                             Password = opt.Password
                         };
 
-                        handler.HandleAsync(request).Wait();
+                        try
+                        {
+                            handler.HandleAsync(request).Wait();
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                            return false;
+                        }
 
                         return true;
                     },
@@ -58,7 +73,15 @@ namespace NetParty.Application
                             Local = opt.Local
                         };
 
-                        handler.HandleAsync(request).Wait();
+                        try
+                        {
+                            handler.HandleAsync(request).Wait();
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                            return false;
+                        }
 
                         return true;
                     },
