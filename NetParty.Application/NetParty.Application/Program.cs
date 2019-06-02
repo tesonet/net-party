@@ -1,5 +1,9 @@
-﻿using Autofac;
+﻿#region Using
+
+using Autofac;
 using Serilog;
+
+#endregion
 
 namespace NetParty.Application
     {
