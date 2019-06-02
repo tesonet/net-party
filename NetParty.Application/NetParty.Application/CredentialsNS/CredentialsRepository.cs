@@ -8,13 +8,7 @@ using Newtonsoft.Json;
 
 namespace NetParty.Application.CredentialsNS
     {
-    public interface IStorageProvider
-        {
-        Stream GetStorage();
-        }
-
-
-    public class CredentialsRepository
+    public class CredentialsRepository : ICredentialsRepository
         {
         private readonly IStorageProvider m_storageProvider;
 

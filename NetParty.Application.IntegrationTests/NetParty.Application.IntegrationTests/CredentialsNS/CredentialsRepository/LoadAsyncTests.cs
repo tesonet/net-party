@@ -1,7 +1,6 @@
 ﻿#region Using
 
 using System.Threading.Tasks;
-using AutoFixture.NUnit3;
 using FluentAssertions;
 using NetParty.Application.CredentialsNS;
 using NetParty.Application.IntegrationTests.CredentialsNS.CredentialsRepository.Helpers;
@@ -17,11 +16,10 @@ namespace NetParty.Application.IntegrationTests.CredentialsNS.CredentialsReposit
         [Test]
         [AutoStorageData]
         public async Task CredentialsAreStored_CredentialsAreLoaded(
-            [Frozen] IStorageProvider storageProvider,
             Application.CredentialsNS.CredentialsRepository credentialsRepository)
             {
             // arrange
-            var storedCredentials = new Credentials {Username = "TestUsername", Password = "TestPassword"};
+            var storedCredentials = new Credentials("TestUsername", "TestPassword");
             await credentialsRepository.StoreAsync(storedCredentials);
 
             // act
@@ -34,7 +32,6 @@ namespace NetParty.Application.IntegrationTests.CredentialsNS.CredentialsReposit
         [Test]
         [AutoStorageData]
         public async Task NoCredentialsAreStored_NullReturned(
-            [Frozen] IStorageProvider storageProvider,
             Application.CredentialsNS.CredentialsRepository credentialsRepository)
             {
             // arrange

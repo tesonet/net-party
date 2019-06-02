@@ -1,11 +1,11 @@
 ﻿#region Using
 
 using Autofac;
-using Serilog;
+using NetParty.Application.DependencyInjection.Modules;
 
 #endregion
 
-namespace NetParty.Application
+namespace NetParty.Application.DependencyInjection
     {
     public static class DependencyContainer
         {
@@ -15,7 +15,8 @@ namespace NetParty.Application
             {
             var builder = new ContainerBuilder();
 
-            builder.RegisterInstance<ILogger>(new LoggerConfiguration().MinimumLevel.Debug().WriteTo.Console().CreateLogger());
+            builder.RegisterModule<LoggerModule>();
+            builder.RegisterModule<CredentialsModule>();
 
             return builder.Build();
             }

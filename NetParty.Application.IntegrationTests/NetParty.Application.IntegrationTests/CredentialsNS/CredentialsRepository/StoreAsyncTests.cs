@@ -22,7 +22,7 @@ namespace NetParty.Application.IntegrationTests.CredentialsNS.CredentialsReposit
             Application.CredentialsNS.CredentialsRepository credentialsRepository)
             {
             // arrange
-            var credentials = new Credentials {Username = "TestUsername", Password = "TestPassword"};
+            var credentials = new Credentials("TestUsername", "TestPassword");
 
             // act
             await credentialsRepository.StoreAsync(credentials);
@@ -38,7 +38,7 @@ namespace NetParty.Application.IntegrationTests.CredentialsNS.CredentialsReposit
             Application.CredentialsNS.CredentialsRepository credentialsRepository)
             {
             // arrange
-            var credentials = new Credentials {Username = "TestUsername", Password = "TestPassword"};
+            var credentials = new Credentials("TestUsername", "TestPassword");
 
             // act
             await credentialsRepository.StoreAsync(credentials);

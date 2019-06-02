@@ -14,8 +14,8 @@ namespace NetParty.Application.UnitTests.CredentialsNS.Credentials
         public void CredentialsAreEqual_True()
             {
             // arrange
-            var firstCredentials = new Application.CredentialsNS.Credentials {Username = "TestUsername", Password = "TestPassword"};
-            var secondCredentials = new Application.CredentialsNS.Credentials {Username = "TestUsername", Password = "TestPassword"};
+            var firstCredentials = new Application.CredentialsNS.Credentials("TestUsername", "TestPassword");
+            var secondCredentials = new Application.CredentialsNS.Credentials("TestUsername", "TestPassword");
 
             // act
             var areEqual = firstCredentials == secondCredentials;
@@ -28,8 +28,8 @@ namespace NetParty.Application.UnitTests.CredentialsNS.Credentials
         public void CredentialsAreDifferent_False()
             {
             // arrange
-            var firstCredentials = new Application.CredentialsNS.Credentials {Username = "AAA", Password = "BBB"};
-            var secondCredentials = new Application.CredentialsNS.Credentials {Username = "ZZZ", Password = "YYY"};
+            var firstCredentials = new Application.CredentialsNS.Credentials("AAA", "BBB");
+            var secondCredentials = new Application.CredentialsNS.Credentials("ZZZ", "YYY");
 
             // act
             var areEqual = firstCredentials == secondCredentials;
