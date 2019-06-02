@@ -10,9 +10,9 @@ namespace NetParty.Application.CredentialsNS
     {
     public class CredentialsRepository : ICredentialsRepository
         {
-        private readonly IStorageProvider m_storageProvider;
+        private readonly ICredentialsStorageProvider m_storageProvider;
 
-        public CredentialsRepository(IStorageProvider storageProvider)
+        public CredentialsRepository(ICredentialsStorageProvider storageProvider)
             {
             m_storageProvider = storageProvider;
             }

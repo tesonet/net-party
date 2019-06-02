@@ -2,6 +2,7 @@
 
 using Autofac;
 using NetParty.Application.CredentialsNS;
+using NetParty.Application.StorageProvider;
 
 #endregion
 
@@ -12,7 +13,7 @@ namespace NetParty.Application.DependencyInjection.Modules
         protected override void Load(ContainerBuilder builder)
             {
             builder.RegisterType<CredentialsRepository>().As<ICredentialsRepository>();
-            builder.Register(c => new FileStorageProvider("credentials.dat")).As<IStorageProvider>();
+            builder.Register(c => new FileStorageProvider("credentials.dat")).As<ICredentialsStorageProvider>();
             }
         }
     }

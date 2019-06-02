@@ -4,7 +4,7 @@ using System.IO;
 
 #endregion
 
-namespace NetParty.Application.CredentialsNS
+namespace NetParty.Application.StorageProvider
     {
     public interface IStorageProvider
         {

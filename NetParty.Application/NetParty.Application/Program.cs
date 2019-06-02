@@ -8,6 +8,7 @@ using CommandLine;
 using NetParty.Application.CommandLineOptions;
 using NetParty.Application.CredentialsNS;
 using NetParty.Application.DependencyInjection;
+using NetParty.Application.Servers;
 using Serilog;
 
 #endregion
@@ -22,13 +23,29 @@ namespace NetParty.Application
                 {
                 Log.Logger = scope.Resolve<ILogger>();
 
-                var argumentParsingResult = Parser.Default.ParseArguments<StoreCredentialsOptions>(args);
+                var argumentParsingResult = Parser.Default.ParseArguments<StoreCredentialsOptions, ServerListOptions>(args);
                 argumentParsingResult.MapResult(
-                    opts => ExecuteConsoleCommand(() =>
-                        scope.Resolve<ICredentialsRepository>().StoreAsync(new Credentials(opts.Username, opts.Password)).Wait()),
+                    (StoreCredentialsOptions opts) => StoreCredentials(scope, opts),
+                    (ServerListOptions opts) => ListServers(scope, opts),
                     HandleParsingErrors);
                 }
             }
+
+        private static ConsoleCommandStatusCode StoreCredentials(ILifetimeScope scope, StoreCredentialsOptions opts) =>
+            ExecuteConsoleCommand(() =>
+                scope.Resolve<ICredentialsRepository>().StoreAsync(new Credentials(opts.Username, opts.Password)).Wait());
+
+        private static ConsoleCommandStatusCode ListServers(ILifetimeScope scope, ServerListOptions opts) =>
+            ExecuteConsoleCommand(() =>
+                {
+                if (!opts.Local)
+                    {
+                    var onlineServerList = scope.Resolve<IServerProvider>().GetServersAsync().Result;
+                    scope.Resolve<IServerRepository>().StoreServersAsync(onlineServerList).Wait();
+                    }
+
+                // print result from local
+                });
 
         private static ConsoleCommandStatusCode HandleParsingErrors(IEnumerable<Error> errors)
             {

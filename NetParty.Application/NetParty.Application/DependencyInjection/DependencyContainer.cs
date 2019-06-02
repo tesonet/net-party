@@ -17,6 +17,7 @@ namespace NetParty.Application.DependencyInjection
 
             builder.RegisterModule<LoggerModule>();
             builder.RegisterModule<CredentialsModule>();
+            builder.RegisterModule<ServersModule>();
 
             return builder.Build();
             }

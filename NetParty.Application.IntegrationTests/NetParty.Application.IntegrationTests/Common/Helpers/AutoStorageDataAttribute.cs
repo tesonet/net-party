@@ -6,7 +6,7 @@ using AutoFixture.NUnit3;
 
 #endregion
 
-namespace NetParty.Application.IntegrationTests.CredentialsNS.CredentialsRepository.Helpers
+namespace NetParty.Application.IntegrationTests.Common.Helpers
     {
     public class AutoStorageDataAttribute : AutoDataAttribute
         {

@@ -6,7 +6,7 @@ using CommandLine;
 
 namespace NetParty.Application.CommandLineOptions
     {
-    [Verb("storeCredentials", HelpText = "Store credentials used to authenticate to API.")]
+    [Verb("config", HelpText = "Store credentials used to authenticate to API.")]
     public class StoreCredentialsOptions
         {
         [Option('u', "username", Required = true)]

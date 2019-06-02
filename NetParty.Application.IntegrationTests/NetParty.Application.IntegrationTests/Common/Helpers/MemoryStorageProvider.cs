@@ -2,12 +2,13 @@
 
 using System.IO;
 using NetParty.Application.CredentialsNS;
+using NetParty.Application.Servers;
 
 #endregion
 
-namespace NetParty.Application.IntegrationTests.CredentialsNS.CredentialsRepository.Helpers
+namespace NetParty.Application.IntegrationTests.Common.Helpers
     {
-    public class MemoryStorageProvider : IStorageProvider
+    public class MemoryStorageProvider : ICredentialsStorageProvider, IServerStorageProvider
         {
         private readonly DeferredDisposalMemoryStream m_storage = new DeferredDisposalMemoryStream();
 

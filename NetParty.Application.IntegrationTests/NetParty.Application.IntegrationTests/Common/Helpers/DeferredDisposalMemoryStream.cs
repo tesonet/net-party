@@ -4,7 +4,7 @@ using System.IO;
 
 #endregion
 
-namespace NetParty.Application.IntegrationTests.CredentialsNS.CredentialsRepository.Helpers
+namespace NetParty.Application.IntegrationTests.Common.Helpers
     {
     public class DeferredDisposalMemoryStream : MemoryStream
         {

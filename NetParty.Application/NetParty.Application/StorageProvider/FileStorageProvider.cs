@@ -1,12 +1,14 @@
 ﻿#region Using
 
 using System.IO;
+using NetParty.Application.CredentialsNS;
+using NetParty.Application.Servers;
 
 #endregion
 
-namespace NetParty.Application.CredentialsNS
+namespace NetParty.Application.StorageProvider
     {
-    public class FileStorageProvider : IStorageProvider
+    public class FileStorageProvider : ICredentialsStorageProvider, IServerStorageProvider
         {
         private readonly string m_filePath;
 

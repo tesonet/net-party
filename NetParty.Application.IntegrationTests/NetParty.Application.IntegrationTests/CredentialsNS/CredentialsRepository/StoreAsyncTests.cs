@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using AutoFixture.NUnit3;
 using FluentAssertions;
 using NetParty.Application.CredentialsNS;
-using NetParty.Application.IntegrationTests.CredentialsNS.CredentialsRepository.Helpers;
+using NetParty.Application.IntegrationTests.Common.Helpers;
 using NUnit.Framework;
 
 #endregion
@@ -18,7 +18,7 @@ namespace NetParty.Application.IntegrationTests.CredentialsNS.CredentialsReposit
         [Test]
         [AutoStorageData]
         public async Task CredentialsAreStored_StorageIsNotBeEmpty(
-            [Frozen] IStorageProvider storageProvider,
+            [Frozen] ICredentialsStorageProvider storageProvider,
             Application.CredentialsNS.CredentialsRepository credentialsRepository)
             {
             // arrange
@@ -34,7 +34,7 @@ namespace NetParty.Application.IntegrationTests.CredentialsNS.CredentialsReposit
         [Test]
         [AutoStorageData]
         public async Task CredentialsAreStored_CredentialsAreEncrypted(
-            [Frozen] IStorageProvider storageProvider,
+            [Frozen] ICredentialsStorageProvider storageProvider,
             Application.CredentialsNS.CredentialsRepository credentialsRepository)
             {
             // arrange

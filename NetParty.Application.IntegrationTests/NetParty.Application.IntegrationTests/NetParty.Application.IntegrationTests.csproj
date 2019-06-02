@@ -84,14 +84,16 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CredentialsNS\CredentialsRepository\Helpers\AutoStorageDataAttribute.cs" />
-    <Compile Include="CredentialsNS\CredentialsRepository\Helpers\DeferredDisposalMemoryStream.cs" />
-    <Compile Include="CredentialsNS\CredentialsRepository\Helpers\MemoryStorageProvider.cs" />
-    <Compile Include="CredentialsNS\CredentialsRepository\Helpers\StorageProviderCustomization.cs" />
+    <Compile Include="Common\Helpers\AutoStorageDataAttribute.cs" />
+    <Compile Include="Common\Helpers\DeferredDisposalMemoryStream.cs" />
+    <Compile Include="Common\Helpers\MemoryStorageProvider.cs" />
+    <Compile Include="Common\Helpers\StorageProviderCustomization.cs" />
     <Compile Include="CredentialsNS\CredentialsRepository\LoadAsyncTests.cs" />
     <Compile Include="CredentialsNS\CredentialsRepository\StoreAsyncTests.cs" />
     <Compile Include="DependencyContainer\ContainerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Servers\LocalServerRepository\GetServersAsyncTests.cs" />
+    <Compile Include="Servers\LocalServerRepository\StoreServersAsyncTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

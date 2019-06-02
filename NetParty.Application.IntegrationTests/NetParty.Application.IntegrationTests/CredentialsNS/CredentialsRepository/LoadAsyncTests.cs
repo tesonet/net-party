@@ -3,7 +3,7 @@
 using System.Threading.Tasks;
 using FluentAssertions;
 using NetParty.Application.CredentialsNS;
-using NetParty.Application.IntegrationTests.CredentialsNS.CredentialsRepository.Helpers;
+using NetParty.Application.IntegrationTests.Common.Helpers;
 using NUnit.Framework;
 
 #endregion
