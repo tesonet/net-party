@@ -17,5 +17,7 @@ namespace NetParty.Application.IntegrationTests.Common.Helpers
             m_storage.Seek(0, SeekOrigin.Begin);
             return m_storage;
             }
+
+        public void ClearStorage() => m_storage.SetLength(0);
         }
     }

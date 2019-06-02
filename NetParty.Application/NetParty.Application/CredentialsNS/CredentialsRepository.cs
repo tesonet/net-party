@@ -19,6 +19,7 @@ namespace NetParty.Application.CredentialsNS
 
         public Task StoreAsync(Credentials credentials)
             {
+            m_storageProvider.ClearStorage();
             using (var storage = m_storageProvider.GetStorage())
             using (StreamWriter streamWriter = new StreamWriter(storage))
                 {

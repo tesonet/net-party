@@ -13,5 +13,7 @@ namespace NetParty.Application.StorageProvider
         /// </summary>
         /// <returns>Stream which the user is responsible for disposing</returns>
         Stream GetStorage();
+
+        void ClearStorage();
         }
     }

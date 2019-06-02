@@ -53,5 +53,24 @@ namespace NetParty.Application.IntegrationTests.CredentialsNS.CredentialsReposit
             credentialStorageAsString.Should()
                 .NotContainAny(new[] {credentials.Username, credentials.Password}, "Storing unencrypted credentials is unsafe");
             }
+
+        [Test]
+        [AutoStorageData]
+        public async Task StoringCredentialsTwice_ShouldLoadLatestCredentials(
+            [Frozen] ICredentialsStorageProvider storageProvider,
+            Application.CredentialsNS.CredentialsRepository credentialsRepository)
+            {
+            // arrange
+            var firstCredentials = new Credentials("AAA", "BBB");
+            var secondCredentials = new Credentials("Z", "Y");
+
+            // act
+            await credentialsRepository.StoreAsync(firstCredentials);
+            await credentialsRepository.StoreAsync(secondCredentials);
+            var loadedCredentials = await credentialsRepository.LoadAsync();
+
+            // assert
+            loadedCredentials.Should().Be(secondCredentials);
+            }
         }
     }

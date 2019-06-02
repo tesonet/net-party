@@ -65,7 +65,9 @@
     <Compile Include="CommandLineOptions\ServerListOptions.cs" />
     <Compile Include="CredentialsNS\ICredentialsStorageProvider.cs" />
     <Compile Include="DependencyInjection\Modules\ServersModule.cs" />
+    <Compile Include="Servers\IServerDisplayer.cs" />
     <Compile Include="Servers\IServerStorageProvider.cs" />
+    <Compile Include="Servers\ServerListApi\IRemoteServerProvider.cs" />
     <Compile Include="Servers\ServerListApi\IServerListApiTokenProvider.cs" />
     <Compile Include="Servers\IServerProvider.cs" />
     <Compile Include="Servers\Server.cs" />
@@ -76,6 +78,7 @@
     <Compile Include="CredentialsNS\Credentials.cs" />
     <Compile Include="CredentialsNS\CredentialsRepository.cs" />
     <Compile Include="CredentialsNS\EncryptingJsonConverter.cs" />
+    <Compile Include="Servers\ConsoleServerDisplayer.cs" />
     <Compile Include="StorageProvider\FileStorageProvider.cs" />
     <Compile Include="CredentialsNS\ICredentialsRepository.cs" />
     <Compile Include="StorageProvider\IStorageProvider.cs" />

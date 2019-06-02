@@ -58,5 +58,7 @@ namespace NetParty.Application.Servers
                 return ((Name != null ? Name.GetHashCode() : 0) * 397) ^ (int) Distance;
                 }
             }
+
+        public override string ToString() => $"Server: {Name}({Distance})";
         }
     }

@@ -9,6 +9,7 @@ using NetParty.Application.CommandLineOptions;
 using NetParty.Application.CredentialsNS;
 using NetParty.Application.DependencyInjection;
 using NetParty.Application.Servers;
+using NetParty.Application.Servers.ServerListApi;
 using Serilog;
 
 #endregion
@@ -40,11 +41,11 @@ namespace NetParty.Application
                 {
                 if (!opts.Local)
                     {
-                    var onlineServerList = scope.Resolve<IServerProvider>().GetServersAsync().Result;
+                    var onlineServerList = scope.Resolve<IRemoteServerProvider>().GetServersAsync().Result;
                     scope.Resolve<IServerRepository>().StoreServersAsync(onlineServerList).Wait();
                     }
 
-                // print result from local
+                scope.Resolve<IServerDisplayer>().DisplayServers();
                 });
 
         private static ConsoleCommandStatusCode HandleParsingErrors(IEnumerable<Error> errors)

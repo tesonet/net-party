@@ -34,13 +34,14 @@ namespace NetParty.Application.Servers
                 }
             }
 
-        public Task StoreServersAsync(IEnumerable<Server> servers)
+        public async Task StoreServersAsync(IEnumerable<Server> servers)
             {
+            m_storageProvider.ClearStorage();
             using (var storage = m_storageProvider.GetStorage())
             using (StreamWriter streamWriter = new StreamWriter(storage))
                 {
                 var serializedServers = JsonConvert.SerializeObject(servers);
-                return streamWriter.WriteAsync(serializedServers);
+                await streamWriter.WriteAsync(serializedServers);
                 }
             }
         }

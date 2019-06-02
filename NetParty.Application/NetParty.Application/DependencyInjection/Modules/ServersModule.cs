@@ -15,11 +15,13 @@ namespace NetParty.Application.DependencyInjection.Modules
         protected override void Load(ContainerBuilder builder)
             {
             builder.Register(c => new FluentClient("http://playground.tesonet.lt/v1/")).As<IClient>();
-            builder.RegisterType<ServerListApi>().As<IServerProvider>();
+            builder.RegisterType<ServerListApi>().As<IRemoteServerProvider>();
             builder.RegisterType<ServerListApiTokenProvider>().As<IServerListApiTokenProvider>();
 
-            builder.RegisterType<LocalServerRepository>().As<IServerRepository>();
+            builder.RegisterType<LocalServerRepository>().As<IServerRepository>().As<IServerProvider>();
             builder.Register(c => new FileStorageProvider("servers.dat")).As<IServerStorageProvider>();
+
+            builder.RegisterType<ConsoleServerDisplayer>().As<IServerDisplayer>();
             }
         }
     }

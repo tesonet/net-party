@@ -9,7 +9,7 @@ using Pathoschild.Http.Client;
 
 namespace NetParty.Application.Servers.ServerListApi
     {
-    public class ServerListApi : IServerProvider
+    public class ServerListApi : IRemoteServerProvider
         {
         private const string ServersPath = "servers";
         private readonly IClient m_client;
