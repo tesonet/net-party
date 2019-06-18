@@ -21,6 +21,7 @@ namespace NetPartyCore.Console
             }), false);
         }
 
+        
         public Command CreateServerCommand()
         {
             return new Command("server-list", "Server list management command", new List<Symbol>() {
@@ -29,5 +30,11 @@ namespace NetPartyCore.Console
                 //Console.WriteLine($"The value for --local is: {local}");
             }), false);
         }
+
+        public RootCommand CreateRootCommand()
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

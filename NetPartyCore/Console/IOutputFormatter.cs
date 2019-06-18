@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NetPartyCore.Console
 {
-    interface IOutputParser
+    interface IOutputFormatter
     {
     }
 }

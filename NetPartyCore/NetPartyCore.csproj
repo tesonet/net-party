@@ -127,6 +127,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Console\IInputParser.cs" />
+    <Compile Include="Console\InputParser.cs" />
+    <Compile Include="Console\IOutputFormatter.cs" />
+    <Compile Include="Console\OutputFormatter.cs" />
+    <Compile Include="Controller\ConfigController.cs" />
+    <Compile Include="Framework\CommandRouter.cs" />
+    <Compile Include="Framework\CoreController.cs" />
+    <Compile Include="Controller\ServerController.cs" />
+    <Compile Include="Framework\ServiceContainer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -147,7 +156,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Console\" />
     <Folder Include="Datastore\" />
     <Folder Include="Network\" />
   </ItemGroup>
