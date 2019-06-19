@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Invocation;
-using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using NetPartyCore.Output;
+using NetPartyCore.Controller;
+using NetPartyCore.Framework;
 
 namespace NetPartyCore
 {
@@ -13,37 +17,41 @@ namespace NetPartyCore
         {
             try
             {
+                var serviceProvider = new ServiceCollection()
+                    .AddLogging(loggingBuilder => loggingBuilder.AddConsole())
+                    .AddSingleton<IOutputFormatter, OutputFormatter>()
+                    .BuildServiceProvider();
 
+                var logger = serviceProvider
+                    .GetService<ILoggerFactory>()
+                    .CreateLogger<Program>();
 
-                /*var configCommand = new Command("config", "Client configuration command", new List<Symbol>() {
+                var router = new CommandRouter();
+
+                router.AddRoute("config", "config", new List<Option>() {
                     new Option("--username", "Api client username", new Argument<string>()),
                     new Option("--password", "Api client password", new Argument<string>())
-                }, null, true, CommandHandler.Create<string, string>((username, password) => {
-                    Console.WriteLine($"The value for --username is: {username}");
-                    Console.WriteLine($"The value for --password is: {password}");
-                }), false);
+                }, CommandHandler.Create<string, string>((username, password) => {
+                    CoreController
+                        .CreateWithProvider<ConfigController>(serviceProvider)
+                        .ConfigAction(username, password);
+                }));
 
-                var serverCommand = new Command("server-list", "Server list management command", new List<Symbol>() {
-                    new Option("--local", "Display servers from local storage", new Argument<bool>()),
-                }, null, true, CommandHandler.Create<bool>((local) => {
-                    Console.WriteLine($"The value for --local is: {local}");
-                }), false);*/
-                //configCommand, serverCommand
-                var commands = new List<Symbol>() {  };
-
-                // get application descriptiom from asemly information
-                var description = Assembly.GetExecutingAssembly()
-                    .GetCustomAttribute<AssemblyDescriptionAttribute>()
-                    .Description.ToString();
+                router.AddRoute("server-list", "Server list management command", new List<Option>() {
+                    new Option("--local", "Display servers from local storage", new Argument<bool>())
+                }, CommandHandler.Create<bool>((local) => {
+                    CoreController
+                        .CreateWithProvider<ServerController>(serviceProvider)
+                        .ServerListAction(local);
+                }));
 
                 // Parse the incoming args and invoke the handler
-                return await new RootCommand(description, commands, null, true, null, false)
-                    .InvokeAsync(args);
+                return await router.GetRootCommand().InvokeAsync(args);
             }
             catch (Exception exception)
             {
-                System.Console.WriteLine(exception.ToString());
-                System.Console.ReadKey();
+                Console.WriteLine(exception.ToString());
+                Console.ReadKey();
                 return 0;
             }
         }

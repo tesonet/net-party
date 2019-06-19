@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NetPartyCore.Framework;
+using NetPartyCore.Output;
 
 namespace NetPartyCore.Controller
 {
-    class ConfigController
+    /**
+     * Controller of "config" action invoked from command line
+     */
+    class ConfigController : CoreController
     {
-        public void ConfigAction(bool local)
+        public void ConfigAction(string username, string password)
         {
-
+            GetSerivce<IOutputFormatter>().TestMethod($"ConfigController ConfigAction {username} {password}");
         }
-
     }
 }

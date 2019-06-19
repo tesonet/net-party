@@ -1,13 +1,16 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace NetPartyCore.Framework
 {
+    /**
+     *  Simple base controller for handling access to service container
+     */
     class CoreController
     {
+        private IServiceProvider serviceProvider;
 
-        private ServiceProvider serviceProvider;
-
-        protected CoreController(ServiceProvider serviceProvider)
+        private void SetServiceProvider(IServiceProvider serviceProvider)
         {
             this.serviceProvider = serviceProvider;
         }
@@ -15,6 +18,13 @@ namespace NetPartyCore.Framework
         protected T GetSerivce<T>()
         {
             return serviceProvider.GetService<T>();
+        }
+
+        internal static T CreateWithProvider<T>(IServiceProvider serviceProvider) where T : CoreController
+        {
+            var controller = Activator.CreateInstance<T>();
+            controller.SetServiceProvider(serviceProvider);
+            return controller;
         }
     }
 }

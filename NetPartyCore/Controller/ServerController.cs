@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NetPartyCore.Framework;
+using NetPartyCore.Output;
 
 namespace NetPartyCore.Controller
 {
-    class ServerController
+    /**
+     * Controller of "server-list" action invoked from command line
+     */
+    internal class ServerController : CoreController
     {
 
-        public void ServerList(bool local)
+        public void ServerListAction(bool local)
         {
+            GetSerivce<IOutputFormatter>().TestMethod($"ServerController ServerListAction {local}");
         }
-
     }
 }

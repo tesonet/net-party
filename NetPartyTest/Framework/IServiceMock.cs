@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetPartyCore.Console
+namespace NetPartyTest.Framework
 {
-    class OutputFormatter: IOutputFormatter
+    interface IServiceMock
     {
+        bool MethodMock();
     }
 }
