@@ -55,6 +55,12 @@
   </PropertyGroup>
   <PropertyGroup />
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Extensions.Configuration, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Configuration.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.dll</HintPath>
     </Reference>
@@ -109,6 +115,16 @@
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Data.SQLite, Version=1.0.111.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.111.0\lib\net46\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.111.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.111.0\lib\net46\System.Data.SQLite.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.111.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.111.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
     <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.1\lib\netstandard2.0\System.Memory.dll</HintPath>
     </Reference>
@@ -127,6 +143,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config.cs" />
+    <Compile Include="Datastore\IStorage.cs" />
+    <Compile Include="Datastore\Model\Client.cs" />
+    <Compile Include="Datastore\Model\Server.cs" />
+    <Compile Include="Datastore\StorageException.cs" />
+    <Compile Include="Datastore\XmlStorage.cs" />
     <Compile Include="Output\IOutputFormatter.cs" />
     <Compile Include="Output\OutputFormatter.cs" />
     <Compile Include="Controller\ConfigController.cs" />
@@ -153,7 +175,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Datastore\" />
     <Folder Include="Network\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -163,6 +184,8 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\System.CommandLine.DragonFruit.0.2.0-alpha.19174.3\build\netstandard2.0\System.CommandLine.DragonFruit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.CommandLine.DragonFruit.0.2.0-alpha.19174.3\build\netstandard2.0\System.CommandLine.DragonFruit.props'))" />
     <Error Condition="!Exists('..\packages\System.CommandLine.DragonFruit.0.2.0-alpha.19174.3\build\netstandard2.0\System.CommandLine.DragonFruit.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.CommandLine.DragonFruit.0.2.0-alpha.19174.3\build\netstandard2.0\System.CommandLine.DragonFruit.targets'))" />
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets'))" />
   </Target>
   <Import Project="..\packages\System.CommandLine.DragonFruit.0.2.0-alpha.19174.3\build\netstandard2.0\System.CommandLine.DragonFruit.targets" Condition="Exists('..\packages\System.CommandLine.DragonFruit.0.2.0-alpha.19174.3\build\netstandard2.0\System.CommandLine.DragonFruit.targets')" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets')" />
 </Project>

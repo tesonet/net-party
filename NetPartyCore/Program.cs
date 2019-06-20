@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using NetPartyCore.Output;
 using NetPartyCore.Controller;
 using NetPartyCore.Framework;
+using NetPartyCore.Datastore;
 
 namespace NetPartyCore
 {
@@ -20,6 +21,7 @@ namespace NetPartyCore
                 var serviceProvider = new ServiceCollection()
                     .AddLogging(loggingBuilder => loggingBuilder.AddConsole())
                     .AddSingleton<IOutputFormatter, OutputFormatter>()
+                    .AddSingleton<IStorage, XmlStorage>()
                     .BuildServiceProvider();
 
                 var logger = serviceProvider
