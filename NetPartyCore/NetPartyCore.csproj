@@ -135,6 +135,8 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.1\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -143,12 +145,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config.cs" />
     <Compile Include="Datastore\IStorage.cs" />
     <Compile Include="Datastore\Model\Client.cs" />
     <Compile Include="Datastore\Model\Server.cs" />
+    <Compile Include="Datastore\SQLiteStorage.cs" />
+    <Compile Include="Network\ServersResponse.cs" />
+    <Compile Include="Network\TokenResponse.cs" />
     <Compile Include="Datastore\StorageException.cs" />
     <Compile Include="Datastore\XmlStorage.cs" />
+    <Compile Include="Network\IRemoteApi.cs" />
+    <Compile Include="Network\RemoteApi.cs" />
     <Compile Include="Output\IOutputFormatter.cs" />
     <Compile Include="Output\OutputFormatter.cs" />
     <Compile Include="Controller\ConfigController.cs" />
@@ -174,9 +180,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Network\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -1,4 +1,6 @@
-﻿using NetPartyCore.Framework;
+﻿using NetPartyCore.Datastore;
+using NetPartyCore.Framework;
+using NetPartyCore.Network;
 using NetPartyCore.Output;
 using System.Collections.Generic;
 using System.CommandLine;
@@ -10,9 +12,21 @@ namespace NetPartyCore.Controller
      */
     internal class ServerController : CoreController
     {
-        public void ServerListAction(bool local)
+        public async void ServerListAction(bool local)
         {
-            GetSerivce<IOutputFormatter>().TestMethod($"ServerController ServerListAction {local}");
+            var datatore = GetSerivce<IStorage>();
+            var output = GetSerivce<IOutputFormatter>();
+
+            if (!local)
+            {
+                var client = datatore.GetConfiguration();
+                var remoteApi = GetSerivce<IRemoteApi>();
+                var token = await remoteApi.GetToken(client);
+                var servers = await remoteApi.GetServers(token);
+                datatore.SetSevers(servers);
+            }
+
+            output.PrintServers(datatore.GetServers());            
         }
     }
 }

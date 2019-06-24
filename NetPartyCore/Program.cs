@@ -9,6 +9,7 @@ using NetPartyCore.Output;
 using NetPartyCore.Controller;
 using NetPartyCore.Framework;
 using NetPartyCore.Datastore;
+using NetPartyCore.Network;
 
 namespace NetPartyCore
 {
@@ -21,7 +22,8 @@ namespace NetPartyCore
                 var serviceProvider = new ServiceCollection()
                     .AddLogging(loggingBuilder => loggingBuilder.AddConsole())
                     .AddSingleton<IOutputFormatter, OutputFormatter>()
-                    .AddSingleton<IStorage, XmlStorage>()
+                    .AddSingleton<IStorage, SQLiteStorage>()
+                    .AddSingleton<IRemoteApi, RemoteApi>()
                     .BuildServiceProvider();
 
                 var logger = serviceProvider
@@ -47,8 +49,10 @@ namespace NetPartyCore
                         .ServerListAction(local);
                 }));
 
+                await router.GetRootCommand().InvokeAsync(args);
                 // Parse the incoming args and invoke the handler
-                return await router.GetRootCommand().InvokeAsync(args);
+                Console.ReadKey();
+                return 0;
             }
             catch (Exception exception)
             {
