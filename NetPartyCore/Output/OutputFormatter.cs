@@ -6,6 +6,12 @@ namespace NetPartyCore.Output
 {
     class OutputFormatter : IOutputFormatter
     {
+        public void PrintConfiguration(Client client)
+        {
+            Console.WriteLine($"Client username is: {client.Username}");
+            Console.WriteLine($"Client password is: {client.Password}");
+        }
+
         public void PrintServers(List<Server> servers)
         {
             foreach (Server server in servers)
@@ -14,11 +20,6 @@ namespace NetPartyCore.Output
             }
 
             Console.WriteLine($"Total servers: {servers.Count}");
-        }
-
-        public void TestMethod(string output)
-        {
-            Console.WriteLine($"OUTPUT: {output}");
         }
     }
 }

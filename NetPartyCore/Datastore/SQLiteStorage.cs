@@ -1,113 +1,98 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NetPartyCore.Datastore.Model;
 using System.IO;
 using System.Data.SQLite;
+using System.Data.Linq;
 
 namespace NetPartyCore.Datastore
 {
     class SQLiteStorage : IStorage
     {
+        private SQLiteConnection connection;
+
         public SQLiteStorage()
         {
+            var databseExists = File.Exists("partycli.db");
 
-            if (!File.Exists("partycli.db"))
+            if (!databseExists)
             {
-                PrepareDatabase();
+                SQLiteConnection.CreateFile("partycli.db");
             }
+
+            connection = new SQLiteConnection("Data Source=partycli.db;Version=3;");
+
+            if (!databseExists)
+            {
+                connection.Open();
+                var createClientsTableCommand = new SQLiteCommand("CREATE TABLE clients (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL, password TEXT NOT NULL)", connection);
+                createClientsTableCommand.ExecuteNonQuery();
+
+                var createServersTableCommand = new SQLiteCommand("CREATE TABLE servers (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, distance INTEGER NOT NULL)", connection);
+                createServersTableCommand.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+
+        private DataContext GetContext()
+        {
+            return new DataContext(connection);
         }
 
         public Client GetConfiguration()
         {
-            var connection = new SQLiteConnection("Data Source=partycli.db;Version=3;");
-            Client client;
-            connection.Open();
-            using (var reader = new SQLiteCommand(@"SELECT * FROM clients LIMIT 1", connection).ExecuteReader())
+            using (DataContext dc = GetContext())
             {
-                reader.Read();
-                client = new Client(reader.GetString(1), reader.GetString(2));   
+                var table = dc.GetTable<Client>();
+                return table.SingleOrDefault();
             }
-
-            connection.Close();
-            return client;
-        }
-
-        public List<Server> GetServers()
-        {
-            var connection = new SQLiteConnection("Data Source=partycli.db;Version=3;");
-            connection.Open();
-
-            var servers = new List<Server>();
-            using (var reader = new SQLiteCommand(@"SELECT * FROM servers", connection).ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    servers.Add(new Server(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2)));
-                }
-            }
-
-            connection.Close();
-            return servers;
         }
 
         public void SetConfiguration(Client client)
         {
+            using (DataContext dc = GetContext()) {
+                var table = dc.GetTable<Client>();
+                var current = table.SingleOrDefault();
 
-            var connection = new SQLiteConnection("Data Source=partycli.db;Version=3;");
-            connection.Open();
-
-            var insertClientCommand = new SQLiteCommand($"INSERT INTO clients (username, password) VALUES ('{client.Username}', '{client.Password}')", connection);
-            var updateClinetCOmmand = new SQLiteCommand($"UPDATE clients SET username = '{client.Username}', password = '{client.Password}' WHERE id = 1", connection);
-
-            using (var reader = new SQLiteCommand(@"SELECT * FROM clients LIMIT 1", connection).ExecuteReader())
-            {
-                if (!reader.HasRows)
+                if (current != null)
                 {
-                    insertClientCommand.ExecuteNonQuery();
-                } else
-                {
-                    updateClinetCOmmand.ExecuteNonQuery();
+                    current.Username = client.Username;
+                    current.Password = client.Password;
                 }
-            }
+                else
+                {
+                    table.InsertOnSubmit(client);
+                }
 
-            connection.Close();
+                dc.SubmitChanges();
+            }
+        }
+
+        public List<Server> GetServers()
+        {
+            using (DataContext dc = GetContext())
+            {
+                var table = dc.GetTable<Server>();
+                var rows = from item in table select item;
+                return rows.ToList();
+            }
         }
 
         public void SetSevers(List<Server> servers)
         {
-            var connection = new SQLiteConnection("Data Source=partycli.db;Version=3;");
+            // had to resort using plain connection instead of linq because of a following bug in SQL linq library:
+            // https://stackoverflow.com/questions/18677411/wrong-sql-statements-being-generated-when-using-system-data-sqlite-linq
             connection.Open();
 
-            var clearServersCommand = new SQLiteCommand("DELETE FROM servers", connection);
-            
-            clearServersCommand.ExecuteNonQuery();
+                new SQLiteCommand("DELETE FROM servers", connection)
+                    .ExecuteNonQuery();
 
-            foreach (Server server in servers)
-            {
-                var insertClientCommand = new SQLiteCommand($"INSERT INTO servers (name, distance) VALUES ('{server.Name}', '{server.Distance}')", connection);
-                insertClientCommand.ExecuteNonQuery();
-            }
+                servers.ForEach(server => {
+                    new SQLiteCommand($"INSERT INTO servers (name, distance) VALUES ('{server.Name}', '{server.Distance}')", connection)
+                        .ExecuteNonQuery();
+                });
 
-            connection.Close();
-        }
-
-        private void PrepareDatabase()
-        {
-            SQLiteConnection.CreateFile("partycli.db");
-            var connection = new SQLiteConnection("Data Source=partycli.db;Version=3;");
-            connection.Open();
-            
-
-            var createClientsTableCommand = new SQLiteCommand("CREATE TABLE clients (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL, password TEXT NOT NULL)", connection);
-            createClientsTableCommand.ExecuteNonQuery();
-
-            var createServersTableCommand = new SQLiteCommand("CREATE TABLE servers (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, distance INTEGER NOT NULL)", connection);
-            createServersTableCommand.ExecuteNonQuery();
-
-            connection.Close();
+                connection.Close();
         }
     }
 }

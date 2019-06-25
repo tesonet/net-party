@@ -1,19 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Data.Linq.Mapping;
 
 namespace NetPartyCore.Datastore.Model
 {
+    [Table(Name = "clients")]
     class Client
     {
-        public Client(string username, string password)
-        {
-            Username = username;
-            Password = password;
-        }
-
+        [Column(Name = "id", IsPrimaryKey = true)]
         public int ID { get; set; }
 
+        [Column(Name = "username")]
         public string Username { get; set; }
 
+        [Column(Name = "password")]
         public string Password { get; set; }
     }
 }

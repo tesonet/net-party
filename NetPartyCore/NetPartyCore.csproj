@@ -97,6 +97,12 @@
     <Reference Include="Microsoft.Extensions.Primitives, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Primitives.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Refit, Version=4.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Refit.4.7.9\lib\net461\Refit.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
@@ -137,6 +143,7 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -149,12 +156,10 @@
     <Compile Include="Datastore\Model\Client.cs" />
     <Compile Include="Datastore\Model\Server.cs" />
     <Compile Include="Datastore\SQLiteStorage.cs" />
+    <Compile Include="Network\IRemoteApi.cs" />
     <Compile Include="Network\ServersResponse.cs" />
     <Compile Include="Network\TokenResponse.cs" />
     <Compile Include="Datastore\StorageException.cs" />
-    <Compile Include="Datastore\XmlStorage.cs" />
-    <Compile Include="Network\IRemoteApi.cs" />
-    <Compile Include="Network\RemoteApi.cs" />
     <Compile Include="Output\IOutputFormatter.cs" />
     <Compile Include="Output\OutputFormatter.cs" />
     <Compile Include="Controller\ConfigController.cs" />
@@ -189,7 +194,9 @@
     <Error Condition="!Exists('..\packages\System.CommandLine.DragonFruit.0.2.0-alpha.19174.3\build\netstandard2.0\System.CommandLine.DragonFruit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.CommandLine.DragonFruit.0.2.0-alpha.19174.3\build\netstandard2.0\System.CommandLine.DragonFruit.props'))" />
     <Error Condition="!Exists('..\packages\System.CommandLine.DragonFruit.0.2.0-alpha.19174.3\build\netstandard2.0\System.CommandLine.DragonFruit.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.CommandLine.DragonFruit.0.2.0-alpha.19174.3\build\netstandard2.0\System.CommandLine.DragonFruit.targets'))" />
     <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets'))" />
+    <Error Condition="!Exists('..\packages\Refit.4.7.9\build\net461\refit.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Refit.4.7.9\build\net461\refit.targets'))" />
   </Target>
   <Import Project="..\packages\System.CommandLine.DragonFruit.0.2.0-alpha.19174.3\build\netstandard2.0\System.CommandLine.DragonFruit.targets" Condition="Exists('..\packages\System.CommandLine.DragonFruit.0.2.0-alpha.19174.3\build\netstandard2.0\System.CommandLine.DragonFruit.targets')" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets')" />
+  <Import Project="..\packages\Refit.4.7.9\build\net461\refit.targets" Condition="Exists('..\packages\Refit.4.7.9\build\net461\refit.targets')" />
 </Project>

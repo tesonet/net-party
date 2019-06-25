@@ -10,6 +10,7 @@ using NetPartyCore.Controller;
 using NetPartyCore.Framework;
 using NetPartyCore.Datastore;
 using NetPartyCore.Network;
+using Refit;
 
 namespace NetPartyCore
 {
@@ -21,9 +22,9 @@ namespace NetPartyCore
             {
                 var serviceProvider = new ServiceCollection()
                     .AddLogging(loggingBuilder => loggingBuilder.AddConsole())
+                    .AddSingleton<IRemoteApi>((_) => RestService.For<IRemoteApi>("http://playground.tesonet.lt/v1/"))
                     .AddSingleton<IOutputFormatter, OutputFormatter>()
                     .AddSingleton<IStorage, SQLiteStorage>()
-                    .AddSingleton<IRemoteApi, RemoteApi>()
                     .BuildServiceProvider();
 
                 var logger = serviceProvider

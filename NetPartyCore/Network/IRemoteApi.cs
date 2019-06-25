@@ -1,14 +1,15 @@
-﻿using NetPartyCore.Datastore.Model;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Refit;
 
 namespace NetPartyCore.Network
 {
     interface IRemoteApi
     {
-        Task<string> GetToken(Client client);
+        [Post("/tokens")]
+        Task<TokenResponse> GetToken(string username, string password);
 
-        Task<List<Server>> GetServers(string token);
-
+        [Get("/servers")]
+        Task<List<ServersResponse>> GetServers([Header("Authorization")] string authorization);
     }
 }

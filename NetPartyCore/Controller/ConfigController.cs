@@ -8,14 +8,21 @@ namespace NetPartyCore.Controller
     /**
      * Controller of "config" action invoked from command line
      */
-    class ConfigController : CoreController
+    internal class ConfigController : CoreController
     {
         public async void ConfigAction(string username, string password)
         {
-            GetSerivce<IStorage>().SetConfiguration(new Client(username, password));
+            var client = new Client()
+            {
+                Username = username,
+                Password = password
+            };
+
+            GetSerivce<IStorage>()
+                .SetConfiguration(client);
 
             GetSerivce<IOutputFormatter>()
-                .TestMethod($"Client configuration saved: {username} {password}");
+                .PrintConfiguration(client);
         }
     }
 }
