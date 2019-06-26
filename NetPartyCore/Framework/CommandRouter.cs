@@ -8,7 +8,7 @@ namespace NetPartyCore.Framework
     /**
      * A helper class to simplify route adding from main Program
      */
-    class CommandRouter
+    internal class CommandRouter
     {
         private RootCommand rootCommand = new RootCommand();
 

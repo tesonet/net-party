@@ -84,15 +84,15 @@ namespace NetPartyCore.Datastore
             // https://stackoverflow.com/questions/18677411/wrong-sql-statements-being-generated-when-using-system-data-sqlite-linq
             connection.Open();
 
-                new SQLiteCommand("DELETE FROM servers", connection)
+            new SQLiteCommand("DELETE FROM servers", connection)
+                .ExecuteNonQuery();
+
+            servers.ForEach(server => {
+                new SQLiteCommand($"INSERT INTO servers (name, distance) VALUES ('{server.Name}', '{server.Distance}')", connection)
                     .ExecuteNonQuery();
+            });
 
-                servers.ForEach(server => {
-                    new SQLiteCommand($"INSERT INTO servers (name, distance) VALUES ('{server.Name}', '{server.Distance}')", connection)
-                        .ExecuteNonQuery();
-                });
-
-                connection.Close();
+            connection.Close();
         }
     }
 }

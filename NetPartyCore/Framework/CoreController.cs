@@ -6,7 +6,7 @@ namespace NetPartyCore.Framework
     /**
      *  Simple base controller for handling access to service container
      */
-    class CoreController
+    internal class CoreController
     {
         private IServiceProvider serviceProvider;
 

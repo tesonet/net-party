@@ -4,6 +4,7 @@ using NetPartyCore.Framework;
 using NetPartyCore.Network;
 using NetPartyCore.Output;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace NetPartyCore.Controller
 {
@@ -12,7 +13,7 @@ namespace NetPartyCore.Controller
      */
     internal class ServerController : CoreController
     {
-        public async void ServerListAction(bool local)
+        public async Task ServerListAction(bool local)
         {
             var output = GetSerivce<IOutputFormatter>();
             var datatore = GetSerivce<IStorage>();
@@ -28,14 +29,14 @@ namespace NetPartyCore.Controller
                 var serversResponse = await remoteApi
                     .GetServers($"Bearer {tokenResponse.token}");
 
-                var servers = serversResponse
+                var remoteServers = serversResponse
                     .Select(x => new Server() {
                         Name = x.name,
                         Distance = x.distance
                     })
                     .ToList();
 
-                datatore.SetSevers(servers);
+                datatore.SetSevers(remoteServers);
             }
 
             output.PrintServers(datatore.GetServers());

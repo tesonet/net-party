@@ -6,9 +6,6 @@ using Moq;
 
 namespace NetPartyTest.Framework
 {
-    /// <summary>
-    /// Summary description for UnitTest1
-    /// </summary>
     [TestClass]
     public class CoreControllerTest
     {
@@ -16,17 +13,35 @@ namespace NetPartyTest.Framework
         [TestMethod]
         public void CreateWithProviderTest()
         {
-            var serviceProviderMock = new Mock<IServiceProvider>();
-            var service = new ServiceMock();
+            var serviceMock = new Mock<IServiceMock>();
 
-            serviceProviderMock
-                .Setup(it => it.GetService<IServiceMock>())
-                .Returns(service);
+            // since extension C# extensions are just static and they are
+            // b**** to test, a real ServiceProvider implementation is used
+            // instead of a mock
+            var serviceProvider = new ServiceCollection()
+                .AddSingleton<IServiceMock>((_) => serviceMock.Object)
+                .BuildServiceProvider();
 
             var controller = CoreController
-                .CreateWithProvider<ControllerMock>(serviceProviderMock.Object);
+                .CreateWithProvider<ControllerMock>(serviceProvider);
+
+            serviceMock.Setup(it => it.TestMthod())
+                .Returns(true);
 
             Assert.IsTrue(controller.MethodMock());
         }
+    }
+
+    internal class ControllerMock : CoreController
+    {
+        public bool MethodMock()
+        {
+            return GetSerivce<IServiceMock>().TestMthod();
+        }
+    }
+
+    internal interface IServiceMock
+    {
+        bool TestMthod();
     }
 }

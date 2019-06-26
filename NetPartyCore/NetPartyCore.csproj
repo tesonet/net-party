@@ -153,8 +153,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Datastore\IStorage.cs" />
-    <Compile Include="Datastore\Model\Client.cs" />
-    <Compile Include="Datastore\Model\Server.cs" />
+    <Compile Include="Datastore\Client.cs" />
+    <Compile Include="Datastore\Server.cs" />
     <Compile Include="Datastore\SQLiteStorage.cs" />
     <Compile Include="Network\IRemoteApi.cs" />
     <Compile Include="Network\ServersResponse.cs" />

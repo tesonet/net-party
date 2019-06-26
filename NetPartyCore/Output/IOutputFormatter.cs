@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace NetPartyCore.Output
 {
-    interface IOutputFormatter
+    internal interface IOutputFormatter
     {
         void PrintConfiguration(Client client);
 

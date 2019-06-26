@@ -31,27 +31,10 @@ namespace NetPartyCore
                     .GetService<ILoggerFactory>()
                     .CreateLogger<Program>();
 
-                var router = new CommandRouter();
-
-                router.AddRoute("config", "config", new List<Option>() {
-                    new Option("--username", "Api client username", new Argument<string>()),
-                    new Option("--password", "Api client password", new Argument<string>())
-                }, CommandHandler.Create<string, string>((username, password) => {
-                    CoreController
-                        .CreateWithProvider<ConfigController>(serviceProvider)
-                        .ConfigAction(username, password);
-                }));
-
-                router.AddRoute("server-list", "Server list management command", new List<Option>() {
-                    new Option("--local", "Display servers from local storage", new Argument<bool>())
-                }, CommandHandler.Create<bool>((local) => {
-                    CoreController
-                        .CreateWithProvider<ServerController>(serviceProvider)
-                        .ServerListAction(local);
-                }));
-
-                await router.GetRootCommand().InvokeAsync(args);
                 // Parse the incoming args and invoke the handler
+                await CreateCommandRouter(serviceProvider)
+                    .InvokeAsync(args);
+
                 Console.ReadKey();
                 return 0;
             }
@@ -61,6 +44,30 @@ namespace NetPartyCore
                 Console.ReadKey();
                 return 0;
             }
+        }
+
+        private static RootCommand CreateCommandRouter(IServiceProvider serviceProvider)
+        {
+            var router = new CommandRouter();
+
+            router.AddRoute("config", "config", new List<Option>() {
+                new Option("--username", "Api client username", new Argument<string>()),
+                new Option("--password", "Api client password", new Argument<string>())
+            }, CommandHandler.Create<string, string>((username, password) => {
+                CoreController
+                    .CreateWithProvider<ConfigController>(serviceProvider)
+                    .ConfigAction(username, password);
+            }));
+
+            router.AddRoute("server-list", "Server list management command", new List<Option>() {
+                new Option("--local", "Display servers from local storage", new Argument<bool>())
+            }, CommandHandler.Create<bool>((local) => {
+                CoreController
+                    .CreateWithProvider<ServerController>(serviceProvider)
+                    .ServerListAction(local);
+            }));
+
+            return router.GetRootCommand();
         }
     }
 }

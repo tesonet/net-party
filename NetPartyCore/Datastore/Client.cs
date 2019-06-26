@@ -3,7 +3,7 @@
 namespace NetPartyCore.Datastore.Model
 {
     [Table(Name = "clients")]
-    class Client
+    internal class Client
     {
         [Column(Name = "id", IsPrimaryKey = true)]
         public int ID { get; set; }
