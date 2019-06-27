@@ -10,6 +10,7 @@ using NetPartyCore.Output;
 using Moq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using NetPartyCore.Exception;
 
 namespace NetPartyTest.Controller
 {
@@ -65,40 +66,90 @@ namespace NetPartyTest.Controller
                 .CreateWithProvider<ServerController>(serviceProvider)
                 .ServerListAction(true);
             
-            outputMock.Verify(x => x.PrintServers(
-                It.Is<List<Server>>(l => l == localServerList)
+            outputMock.Verify(mock => mock.PrintServers(
+                It.Is<List<Server>>(list => list == localServerList)
             ));
         }
 
         [TestMethod]
         public async Task RemoteServerListActionTest()
         {
-            storageMock.Setup(m => m.GetConfiguration()).Returns(new Client() {
+            storageMock.Setup(mock => mock.GetConfiguration()).Returns(new Client() {
                 Username = "api-username",
                 Password = "api-password"
             });
 
-            remoteApiMock.Setup(m => m.GetToken("api-username", "api-password")).Returns(
+            remoteApiMock.Setup(mock => mock.GetToken("api-username", "api-password")).Returns(
                 Task.FromResult(new TokenResponse() {
                     token = "token-string"
                 })
             );
 
-            remoteApiMock.Setup(m => m.GetServers("Bearer token-string")).Returns(
+            remoteApiMock.Setup(mock => mock.GetServers("Bearer token-string")).Returns(
                 Task.FromResult(remoteServerList)
             );
+
+            storageMock.Setup(mock => mock.GetServers()).Returns(localServerList);
 
             await CoreController
                 .CreateWithProvider<ServerController>(serviceProvider)
                 .ServerListAction(false);
 
-            storageMock.Verify(x => x.SetSevers(
-                It.Is<List<Server>>(list => list.Count > 0)
+            storageMock.Verify(mock => mock.SetSevers(
+                It.Is<List<Server>>(list => list.Count == 1)
             ));
 
-            // outputMock.Verify(x => x.PrintServers(
-            //     It.Is<List<Server>>(l => l.Count > 0)
-            // ));
+            outputMock.Verify(mock => mock.PrintServers(
+                 It.Is<List<Server>>(list => list == localServerList)
+            ));
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ConfigurationNotFoundException))]
+        public async Task TokenNotSetTest()
+        {
+            await CoreController
+                .CreateWithProvider<ServerController>(serviceProvider)
+                .ServerListAction(false);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TokenRetrievalException))]
+        public async Task TokenInvalidTest()
+        {
+            storageMock.Setup(mock => mock.GetConfiguration()).Returns(new Client() {
+                Username = "api-username",
+                Password = "api-password"
+            });
+
+            remoteApiMock.Setup(mock => mock.GetToken("api-username", "api-password")).Throws(new System.Exception());
+
+            await CoreController
+                .CreateWithProvider<ServerController>(serviceProvider)
+                .ServerListAction(false);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ServerListRetrievalException))]
+        public async Task ServerListFailureTest()
+        {
+            storageMock.Setup(mock => mock.GetConfiguration()).Returns(new Client() {
+                Username = "api-username",
+                Password = "api-password"
+            });
+
+            remoteApiMock.Setup(mock => mock.GetToken("api-username", "api-password")).Returns(
+                Task.FromResult(new TokenResponse() {
+                    token = "token-string"
+                })
+            );
+
+            remoteApiMock.Setup(mock => mock.GetServers("Bearer token-string")).Throws(new System.Exception());
+
+            await CoreController
+                .CreateWithProvider<ServerController>(serviceProvider)
+                .ServerListAction(false);
+        }
+
     }
 }

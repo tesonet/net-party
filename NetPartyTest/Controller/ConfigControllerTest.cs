@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NetPartyCore.Controller;
 using NetPartyCore.Datastore;
 using NetPartyCore.Datastore.Model;
+using NetPartyCore.Exception;
 using NetPartyCore.Framework;
 using NetPartyCore.Output;
 
@@ -30,9 +32,9 @@ namespace NetPartyTest.Controller
         }
 
         [TestMethod]
-        public void ConfigActionTest()
+        public async Task ConfigActionValidParametersTestAsync()
         {
-            CoreController
+            await CoreController
                 .CreateWithProvider<ConfigController>(serviceProvider)
                 .ConfigAction("usrn", "pass");
 
@@ -43,6 +45,15 @@ namespace NetPartyTest.Controller
             outputMock.Verify(x => x.PrintConfiguration(
                 It.Is<Client>(c => c.Username == "usrn" && c.Password == "pass")
             ));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ConfigurationInvalidException))]
+        public async Task ConfigActionInvalidParametersTestAsync()
+        {
+            await CoreController
+                .CreateWithProvider<ConfigController>(serviceProvider)
+                .ConfigAction("", "");
         }
 
     }

@@ -31,19 +31,15 @@ namespace NetPartyCore
                     .GetService<ILoggerFactory>()
                     .CreateLogger<Program>();
 
-                // Parse the incoming args and invoke the handler
                 await CreateCommandRouter(serviceProvider)
                     .InvokeAsync(args);
-
-                Console.ReadKey();
-                return 0;
             }
-            catch (Exception exception)
+            catch (System.Exception exception)
             {
-                Console.WriteLine(exception.ToString());
-                Console.ReadKey();
-                return 0;
+                Console.WriteLine(exception.Message);
             }
+
+            return 0;
         }
 
         private static RootCommand CreateCommandRouter(IServiceProvider serviceProvider)
@@ -53,18 +49,38 @@ namespace NetPartyCore
             router.AddRoute("config", "config", new List<Option>() {
                 new Option("--username", "Api client username", new Argument<string>()),
                 new Option("--password", "Api client password", new Argument<string>())
-            }, CommandHandler.Create<string, string>((username, password) => {
-                CoreController
-                    .CreateWithProvider<ConfigController>(serviceProvider)
-                    .ConfigAction(username, password);
+            }, CommandHandler.Create<string, string>(async (username, password) => {
+                // ideally I would not user try catch here but I couldn't find how to 
+                // exploid  CommandLineBuilder UseExceptionHandler method and had no
+                // more time to spare for this test
+                try
+                {
+                    await CoreController
+                        .CreateWithProvider<ConfigController>(serviceProvider)
+                        .ConfigAction(username, password);
+                }
+                catch (System.Exception exception)
+                {
+                    Console.WriteLine(exception.Message);
+                }
             }));
 
             router.AddRoute("server-list", "Server list management command", new List<Option>() {
                 new Option("--local", "Display servers from local storage", new Argument<bool>())
-            }, CommandHandler.Create<bool>((local) => {
-                CoreController
-                    .CreateWithProvider<ServerController>(serviceProvider)
-                    .ServerListAction(local);
+            }, CommandHandler.Create<bool>(async (local) => {
+                // ideally I would not user try catch here but I couldn't find how to 
+                // exploid  CommandLineBuilder UseExceptionHandler method and had no
+                // more time to spare for this test
+                try
+                {
+                    await CoreController
+                        .CreateWithProvider<ServerController>(serviceProvider)
+                        .ServerListAction(local);
+                }
+                catch (System.Exception exception)
+                {
+                    Console.WriteLine(exception.Message);
+                }
             }));
 
             return router.GetRootCommand();

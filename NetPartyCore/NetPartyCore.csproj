@@ -156,10 +156,13 @@
     <Compile Include="Datastore\Client.cs" />
     <Compile Include="Datastore\Server.cs" />
     <Compile Include="Datastore\SQLiteStorage.cs" />
+    <Compile Include="Exception\ConfigurationInvalidException.cs" />
+    <Compile Include="Exception\ConfigurationNotFoundException.cs" />
+    <Compile Include="Exception\ServerListRetrievalException.cs" />
+    <Compile Include="Exception\TokenRetrievalException.cs" />
     <Compile Include="Network\IRemoteApi.cs" />
     <Compile Include="Network\ServersResponse.cs" />
     <Compile Include="Network\TokenResponse.cs" />
-    <Compile Include="Datastore\StorageException.cs" />
     <Compile Include="Output\IOutputFormatter.cs" />
     <Compile Include="Output\OutputFormatter.cs" />
     <Compile Include="Controller\ConfigController.cs" />
