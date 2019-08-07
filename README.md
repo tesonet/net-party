@@ -1,58 +1,16 @@
-# Great task for Great .NET Developer
+# NetParty CLI
 
-If you found this task it means we are looking for you!
+## How to get it running
+1. Checkout the repository
+2. Build the project (preferably using Visual Studio)
+3. Navigate to the build output directory
+    * Most likely `src\NetParty.CLI\bin\Release` or `src\NetParty.CLI\bin\Debug` if you're using Visual Studio 
+4. Run `partycli.exe --help` to check whether you're at the right place
 
-## Few simple steps
-
-1. Fork this repo
-2. Do your best
-3. Prepare pull request and let us know that you are done
-
-## Simple specification
-
-- Build console app ```partycli.exe``` that will show and save servers received from API:
-
-This should store username and password for API authorization in the persistent data store:
-```
-partycli.exe config --username "YOUR USERNAME" --password "YOUR PASSWORD" 
-``` 
-
-This should fetch servers from API, store them in persistent data store and display server names and total number of servers in the console:
-```
-partycli.exe server_list 
-``` 
-
-This should fetch servers from persistent data store and display server names and total number of servers in the console:
-```
-partycli.exe server_list --local
-```
-
-- ```partycli.exe``` for now is a simple console app but it will grow in the near future into enterprise grade cli monster:
-1. There might be more parameters for the app.
-2. Persistent data store provider/storage type/libraries might change.
-3. Servers might be displayed differently in the console or even displayed with colors.
-4. Different API might be choosen.
-
-- It should be fairly easy to adapt current app code to the upcoming requirements. So choose your architecture wisely!
-
-How to get servers from API?
-- Send authorization request (POST) to http://playground.tesonet.lt/v1/tokens to generate token with body: `{"username": "tesonet", "password": "partyanimal"}`. (Don't forget Content-Type)
-- Get servers list from http://playground.tesonet.lt/v1/servers. Add header to this request: `Authorization: Bearer <token>`
-
-## Few simple requirements
-- Use C# 7.0+ and .NET 4.6.1+
-- Write high quality, beautiful code
-- Follow modern .NET development practices:  
-  Use dependency injection pattern and use IoC container  
-  Use async APIs if available, don't block on async code  
-- Implement logging in your app
-- Maybe You have an idea how it should interact with users? Do it! Its on you!
-- Have fun!
-
-## Few simple recommendations:
-- Don't reinvent the wheel! If you find a nice library/framework that can make your life easier use it!
-- TDD can be realy useful for this app!
-
-## Bonus points:
-- Write unit/integration tests
-- Make use of AOP
+## Implementation notes
+* The solution aims to decouple application logic from anything presentation related. Therefore `Handlers` layer has no knowledge of how it's results are used.
+* Logging was implemented using the `Interceptor` approach. This approach helps make our implementations closed for modification and only open for extention.
+* Writing to file was picked as the choice for local persistence due to it meeting current requirements and being easy to implement. Does not scale as well if the persisted data gets more complex.
+* When persisting configuration user password is not saved  and the authorization token is saved instead. This is done in orer to maintain a reasonable level of security for the implementation costs.
+* External API calls could be implemented in a more maintainable way
+* Handling of verbs could be refactored to implement the `Chain of Responsibility` pattern as the amound of options and input combinations grows. This would help isolate each case and make it easier to extend in the future.
