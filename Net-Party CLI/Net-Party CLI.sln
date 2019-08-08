@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "partycli", "partycli\partyc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "partycli.IntegrationTests", "partycli.IntegrationTests\partycli.IntegrationTests.csproj", "{690A3098-5AAC-4F41-BAA0-B07A9594CD2E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "partycli.UnitTests", "partycli.UnitTests\partycli.UnitTests.csproj", "{17B6AAAB-4FDA-4F7B-AE7E-C9BB5B024047}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{690A3098-5AAC-4F41-BAA0-B07A9594CD2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{690A3098-5AAC-4F41-BAA0-B07A9594CD2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{690A3098-5AAC-4F41-BAA0-B07A9594CD2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17B6AAAB-4FDA-4F7B-AE7E-C9BB5B024047}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17B6AAAB-4FDA-4F7B-AE7E-C9BB5B024047}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17B6AAAB-4FDA-4F7B-AE7E-C9BB5B024047}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17B6AAAB-4FDA-4F7B-AE7E-C9BB5B024047}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

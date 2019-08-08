@@ -6,7 +6,6 @@ namespace partycli.IntegrationTests
     [TestFixture]
     class DependencyContainerTests
     {
-
         [Test]
         public void containerRegistrationSuccessfull_serviceResolvbable()
         {
@@ -19,6 +18,7 @@ namespace partycli.IntegrationTests
                 //Assert
                 Assert.IsNotNull(container.Resolve(registration.RegisteredType, registration.Name));
             }
+            container.Dispose();
         }
     }
 }

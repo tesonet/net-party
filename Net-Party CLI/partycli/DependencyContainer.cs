@@ -12,9 +12,12 @@ namespace partycli
         {
             var unityContainer = new UnityContainer();
             unityContainer.RegisterInstance<ILog>(LogManager.GetLogger("party-logger"));
+
+            unityContainer.RegisterInstance<IRepositoryProvider>("config",new FileRepositoryProvider(@"C:\Users\abrak\OneDrive\Desktop\config.txt"));
+            unityContainer.RegisterType<AuthenticationRepository>(new InjectionConstructor(unityContainer.Resolve<IRepositoryProvider>("config")));
+            unityContainer.RegisterInstance<IAuthenticationRepository>(new AuthenticationRepository(unityContainer.Resolve<IRepositoryProvider>("config")));
+
             return unityContainer;
         }
-
-
     }
 }

@@ -43,19 +43,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\AuthenticationRepository.cs" />
+    <Compile Include="Repository\FileRepositoryProvider.cs" />
+    <Compile Include="Credentials.cs" />
     <Compile Include="DependencyContainer.cs" />
+    <Compile Include="Config\IAuthenticationRepository.cs" />
+    <Compile Include="Repository\IRepositoryProvider.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="log4net.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="log4net.config" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="log4net">
       <Version>2.0.8</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="System.IO.Abstractions">
+      <Version>6.0.17</Version>
     </PackageReference>
     <PackageReference Include="Unity">
       <Version>5.11.1</Version>
