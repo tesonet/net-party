@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CLIParametersParsing.cs" />
     <Compile Include="Config\AuthenticationRepository.cs" />
     <Compile Include="Helpers\IPrinter.cs" />
     <Compile Include="Helpers\IRequestResult.cs" />
@@ -69,6 +70,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Commander.NET">
+      <Version>1.1.11</Version>
+    </PackageReference>
     <PackageReference Include="Flurl">
       <Version>2.8.2</Version>
     </PackageReference>

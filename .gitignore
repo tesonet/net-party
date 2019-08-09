@@ -339,3 +339,4 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 /Net-Party CLI/MigrationBackup/d2420f60/partycli
+/Net-Party CLI/partycli/partycli.v3.ncrunchproject
