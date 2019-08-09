@@ -4,28 +4,31 @@ using Unity;
 using Moq;
 using System.Threading.Tasks;
 using FluentAssertions;
+using partycli.Repository;
+using partycli.Config;
+using partycli.Http;
 
-namespace partycli.UnitTests
+namespace partycli.UnitTests.IAuthenticationRepositoryTests
 {
     [TestFixture]
     class IAuthenticationRepositoryTests
     {
         IUnityContainer container = null;
+        Mock<IHttpService> mockHttpService = null;
         Mock<IRepositoryProvider> mockRepositoryProvider = null;
         AuthenticationRepository authRepository = null;
 
         [SetUp]
         public void TestSetup()
         {
-            //Arrange
+            //Arrange  
             container = new UnityContainer();
+            mockHttpService = new Mock<IHttpService>();            
             mockRepositoryProvider = new Mock<IRepositoryProvider>();
-            mockRepositoryProvider.Setup(repo => repo.Reset());
+            container.RegisterInstance<IHttpService>(mockHttpService.Object);
             container.RegisterInstance<IRepositoryProvider>(mockRepositoryProvider.Object);
-
-            authRepository = new AuthenticationRepository(container.Resolve<IRepositoryProvider>());
+            authRepository = new AuthenticationRepository(httpService: container.Resolve<IHttpService>(), repositoryProvider: container.Resolve<IRepositoryProvider>());
         }
-
 
         [Test]
         public void IAuthenticationRepository_ValidateSave_ResetsFile()
@@ -96,5 +99,19 @@ namespace partycli.UnitTests
             credentialsResult.Should().Equals(new Credentials("username", "password"));
         }
 
+        [Test]
+        public void IAuthenticationRepository_ValidateRetrieveToken_MakesHttpPost()
+        {
+            //Arrange
+            string serializedCredentials = JsonConvert.SerializeObject(
+                new Credentials(AuthenticationRepository.Encrypt("foo"), AuthenticationRepository.Encrypt("bar")));
+            mockRepositoryProvider.Setup(repo => repo.LoadAsync()).Returns(Task.FromResult(serializedCredentials));
+
+            //Act
+            Task<string> token = authRepository.RetrieveToken();
+
+            //Assert
+            mockHttpService.Verify(mock => mock.PostJson(It.IsAny<string>()), Times.Once());
+        }
     }
 }

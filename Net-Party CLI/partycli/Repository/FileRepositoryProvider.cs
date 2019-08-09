@@ -3,7 +3,7 @@ using System.IO;
 using System.IO.Abstractions;
 using System.Text;
 
-namespace partycli
+namespace partycli.Repository
 {
     public class FileRepositoryProvider : IRepositoryProvider
     {

@@ -2,9 +2,11 @@
 using NUnit.Framework;
 using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
+using partycli.Repository;
 
-namespace partycli.UnitTests
+namespace partycli.UnitTests.IRepositoryProviderTests
 {
+    [TestFixture]
     public class IRepositoryProviderTests
     {
 

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace partycli
+namespace partycli.Repository
 {
     public interface IRepositoryProvider
     {   

@@ -1,4 +1,5 @@
 ﻿using log4net;
+using partycli.Servers;
 using Unity;
 
 namespace partycli
@@ -17,10 +18,14 @@ namespace partycli
                 var repository = container.Resolve<IAuthenticationRepository>();
                 repository.SaveCredentialsAsync(username, password).Wait();
 
-                //TODO: list servers (server_list)
-                //TODO: list servers from local storage (server_list --local)
+
+                var serversHandler = container.Resolve<ServersHandler>();                
+                serversHandler.GetServersListAsync(repository.RetrieveToken()).Wait(); 
+                serversHandler.GetServersListLocal().Wait();
 
                 //TODO: use command line arguments as parameters and options to control application flow
+                //TODO: pretty printing
+                //TODO: error handling
             };
         }
     }

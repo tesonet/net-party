@@ -80,6 +80,7 @@
   <ItemGroup>
     <Compile Include="IAuthenticationRepositoryTests.cs" />
     <Compile Include="IRepositoryProviderTests.cs" />
+    <Compile Include="IServersRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
