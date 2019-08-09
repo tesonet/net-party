@@ -2,17 +2,21 @@
 using Unity;
 using System;
 using System.Threading.Tasks;
+using partycli.Http;
+using partycli.Repository;
 
-namespace partycli
+namespace partycli.Config
 {
     public class AuthenticationRepository : IAuthenticationRepository
     {
-        private IRepositoryProvider m_repositoryProvider;
+        private readonly IRepositoryProvider m_repositoryProvider;
+        private readonly IHttpService m_httpService;
 
         [InjectionConstructor]
-        public AuthenticationRepository(IRepositoryProvider repositoryProvider)
+        public AuthenticationRepository(IHttpService httpService, IRepositoryProvider repositoryProvider)
         {
             m_repositoryProvider = repositoryProvider;
+            m_httpService = httpService;
         }
         public Task SaveCredentialsAsync(string username, string password)
         {
@@ -25,6 +29,13 @@ namespace partycli
         {
             dynamic o = JsonConvert.DeserializeObject<Credentials>(await m_repositoryProvider.LoadAsync());
             return new Credentials(Decrypt(o.Username), Decrypt(o.Password));
+        }
+
+        public async Task<string> RetrieveToken()
+        {
+            var credentials = await LoadCredentialsAsync();
+            var result = await m_httpService.PostJson(JsonConvert.SerializeObject(credentials));
+            return result.token;
         }
 
         public static string Encrypt(string s) { return Reverse(s); }

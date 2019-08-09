@@ -7,5 +7,7 @@ namespace partycli
         Task SaveCredentialsAsync(string username, string password);
 
         Task<Credentials> LoadCredentialsAsync();
+
+        Task<string> RetrieveToken();
     }
 }
