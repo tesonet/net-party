@@ -49,6 +49,7 @@ namespace partycli.UnitTests.IServersRepositoryTests
             
             //Assert
             mockHttpService.Verify(mock => mock.GetWithToken(It.IsAny<string>()), Times.Once());
+            mockRepositoryProvider.Verify(mock => mock.Reset(), Times.Once());
             mockRepositoryProvider.Verify(mock => mock.SaveAsync(It.IsAny<string>()), Times.Once());
             result.Success.Should().Be(true);
             result.Result.Should().HaveCount(2).And.Should().Equals(server_list_deserialized);

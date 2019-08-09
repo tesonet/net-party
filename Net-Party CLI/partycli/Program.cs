@@ -1,5 +1,4 @@
 ﻿using log4net;
-using partycli.Servers;
 using partycli.Api;
 using Unity;
 
@@ -24,8 +23,6 @@ namespace partycli
                 serversHandler.GetServersListLocalAsync().Wait();
 
                 //TODO: use command line arguments as parameters and options to control application flow
-                //TODO: pretty printing for all Console.WriteLine
-                //TODO: error handling for FileRepository
             };
         }
     }

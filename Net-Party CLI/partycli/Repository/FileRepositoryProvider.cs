@@ -50,3 +50,4 @@ namespace partycli.Repository
         }
     }
 }
+//TODO: error handling for FileRepository. catch exceptions , refactor for IRequestResult

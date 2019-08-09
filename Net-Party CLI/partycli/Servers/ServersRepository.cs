@@ -23,6 +23,7 @@ namespace partycli.Servers
             if (response.Success)
             {
                 var server_list = response.Result;
+                m_serversRepositoryProvider.Reset();
                 m_serversRepositoryProvider.SaveAsync(server_list).Wait();
                 return new SuccessResult<List<Server>>(JsonConvert.DeserializeObject<List<Server>>(server_list));
             }

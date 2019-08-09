@@ -1,6 +1,6 @@
 ﻿using partycli.Config;
+using partycli.Helpers;
 using partycli.Servers;
-using System;
 using System.Threading.Tasks;
 
 namespace partycli.Api
@@ -9,43 +9,38 @@ namespace partycli.Api
     {
         IAuthenticationRepository m_authRepository = null;
         IServersRepository m_serversService = null;
+        IPrinter m_print = null;
 
-        public ApiHandler(IAuthenticationRepository authRepository, IServersRepository serversService)
+        public ApiHandler(IAuthenticationRepository authRepository, IServersRepository serversService, IPrinter printer)
         {
             m_authRepository = authRepository;
             m_serversService = serversService;
+            m_print = printer;
         }
         internal void SaveCredentials(string username, string password)
         {
             m_authRepository.SaveCredentialsAsync(username, password).Wait();
-            Console.WriteLine("authentication were configured successfully");
+            m_print.Info("authentication were configured successfully");
         }
 
         public async Task GetServersListAsync()
         {
-            var tokenResponse = await m_authRepository.RetrieveToken();
-            if (tokenResponse.Success)
+            var tokenResponse = await m_authRepository.RetrieveToken();            
+            if (!tokenResponse.Success)
             {
-                var response = await m_serversService.RetrieveServersListAsync(tokenResponse.Result);
-                if (response.Success)
-                    foreach (var server in response.Result)
-                        Console.WriteLine(server.Name + " " + server.Distance);
-                else
-                    Console.WriteLine(response.ErrorMessage);
+                m_print.Error(tokenResponse.ErrorMessage);
+                return;
             }
-            else
-            {
-                Console.WriteLine(tokenResponse.ErrorMessage);
-            }
-            Console.ReadKey();
+            var response = await m_serversService.RetrieveServersListAsync(tokenResponse.Result);
+            if (!response.Success)
+                m_print.Error(response.ErrorMessage);
+            m_print.ServersList(response.Result);  
         }
 
-            public async Task GetServersListLocalAsync()
+        public async Task GetServersListLocalAsync()
         {
-            var serves_list = await m_serversService.RetrieveServersListLocalAsync();
-            foreach (var server in serves_list)
-                Console.WriteLine(server.Name + " " + server.Distance);            
-            Console.ReadKey();
+            var servers_list = await m_serversService.RetrieveServersListLocalAsync();
+            m_print.ServersList(servers_list);
         }
     }
 }

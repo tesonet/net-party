@@ -44,7 +44,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\AuthenticationRepository.cs" />
+    <Compile Include="Helpers\IPrinter.cs" />
     <Compile Include="Helpers\IRequestResult.cs" />
+    <Compile Include="Helpers\Printer.cs" />
     <Compile Include="Repository\FileRepositoryProvider.cs" />
     <Compile Include="Credentials.cs" />
     <Compile Include="DependencyContainer.cs" />
