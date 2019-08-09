@@ -3,6 +3,7 @@ using Unity;
 using System;
 using System.Threading.Tasks;
 using partycli.Http;
+using partycli.Helpers;
 using partycli.Repository;
 
 namespace partycli.Config
@@ -18,24 +19,24 @@ namespace partycli.Config
             m_repositoryProvider = repositoryProvider;
             m_httpService = httpService;
         }
+
         public Task SaveCredentialsAsync(string username, string password)
         {
             m_repositoryProvider.Reset();
-            string content = JsonConvert.SerializeObject(new Credentials(Encrypt(username), Encrypt(password)));
-            return m_repositoryProvider.SaveAsync(content);
+            return m_repositoryProvider.SaveAsync(JsonConvert.SerializeObject(new Credentials(Encrypt(username), Encrypt(password))));
         }
+        public async Task<IRequestResult<string>> RetrieveToken()
+        {
+            var response = await m_httpService.PostJson(JsonConvert.SerializeObject(await LoadCredentialsAsync()));
+            if (response.Success)
+                return new SuccessResult<string>(response.Result);
+            return new FailedResult(response.ErrorMessage);
+        }   
 
-        public async Task<Credentials> LoadCredentialsAsync()
+        private async Task<Credentials> LoadCredentialsAsync()
         {
             dynamic o = JsonConvert.DeserializeObject<Credentials>(await m_repositoryProvider.LoadAsync());
             return new Credentials(Decrypt(o.Username), Decrypt(o.Password));
-        }
-
-        public async Task<string> RetrieveToken()
-        {
-            var credentials = await LoadCredentialsAsync();
-            var result = await m_httpService.PostJson(JsonConvert.SerializeObject(credentials));
-            return result.token;
         }
 
         public static string Encrypt(string s) { return Reverse(s); }

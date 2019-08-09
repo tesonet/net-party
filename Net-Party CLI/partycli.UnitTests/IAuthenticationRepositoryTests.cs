@@ -7,6 +7,7 @@ using FluentAssertions;
 using partycli.Repository;
 using partycli.Config;
 using partycli.Http;
+using partycli.Helpers;
 
 namespace partycli.UnitTests.IAuthenticationRepositoryTests
 {
@@ -69,49 +70,21 @@ namespace partycli.UnitTests.IAuthenticationRepositoryTests
         }
 
         [Test]
-        public void IAuthenticationRepository_ValidateLoad_LoadsFromProvider()
+        public async Task IAuthenticationRepository_ValidateRetrieveToken_MakesHttpPostAsync()
         {
             //Arrange
             string serializedCredentials = JsonConvert.SerializeObject(
                 new Credentials(AuthenticationRepository.Encrypt("foo"), AuthenticationRepository.Encrypt("bar")));
             mockRepositoryProvider.Setup(repo => repo.LoadAsync()).Returns(Task.FromResult(serializedCredentials));
+            mockHttpService.Setup(http => http.PostJson(It.IsAny<string>())).Returns(Task.FromResult(new SuccessResult<string>("token") as IRequestResult<string>));
 
             //Act
-            authRepository.LoadCredentialsAsync().Wait();
-
-            //Assert
-            mockRepositoryProvider.Verify(mock => mock.LoadAsync(), Times.Once());
-        }
-
-        [Test]
-        public async Task IAuthenticationRepository_ValidateLoad_ReturnsCredentials()
-        {
-            //Arrange
-            string serializedCredentials = JsonConvert.SerializeObject(
-                new Credentials(AuthenticationRepository.Encrypt("username"), AuthenticationRepository.Encrypt("password")));
-            mockRepositoryProvider.Setup(repo => repo.LoadAsync()).Returns(Task.FromResult(serializedCredentials));
-
-            //Act
-            Credentials credentialsResult = await authRepository.LoadCredentialsAsync();
-
-            //Assert
-            credentialsResult.Should().NotBeNull();
-            credentialsResult.Should().Equals(new Credentials("username", "password"));
-        }
-
-        [Test]
-        public void IAuthenticationRepository_ValidateRetrieveToken_MakesHttpPost()
-        {
-            //Arrange
-            string serializedCredentials = JsonConvert.SerializeObject(
-                new Credentials(AuthenticationRepository.Encrypt("foo"), AuthenticationRepository.Encrypt("bar")));
-            mockRepositoryProvider.Setup(repo => repo.LoadAsync()).Returns(Task.FromResult(serializedCredentials));
-
-            //Act
-            Task<string> token = authRepository.RetrieveToken();
+            var response = await authRepository.RetrieveToken();
 
             //Assert
             mockHttpService.Verify(mock => mock.PostJson(It.IsAny<string>()), Times.Once());
+            response.Success.Should().Be(true);
+            response.Result.Should().Be("token");
         }
     }
 }

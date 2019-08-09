@@ -46,7 +46,7 @@ namespace partycli.Repository
             {
                 var content = await reader.ReadToEndAsync();
                 return content;
-            }            
+            }
         }
     }
 }

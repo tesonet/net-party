@@ -1,13 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using partycli.Helpers;
+using System.Threading.Tasks;
 
-namespace partycli
+namespace partycli.Config
 {
     interface IAuthenticationRepository
     {
         Task SaveCredentialsAsync(string username, string password);
 
-        Task<Credentials> LoadCredentialsAsync();
-
-        Task<string> RetrieveToken();
+        Task<IRequestResult<string>> RetrieveToken();
     }
 }
