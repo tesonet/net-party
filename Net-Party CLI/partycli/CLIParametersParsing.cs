@@ -1,34 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Commander.NET.Attributes;
+﻿using CommandLine;
 
 namespace partycli.Options
 {
-    public class APIConfig
+    [Verb("server_list", HelpText = "List servers")]
+    class ServerListSubOptions
     {
-        [Parameter("--username")]
-        public string username;
-        [Parameter("--password")]
-        public string password;
+        [Option("local", HelpText = "Use list from persistant storage")]
+        public bool Local { get; set; }
     }
 
-    public class APIListServers
+    [Verb("config", HelpText = "Configurate authentication")]
+    class ConfigSubOptions
     {
-        [Parameter("--local", Required = Required.No)]
-        public Local local;
-    }
-    public class Local { //need a flag attribute instead 
-    };
-    public class CLIOptions
-    {
-        [Command("config")]
-        public APIConfig config;
+        [Option("username", HelpText = "Specify user name")]
+        public string Username { get; set; }
 
-        [Command("server_list")]
-        public APIListServers server_list;
-    }
+        [Option("password", HelpText = "Specify password")]
+        public string Password { get; set; }
+    }   
 }

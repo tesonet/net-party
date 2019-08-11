@@ -16,7 +16,5 @@ namespace partycli
             Username = username;
             Password = password;
         }
-
-
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 
 namespace partycli.Repository
 {
+    //TODO: error handling for FileRepository. catch exceptions , refactor for IRequestResult
     public class FileRepositoryProvider : IRepositoryProvider
     {
         private readonly string m_filePath;
@@ -42,6 +43,7 @@ namespace partycli.Repository
 
         public async Task<string> LoadAsync()
         {
+            if (!m_fileSystem.File.Exists(m_filePath)) return null; //
             using (var reader = m_fileSystem.File.OpenText(m_filePath))
             {
                 var content = await reader.ReadToEndAsync();
@@ -50,4 +52,4 @@ namespace partycli.Repository
         }
     }
 }
-//TODO: error handling for FileRepository. catch exceptions , refactor for IRequestResult
+

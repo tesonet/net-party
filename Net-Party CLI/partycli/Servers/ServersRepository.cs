@@ -33,7 +33,9 @@ namespace partycli.Servers
         public async Task<List<Server>> RetrieveServersListLocalAsync()
         {
             var server_list = await m_serversRepositoryProvider.LoadAsync();
-            return JsonConvert.DeserializeObject<List<Server>>(server_list);            
+            if (server_list != null)
+                return JsonConvert.DeserializeObject<List<Server>>(server_list);
+            return new List<Server>();
         }
     }
 }
