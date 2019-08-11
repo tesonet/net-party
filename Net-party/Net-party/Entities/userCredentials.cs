@@ -20,7 +20,7 @@ namespace Net_party.Entities
             return $"{nameof(Id)}: {Id}, {nameof(Username)}: {Username}, {nameof(Password)}: {Password}";
         }
 
-        public UserCredentials FromConfig(CredentialsDto credentials)
+        public static UserCredentials FromConfig(CredentialsDto credentials)
         {
             return new UserCredentials {Username = credentials.Username, Password = credentials.Password};
         }

@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Linq;
 using System.Data.SQLite;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Net_party.CommandLineModels;
-using Net_party.Entities;
 
 namespace Net_party.Database
 {
-    class SqLiteDatabase : IStorage
+    class SqLiteDatabase : IStorage, IDisposable
     {
         private const string DatabaseName = "NetParty.db";
 
@@ -27,29 +22,6 @@ namespace Net_party.Database
             _connection = new SQLiteConnection($"Data Source={DatabaseName};Version=3;");
         }
 
-
-        public async Task SaveUser(CredentialsDto userConfig)
-        {
-            var context = new DataContext(_connection);
-            context.GetTable<CredentialsDto>().InsertOnSubmit(userConfig);
-            context.SubmitChanges();
-        }
-
-        public CredentTaskalsDto GetUser()
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public Task SaveServers(IEnumerable<ServersRetrievalConfigurationDto> servers)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<Server>> GetServers()
-        {
-            throw new NotImplementedException();
-        }
 
         private void Init()
         {
@@ -71,6 +43,16 @@ namespace Net_party.Database
 
             new SQLiteCommand(userConfigurationTableCreationSql, _connection).ExecuteNonQuery();
 
+        }
+
+        public DataContext GetContext()
+        {
+            return new DataContext(_connection);
+        }
+
+        public void Dispose()
+        {
+            _connection?.Dispose();
         }
     }
 }

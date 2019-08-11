@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Threading;
 using CommandLine;
 using Net_party.CommandLineControllers;
 using Net_party.CommandLineModels;
@@ -34,14 +35,15 @@ namespace Net_party
                     Parser.Default.ParseArguments<CredentialsDto>(args)
                         .WithParsed(config =>
                         {
-                            new CredentialsController(config);
+                            new CredentialsController().SaveUser(config);
                         });
                     break;
                 case "server_list":
                     Parser.Default.ParseArguments<ServersRetrievalConfigurationDto>(args)
-                        .WithParsed(o =>
+                        .WithParsed(async config =>
                         {
-                            Console.WriteLine(o.IsLocal);
+                            await (new ServerController().GetServers(config));
+                            
                         });
                     break;
                 default:
