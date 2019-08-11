@@ -1,56 +1,64 @@
 ﻿using System;
 using System.Reflection;
-using System.Threading;
+using System.Threading.Tasks;
 using CommandLine;
 using Net_party.CommandLineControllers;
 using Net_party.CommandLineModels;
-using Net_party.Database;
-using Net_party.Entities;
+using Net_party.Controllers;
+using Net_party.Logging;
 using Ninject;
 
 namespace Net_party
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-
             var kernel = new StandardKernel();
             kernel.Load(Assembly.GetExecutingAssembly());
 
-            var database = kernel.Get<IStorage>();
 
-            args = new[] { "config", "--username", "Test", "--password", "test" };
+//            args = new[] { "config", "--username", "tesonet" };
+//            args = new[] { "server_list"};
 
+
+            await RouteToControllers(args);
+        }
+
+        private static async Task RouteToControllers(string[] args)
+        {
             if (args.Length == 0)
             {
-                Console.WriteLine("The application is supposed to be launched with arguments.");
+                NLogger.GetInstance().Error("The application is supposed to be launched with arguments.");
                 return;
             }
 
-
+            Task controllerTask = null;
             switch (args[0].ToLower())
             {
                 case "config":
                     Parser.Default.ParseArguments<CredentialsDto>(args)
                         .WithParsed(config =>
                         {
-                            new CredentialsController().SaveUser(config);
+                            controllerTask = ExceptionLogging.CatchAndLogErrors(async () => await new CredentialsController().SaveUser(config), rethrow: false);
                         });
                     break;
                 case "server_list":
                     Parser.Default.ParseArguments<ServersRetrievalConfigurationDto>(args)
-                        .WithParsed(async config =>
+                        .WithParsed(config =>
                         {
-                            await (new ServerController().GetServers(config));
-                            
+                            controllerTask = ExceptionLogging.CatchAndLogErrors(async () => await new ServerController().GetServers(config), rethrow: false);
                         });
                     break;
                 default:
-                    Console.WriteLine("Command not recognized");
-                    break;
+                    NLogger.GetInstance().Error("Command not recognised");
+                    return;
             }
 
+            if (controllerTask != null)
+            {
+                await controllerTask;
+            }
         }
     }
 }

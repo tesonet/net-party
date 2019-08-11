@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -86,8 +87,9 @@
     <Compile Include="CommandLineModels\ServersRetrievalConfigurationDTO.cs" />
     <Compile Include="Entities\Server.cs" />
     <Compile Include="Entities\UserCredentials.cs" />
-    <Compile Include="Extensions\RandomExtensions.cs" />
-    <Compile Include="Extensions\StringExtentions.cs" />
+    <Compile Include="Logging\ExceptionLogging.cs" />
+    <Compile Include="Logging\NLogger.cs" />
+    <Compile Include="Logging\ServersLogging.cs" />
     <Compile Include="NinjectContainer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -102,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="NLog.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

@@ -2,13 +2,13 @@
 
 namespace Net_party.CommandLineModels
 {
-    [Verb("config", HelpText = "Displays first lines of a file.")]
+    [Verb("config", HelpText = "Saves credential information in the permanent storage.")]
     public class CredentialsDto
     {
-        [Option("username", Required = true, HelpText = "Set output to verbose messages.")]
+        [Option("username", Required = true, HelpText = "Username that's going to be sent to the api.")]
         public string Username { get; set; }
 
-        [Option("password", Required = true, HelpText = "Set output to verbose messages.")]
+        [Option("password", Required = true, HelpText = "Password that's going to be sent to the api.")]
         public string Password { get; set; }
 
         public override string ToString()

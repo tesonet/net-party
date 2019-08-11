@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Net_party.CommandLineModels;
 using Net_party.Entities;
+using Net_party.Logging;
 using Net_party.Repositories;
 using Net_party.Services.Config;
 using Newtonsoft.Json;
@@ -23,7 +24,7 @@ namespace Net_party.Services.Credentials
 
         public Task SaveUserInStorage(CredentialsDto userConfig)
         {
-            return _credentialsRepository.SaveUser(UserCredentials.FromConfig(userConfig));
+            return ExceptionLogging.CatchAndLogErrors(() => _credentialsRepository.SaveUser(UserCredentials.FromCredentialsDto(userConfig)));
         }
 
         public async Task<UserCredentials> GetUser()
@@ -33,7 +34,7 @@ namespace Net_party.Services.Credentials
 
         public async Task<string> GetAuthorizationToken(UserCredentials userConfig)
         {
-            try
+            return await ExceptionLogging.CatchAndLogErrors(async () =>
             {
                 var client = new HttpClient
                 {
@@ -46,15 +47,10 @@ namespace Net_party.Services.Credentials
                 });
                 var result = await client.PostAsync("tokens", content);
                 var resultContent = await result.Content.ReadAsStringAsync();
-                var jsonObject = (JObject) JsonConvert.DeserializeObject(resultContent);
+                var jsonObject = (JObject)JsonConvert.DeserializeObject(resultContent);
                 var tokenValue = jsonObject.GetValue("token");
                 return tokenValue.ToString();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                return null;
-            }
+            });
         }
     }
 }

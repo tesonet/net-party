@@ -4,11 +4,11 @@ using Net_party.CommandLineModels;
 using Net_party.Entities;
 using Net_party.Services.Server;
 
-namespace Net_party.CommandLineControllers
+namespace Net_party.Controllers
 {
     class ServerController
     {
-        private IServerService _serverService;
+        private readonly IServerService _serverService;
         public ServerController()
         {
            _serverService = new ServerService();

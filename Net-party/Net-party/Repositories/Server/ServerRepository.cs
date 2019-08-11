@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Net_party.Database;
+using Net_party.Logging;
 using Ninject;
 
 namespace Net_party.Repositories.Server
