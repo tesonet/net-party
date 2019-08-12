@@ -39,14 +39,14 @@ namespace partycli.UnitTests.IServersRepositoryTests
         }
 
         [Test]
-        public async Task IServersRepositoryTests_RetrieveServersListAsync_()
+        public async Task IServersRepositoryTests_RetrieveServersListAsync_Success()
         {
             //Arrange
             mockHttpService.Setup(mock => mock.GetWithToken(It.IsAny<string>())).Returns(Task.FromResult(new SuccessResult<string>(server_list) as IRequestResult<string>));
 
             //Act
             var result = await serversRepository.RetrieveServersListAsync("token");
-            
+
             //Assert
             mockHttpService.Verify(mock => mock.GetWithToken(It.IsAny<string>()), Times.Once());
             mockRepositoryProvider.Verify(mock => mock.Reset(), Times.Once());
@@ -56,7 +56,24 @@ namespace partycli.UnitTests.IServersRepositoryTests
         }
 
         [Test]
-        public async Task IServersRepositoryTests_RetrieveServersListLocalAsync_()
+        public async Task IServersRepositoryTests_RetrieveServersListAsync_HttpRequestFailed()
+        {
+            //Arrange
+            mockHttpService.Setup(mock => mock.GetWithToken(It.IsAny<string>())).Returns(Task.FromResult(new FailedResult("error message") as IRequestResult<string>));
+
+            //Act
+            var result = await serversRepository.RetrieveServersListAsync("token");
+
+            //Assert
+            mockHttpService.Verify(mock => mock.GetWithToken(It.IsAny<string>()), Times.Once());
+            mockRepositoryProvider.Verify(mock => mock.Reset(), Times.Never());
+            mockRepositoryProvider.Verify(mock => mock.SaveAsync(It.IsAny<string>()), Times.Never());
+            result.Success.Should().Be(false);
+            result.ErrorMessage.Should().Equals("error message");
+        }
+
+        [Test]
+        public async Task IServersRepositoryTests_RetrieveServersListLocalAsync_Success()
         {
             //Arrange
             mockRepositoryProvider.Setup(mock => mock.LoadAsync()).Returns(Task.FromResult(server_list));
@@ -67,7 +84,8 @@ namespace partycli.UnitTests.IServersRepositoryTests
             //Assert
             mockHttpService.Verify(mock => mock.GetWithToken(It.IsAny<string>()), Times.Never());
             mockRepositoryProvider.Verify(mock => mock.LoadAsync(), Times.Once());
-            result.Should().HaveCount(2).And.Should().Equals(server_list_deserialized);
+            result.Should().HaveCount(2);
+            result.Should().BeEquivalentTo(server_list_deserialized);
         }
     }
 }

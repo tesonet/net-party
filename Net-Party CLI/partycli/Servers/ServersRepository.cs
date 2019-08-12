@@ -27,15 +27,15 @@ namespace partycli.Servers
                 m_serversRepositoryProvider.SaveAsync(server_list).Wait();
                 return new SuccessResult<List<Server>>(JsonConvert.DeserializeObject<List<Server>>(server_list));
             }
-            return new FailedResult(response.ErrorMessage) as IRequestResult<List<Server>>;
+            return new FailedResult<List<Server>>(response.ErrorMessage) as IRequestResult<List<Server>>;
         }
 
         public async Task<List<Server>> RetrieveServersListLocalAsync()
         {
             var server_list = await m_serversRepositoryProvider.LoadAsync();
-            if (server_list != null)
-                return JsonConvert.DeserializeObject<List<Server>>(server_list);
-            return new List<Server>();
+            if (string.IsNullOrEmpty(server_list))
+                return new List<Server>();
+            return JsonConvert.DeserializeObject<List<Server>>(server_list);
         }
     }
 }

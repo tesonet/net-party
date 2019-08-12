@@ -40,6 +40,15 @@
     <Reference Include="FluentAssertions, Version=5.7.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentAssertions.5.7.0\lib\net47\FluentAssertions.dll</HintPath>
     </Reference>
+    <Reference Include="Flurl, Version=2.8.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Flurl.2.8.2\lib\net40\Flurl.dll</HintPath>
+    </Reference>
+    <Reference Include="Flurl.Http, Version=2.4.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Flurl.Http.2.4.2\lib\net46\Flurl.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Moq, Version=4.12.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.12.0\lib\net45\Moq.dll</HintPath>
     </Reference>
@@ -79,6 +88,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IAuthenticationRepositoryTests.cs" />
+    <Compile Include="IHttpServiceTests.cs" />
+    <Compile Include="IPrinterTests.cs" />
     <Compile Include="IRepositoryProviderTests.cs" />
     <Compile Include="IServersRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

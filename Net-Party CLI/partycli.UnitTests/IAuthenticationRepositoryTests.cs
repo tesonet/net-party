@@ -23,8 +23,8 @@ namespace partycli.UnitTests.IAuthenticationRepositoryTests
         public void TestSetup()
         {
             //Arrange  
-            container = new UnityContainer();
-            mockHttpService = new Mock<IHttpService>();            
+            container = new UnityContainer(); 
+            mockHttpService = new Mock<IHttpService>();           
             mockRepositoryProvider = new Mock<IRepositoryProvider>();
             container.RegisterInstance<IHttpService>(mockHttpService.Object);
             container.RegisterInstance<IRepositoryProvider>(mockRepositoryProvider.Object);

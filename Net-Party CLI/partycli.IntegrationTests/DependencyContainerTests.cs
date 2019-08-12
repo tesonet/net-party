@@ -7,7 +7,7 @@ namespace partycli.IntegrationTests
     class DependencyContainerTests
     {
         [Test]
-        public void containerRegistrationSuccessfull_serviceResolvbable()
+        public void DependencyContainer_ContainerRegistration_ServiceResolvbable()
         {
             //Setup
             IUnityContainer container = new UnityContainer();

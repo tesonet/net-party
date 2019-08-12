@@ -12,11 +12,9 @@ namespace partycli.Http
     public class HttpService : IHttpService
     {
         string m_url = null;
-        ILog m_log = null;
-        public HttpService(string url, ILog log)
+        public HttpService(string url)
         {
             m_url = url;
-            m_log = log;
         }
         public async Task<IRequestResult<string>> GetWithToken(string token)
         {
@@ -24,21 +22,33 @@ namespace partycli.Http
                     .WithHeader("Accept", "application/json")
                     .WithHeader("Authorization", "Bearer " + token)
                     .GetJsonListAsync();
-            
-            return new SuccessResult<string>(JsonConvert.SerializeObject(httpResponse));
+            return getResponse(httpResponse);
         }
 
-        public async Task<IRequestResult<string>> PostJson(string content)
+        public async Task<IRequestResult<string>> PostJson(string serializedCredentials)
         {
             dynamic httpResponse = await m_url
                 .WithHeader("Content-Type", "application/json")
-                .PostAsync(new StringContent(content))
+                .PostAsync(new StringContent(serializedCredentials))
                 .ReceiveJson();
+            return getResponse(httpResponse);
+        }
 
-            if (httpResponse.token != null)
+        private static IRequestResult<string> getResponse(dynamic httpResponse)
+        {
+            if (IsPropertyExist(httpResponse,"message"))
+                return new FailedResult(httpResponse.message as string);
+            if (IsPropertyExist(httpResponse, "token"))
                 return new SuccessResult<string>(httpResponse.token as string);
-            return new FailedResult(httpResponse.message as string);
-            
+            return new SuccessResult<string>(JsonConvert.SerializeObject(httpResponse));
+        }
+
+        private static bool IsPropertyExist(dynamic settings, string name)
+        {
+            if (settings is ExpandoObject)
+                return ((IDictionary<string, object>)settings).ContainsKey(name);
+
+            return settings.GetType().GetProperty(name) != null;
         }
     }
 }

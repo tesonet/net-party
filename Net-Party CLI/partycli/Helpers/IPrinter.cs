@@ -2,7 +2,7 @@
 
 namespace partycli.Helpers
 {
-    interface IPrinter
+    public interface IPrinter
     {
         void ServersList(List<Server> servers);
         void Info(string info);

@@ -20,7 +20,7 @@ namespace partycli.Api
         internal void SaveCredentials(string username, string password)
         {
             m_authRepository.SaveCredentialsAsync(username, password).Wait();
-            m_print.Info("authentication were configured successfully");
+            m_print.Info("User configuration was successful");
         }
 
         public async Task GetServersListAsync()

@@ -43,7 +43,7 @@ namespace partycli.Repository
 
         public async Task<string> LoadAsync()
         {
-            if (!m_fileSystem.File.Exists(m_filePath)) return null; //
+            if (!m_fileSystem.File.Exists(m_filePath)) return string.Empty;
             using (var reader = m_fileSystem.File.OpenText(m_filePath))
             {
                 var content = await reader.ReadToEndAsync();

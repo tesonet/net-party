@@ -4,13 +4,14 @@ using System.Collections.Generic;
 
 namespace partycli.Helpers
 {
-    class Printer : IPrinter
+    public class Printer : IPrinter
     {
         ILog m_log = null;
         public Printer(ILog log)
         {
             m_log = log;
         }
+
         public void ServersList(List<Server> servers)
         {
             foreach (var server in servers)
@@ -30,6 +31,8 @@ namespace partycli.Helpers
         public void Info(string info)
         {
             m_log.Info(info);
+            m_log.Info("Press any key to continue");
+            Console.ReadKey();
         }
     }
 }
