@@ -1,0 +1,10 @@
+﻿<SolutionConfiguration>
+  <Settings>
+    <AllowParallelTestExecution>False</AllowParallelTestExecution>
+    <HotSpotsLineExclusionList />
+    <MetricsExclusionList>
+      <Value>EntireSolution</Value>
+    </MetricsExclusionList>
+    <SolutionConfigured>True</SolutionConfigured>
+  </Settings>
+</SolutionConfiguration>
