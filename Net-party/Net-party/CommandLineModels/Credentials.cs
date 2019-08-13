@@ -3,7 +3,7 @@
 namespace Net_party.CommandLineModels
 {
     [Verb("config", HelpText = "Saves credential information in the permanent storage.")]
-    public class CredentialsDto
+    public class Credentials
     {
         [Option("username", Required = true, HelpText = "Username that's going to be sent to the api.")]
         public string Username { get; set; }

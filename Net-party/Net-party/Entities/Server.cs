@@ -10,8 +10,8 @@ namespace Net_party.Entities
 
         [Column(Name = "ServerName")]
         public string Name { get; set; }
-        [Column(Name = "Distance")]
 
+        [Column(Name = "Distance")]
         public int Distance { get; set; }
 
         public override string ToString()

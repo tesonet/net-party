@@ -7,7 +7,7 @@
     <ProjectGuid>{CAC4ACA8-BF45-4AAA-A67B-4165EF6B5999}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>Net_party</RootNamespace>
-    <AssemblyName>Net-party</AssemblyName>
+    <AssemblyName>partycli</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -83,8 +83,8 @@
     <Compile Include="Controllers\ServerController.cs" />
     <Compile Include="Controllers\CredentialsController.cs" />
     <Compile Include="Database\IStorage.cs" />
-    <Compile Include="CommandLineModels\CredentialsDTO.cs" />
-    <Compile Include="CommandLineModels\ServersRetrievalConfigurationDTO.cs" />
+    <Compile Include="CommandLineModels\Credentials.cs" />
+    <Compile Include="CommandLineModels\ServersRetrievalConfiguration.cs" />
     <Compile Include="Entities\Server.cs" />
     <Compile Include="Entities\UserCredentials.cs" />
     <Compile Include="Logging\ExceptionLogging.cs" />
@@ -94,6 +94,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Database\SQLiteDatabase.cs" />
+    <Compile Include="Repositories\Credentials\ICredentialsRepository.cs" />
     <Compile Include="Repositories\Server\IServerRepository.cs" />
     <Compile Include="Repositories\Server\ServerRepository.cs" />
     <Compile Include="Repositories\Credentials\CredentialsRepository.cs" />

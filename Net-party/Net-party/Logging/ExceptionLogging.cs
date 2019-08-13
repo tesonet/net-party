@@ -36,7 +36,7 @@ namespace Net_party.Logging
                     throw;
                 }
 
-                return default(T);
+                return default;
             }
         }
 
@@ -55,7 +55,7 @@ namespace Net_party.Logging
                     throw;
                 }
 
-                return default(T);
+                return default;
             }
         }
 

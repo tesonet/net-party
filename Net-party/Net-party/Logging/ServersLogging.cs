@@ -6,11 +6,10 @@ namespace Net_party.Logging
 {
     static class ServersLogging
     {
-        public static void LogToConsole(this IEnumerable<Server> servers)
+        public static void LogToConsole(this IEnumerable<Server> servers, string format = null)
         {
             foreach (var server in servers)
             {
-
                 if (server.Distance > 1000)
                 {
                     Console.ForegroundColor = ConsoleColor.DarkRed;

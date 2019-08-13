@@ -7,7 +7,7 @@ using Net_party.CommandLineModels;
 using Net_party.Entities;
 using Net_party.Logging;
 using Net_party.Repositories;
-using Net_party.Services.Config;
+using Net_party.Repositories.Credentials;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -22,7 +22,7 @@ namespace Net_party.Services.Credentials
             _credentialsRepository = new CredentialsRepository();
         }
 
-        public Task SaveUserInStorage(CredentialsDto userConfig)
+        public Task SaveUserInStorage(CommandLineModels.Credentials userConfig)
         {
             return ExceptionLogging.CatchAndLogErrors(() => _credentialsRepository.SaveUser(UserCredentials.FromCredentialsDto(userConfig)));
         }

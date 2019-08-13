@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Net_party.Database;
 using Net_party.Entities;
+using Net_party.Logging;
 using Ninject;
 
-namespace Net_party.Repositories
+namespace Net_party.Repositories.Credentials
 {
-    class CredentialsRepository
+    class CredentialsRepository : ICredentialsRepository
     {
-        private IStorage _storage;
+        private readonly IStorage _storage;
 
         public CredentialsRepository()
         {
@@ -28,20 +27,14 @@ namespace Net_party.Repositories
             return Task.CompletedTask;
         }
 
-        public Task<UserCredentials> GetLast()
+        public async Task<UserCredentials> GetLast()
         {
-            var context = _storage.GetContext();
-            try
+            return await ExceptionLogging.CatchAndLogErrors(() =>
             {
+                var context = _storage.GetContext();
                 var user = context.GetTable<UserCredentials>().AsEnumerable().LastOrDefault();
                 return Task.FromResult(user);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return null;
-            }
-           
+            });
         }
     }
 }

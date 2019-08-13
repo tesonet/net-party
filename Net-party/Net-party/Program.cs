@@ -2,10 +2,11 @@
 using System.Reflection;
 using System.Threading.Tasks;
 using CommandLine;
-using Net_party.CommandLineControllers;
 using Net_party.CommandLineModels;
 using Net_party.Controllers;
 using Net_party.Logging;
+using Net_party.Services.Credentials;
+using Net_party.Services.Server;
 using Ninject;
 
 namespace Net_party
@@ -14,14 +15,6 @@ namespace Net_party
     {
         static async Task Main(string[] args)
         {
-            var kernel = new StandardKernel();
-            kernel.Load(Assembly.GetExecutingAssembly());
-
-
-//            args = new[] { "config", "--username", "tesonet" };
-//            args = new[] { "server_list"};
-
-
             await RouteToControllers(args);
         }
 
@@ -34,20 +27,23 @@ namespace Net_party
             }
 
             Task controllerTask = null;
+            var kernel = new StandardKernel();
+            kernel.Load(Assembly.GetExecutingAssembly());
+
             switch (args[0].ToLower())
             {
                 case "config":
-                    Parser.Default.ParseArguments<CredentialsDto>(args)
+                    Parser.Default.ParseArguments<Credentials>(args)
                         .WithParsed(config =>
                         {
-                            controllerTask = ExceptionLogging.CatchAndLogErrors(async () => await new CredentialsController().SaveUser(config), rethrow: false);
+                            controllerTask = ExceptionLogging.CatchAndLogErrors(async () => await new CredentialsController(kernel.Get<ICredentialsService>()).SaveUser(config), rethrow: false);
                         });
                     break;
                 case "server_list":
-                    Parser.Default.ParseArguments<ServersRetrievalConfigurationDto>(args)
+                    Parser.Default.ParseArguments<ServersRetrievalConfiguration>(args)
                         .WithParsed(config =>
                         {
-                            controllerTask = ExceptionLogging.CatchAndLogErrors(async () => await new ServerController().GetServers(config), rethrow: false);
+                            controllerTask = ExceptionLogging.CatchAndLogErrors(async () => await new ServerController(kernel.Get<IServerService>()).GetServers(config), rethrow: false);
                         });
                     break;
                 default:

@@ -9,12 +9,12 @@ namespace Net_party.Controllers
     class ServerController
     {
         private readonly IServerService _serverService;
-        public ServerController()
+        public ServerController(IServerService serverService)
         {
            _serverService = new ServerService();
         }
 
-        public Task<IEnumerable<Server>> GetServers(ServersRetrievalConfigurationDto data)
+        public Task<IEnumerable<Server>> GetServers(ServersRetrievalConfiguration data)
         {
             return data.IsLocal ? _serverService.GetServersLocally() : _serverService.UpdateLocalServerData();
         }

@@ -6,7 +6,6 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Net_party.Logging;
 using Net_party.Repositories.Server;
-using Net_party.Services.Config;
 using Net_party.Services.Credentials;
 using Newtonsoft.Json;
 

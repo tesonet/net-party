@@ -3,7 +3,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Net_party.Database;
-using Net_party.Logging;
 using Ninject;
 
 namespace Net_party.Repositories.Server
@@ -21,15 +20,14 @@ namespace Net_party.Repositories.Server
 
         public Task SaveServers(List<Entities.Server> servers)
         {
-          
             var context = _storage.GetContext();
             var serverTable = context.GetTable<Entities.Server>();
             DeleteServers();
-            int i = 0;
-            foreach (var server in servers)
+
+            for (int i = 0; i < servers.Count; i++)
             {
-                server.Id = i++; // todo Fix the hack
-                serverTable.InsertOnSubmit(server);
+                servers[i].Id = i; // Turns out sqlite is horrible with linq. Leaving the hack this way, could've went with raw sql queries, but decided that the hack is a bit more i
+                serverTable.InsertOnSubmit(servers[i]);
                 context.SubmitChanges();
             }
 

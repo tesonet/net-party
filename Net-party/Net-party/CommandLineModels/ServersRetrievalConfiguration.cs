@@ -4,7 +4,7 @@ namespace Net_party.CommandLineModels
 {
 
     [Verb("server_list", HelpText = "Displays available servers and the distance from them.")]
-    public class ServersRetrievalConfigurationDto
+    public class ServersRetrievalConfiguration
     {
         [Option("local", Required = false, HelpText = "If this parameter is set, the data is going to be aggregated from local storage.")]
         public bool IsLocal { get; set; }
