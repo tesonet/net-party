@@ -1,0 +1,14 @@
+C:\Users\mart\OneDrive\NetPartyCli\bin\Release\netcoreapp2.2\win-x64\hostpolicy.dll
+C:\Users\mart\OneDrive\NetPartyCli\bin\Release\netcoreapp2.2\win-x64\hostfxr.dll
+C:\Users\mart\OneDrive\NetPartyCli\bin\Release\netcoreapp2.2\win-x64\NetPartyCli.exe
+C:\Users\mart\OneDrive\NetPartyCli\bin\Release\netcoreapp2.2\win-x64\NetPartyCli.deps.json
+C:\Users\mart\OneDrive\NetPartyCli\bin\Release\netcoreapp2.2\win-x64\NetPartyCli.runtimeconfig.json
+C:\Users\mart\OneDrive\NetPartyCli\bin\Release\netcoreapp2.2\win-x64\NetPartyCli.runtimeconfig.dev.json
+C:\Users\mart\OneDrive\NetPartyCli\bin\Release\netcoreapp2.2\win-x64\NetPartyCli.dll
+C:\Users\mart\OneDrive\NetPartyCli\bin\Release\netcoreapp2.2\win-x64\NetPartyCli.pdb
+C:\Users\mart\OneDrive\NetPartyCli\obj\Release\netcoreapp2.2\win-x64\NetPartyCli.csprojAssemblyReference.cache
+C:\Users\mart\OneDrive\NetPartyCli\obj\Release\netcoreapp2.2\win-x64\NetPartyCli.csproj.CoreCompileInputs.cache
+C:\Users\mart\OneDrive\NetPartyCli\obj\Release\netcoreapp2.2\win-x64\NetPartyCli.AssemblyInfoInputs.cache
+C:\Users\mart\OneDrive\NetPartyCli\obj\Release\netcoreapp2.2\win-x64\NetPartyCli.AssemblyInfo.cs
+C:\Users\mart\OneDrive\NetPartyCli\obj\Release\netcoreapp2.2\win-x64\NetPartyCli.dll
+C:\Users\mart\OneDrive\NetPartyCli\obj\Release\netcoreapp2.2\win-x64\NetPartyCli.pdb

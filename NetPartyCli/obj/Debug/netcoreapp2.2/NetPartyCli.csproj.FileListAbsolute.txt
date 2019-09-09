@@ -1,0 +1,11 @@
+C:\Users\mart\OneDrive\NetPartyCli\bin\Debug\netcoreapp2.2\NetPartyCli.deps.json
+C:\Users\mart\OneDrive\NetPartyCli\bin\Debug\netcoreapp2.2\NetPartyCli.runtimeconfig.json
+C:\Users\mart\OneDrive\NetPartyCli\bin\Debug\netcoreapp2.2\NetPartyCli.runtimeconfig.dev.json
+C:\Users\mart\OneDrive\NetPartyCli\bin\Debug\netcoreapp2.2\NetPartyCli.dll
+C:\Users\mart\OneDrive\NetPartyCli\bin\Debug\netcoreapp2.2\NetPartyCli.pdb
+C:\Users\mart\OneDrive\NetPartyCli\obj\Debug\netcoreapp2.2\NetPartyCli.csprojAssemblyReference.cache
+C:\Users\mart\OneDrive\NetPartyCli\obj\Debug\netcoreapp2.2\NetPartyCli.csproj.CoreCompileInputs.cache
+C:\Users\mart\OneDrive\NetPartyCli\obj\Debug\netcoreapp2.2\NetPartyCli.AssemblyInfoInputs.cache
+C:\Users\mart\OneDrive\NetPartyCli\obj\Debug\netcoreapp2.2\NetPartyCli.AssemblyInfo.cs
+C:\Users\mart\OneDrive\NetPartyCli\obj\Debug\netcoreapp2.2\NetPartyCli.dll
+C:\Users\mart\OneDrive\NetPartyCli\obj\Debug\netcoreapp2.2\NetPartyCli.pdb
