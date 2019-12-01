@@ -1,0 +1,15 @@
+C:\Users\lt0apvl\Desktop\Užklasinė veikla\Tesonet.NetParty\Tesonet.NetParty.Services\bin\Debug\Tesonet.NetParty.Services.dll
+C:\Users\lt0apvl\Desktop\Užklasinė veikla\Tesonet.NetParty\Tesonet.NetParty.Services\bin\Debug\Tesonet.NetParty.Services.pdb
+C:\Users\lt0apvl\Desktop\Užklasinė veikla\Tesonet.NetParty\Tesonet.NetParty.Services\bin\Debug\log4net.dll
+C:\Users\lt0apvl\Desktop\Užklasinė veikla\Tesonet.NetParty\Tesonet.NetParty.Services\bin\Debug\Tesonet.NetParty.Models.dll
+C:\Users\lt0apvl\Desktop\Užklasinė veikla\Tesonet.NetParty\Tesonet.NetParty.Services\bin\Debug\Tesonet.NetParty.Models.pdb
+C:\Users\lt0apvl\Desktop\Užklasinė veikla\Tesonet.NetParty\Tesonet.NetParty.Services\bin\Debug\log4net.xml
+C:\Users\lt0apvl\Desktop\Užklasinė veikla\Tesonet.NetParty\Tesonet.NetParty.Services\obj\Debug\Tesonet.NetParty.Services.csprojAssemblyReference.cache
+C:\Users\lt0apvl\Desktop\Užklasinė veikla\Tesonet.NetParty\Tesonet.NetParty.Services\obj\Debug\Tesonet.NetParty.Services.csproj.CoreCompileInputs.cache
+C:\Users\lt0apvl\Desktop\Užklasinė veikla\Tesonet.NetParty\Tesonet.NetParty.Services\obj\Debug\Tesonet.NetParty.Services.csproj.CopyComplete
+C:\Users\lt0apvl\Desktop\Užklasinė veikla\Tesonet.NetParty\Tesonet.NetParty.Services\obj\Debug\Tesonet.NetParty.Services.dll
+C:\Users\lt0apvl\Desktop\Užklasinė veikla\Tesonet.NetParty\Tesonet.NetParty.Services\obj\Debug\Tesonet.NetParty.Services.pdb
+C:\Users\lt0apvl\Desktop\Užklasinė veikla\Tesonet.NetParty\Tesonet.NetParty.Services\bin\Debug\Newtonsoft.Json.dll
+C:\Users\lt0apvl\Desktop\Užklasinė veikla\Tesonet.NetParty\Tesonet.NetParty.Services\bin\Debug\Newtonsoft.Json.xml
+C:\Users\lt0apvl\Desktop\Užklasinė veikla\Tesonet.NetParty\Tesonet.NetParty.Services\bin\Debug\CommandLine.dll
+C:\Users\lt0apvl\Desktop\Užklasinė veikla\Tesonet.NetParty\Tesonet.NetParty.Services\bin\Debug\CommandLine.xml

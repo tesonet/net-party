@@ -1,0 +1,3 @@
+2019-12-01 14:52:50,069 [12] INFO  DataDownloaderLogger - Info
+2019-12-01 14:52:50,084 [12] WARN  DataDownloaderLogger - Warning
+2019-12-01 14:52:50,084 [12] ERROR DataDownloaderLogger - Error

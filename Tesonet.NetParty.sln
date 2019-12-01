@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tesonet.NetParty", "Tesonet.NetParty\Tesonet.NetParty.csproj", "{77F249D0-9B0A-4D4A-8BBE-C445E818C1B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tesonet.NetParty.Tests", "Tesonet.NetParty.Tests\Tesonet.NetParty.Tests.csproj", "{93DBCD3B-74A4-4D57-829A-3E27C7C84418}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tesonet.NetParty.Service", "Tesonet.NetParty.Services\Tesonet.NetParty.Service.csproj", "{9C8870DB-9954-411F-924F-1B96597B4025}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tesonet.NetParty.Models", "Tesonet.NetParty.Models\Tesonet.NetParty.Models.csproj", "{14642ADF-7192-43A8-917F-DD755D2F90EC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repositories", "Repositories", "{E026A50C-0BC5-4A93-91BE-A22724A7EDFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tesonet.NetParty.TextFileRepository", "Tesonet.NetParty.TextFileRepository\Tesonet.NetParty.TextFileRepository.csproj", "{F379F201-B93F-4FC5-BB4E-9AADD5F50587}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{4C824E6A-9BCF-4EF7-9801-54B80F63174F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{77F249D0-9B0A-4D4A-8BBE-C445E818C1B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77F249D0-9B0A-4D4A-8BBE-C445E818C1B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77F249D0-9B0A-4D4A-8BBE-C445E818C1B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77F249D0-9B0A-4D4A-8BBE-C445E818C1B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93DBCD3B-74A4-4D57-829A-3E27C7C84418}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93DBCD3B-74A4-4D57-829A-3E27C7C84418}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93DBCD3B-74A4-4D57-829A-3E27C7C84418}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93DBCD3B-74A4-4D57-829A-3E27C7C84418}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C8870DB-9954-411F-924F-1B96597B4025}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C8870DB-9954-411F-924F-1B96597B4025}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C8870DB-9954-411F-924F-1B96597B4025}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C8870DB-9954-411F-924F-1B96597B4025}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14642ADF-7192-43A8-917F-DD755D2F90EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14642ADF-7192-43A8-917F-DD755D2F90EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14642ADF-7192-43A8-917F-DD755D2F90EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14642ADF-7192-43A8-917F-DD755D2F90EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F379F201-B93F-4FC5-BB4E-9AADD5F50587}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F379F201-B93F-4FC5-BB4E-9AADD5F50587}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F379F201-B93F-4FC5-BB4E-9AADD5F50587}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F379F201-B93F-4FC5-BB4E-9AADD5F50587}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9C8870DB-9954-411F-924F-1B96597B4025} = {4C824E6A-9BCF-4EF7-9801-54B80F63174F}
+		{F379F201-B93F-4FC5-BB4E-9AADD5F50587} = {E026A50C-0BC5-4A93-91BE-A22724A7EDFA}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A87BB056-8410-4CA1-8B49-12A740076456}
+	EndGlobalSection
+EndGlobal
