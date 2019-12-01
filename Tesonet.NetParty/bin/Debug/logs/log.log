@@ -1,0 +1,109 @@
+2019-12-01 12:45:16,926 INFO [1] Program - Console app was started! Passed arguments: 
+2019-12-01 12:45:35,961 INFO [1] Program - Console app was started! Passed arguments: --username, YOUR USERNAME, --password, YOUR PASSWORD
+2019-12-01 13:33:10,558 INFO [1] Program - Console app was started! Passed arguments: --username, YOUR USERNAME, --password, YOUR PASSWORD
+2019-12-01 13:58:13,941 INFO [1] Program - Console app was started! Passed arguments: config, --username, YOUR USERNAME, --password, YOURPASSWORD
+2019-12-01 13:59:32,378 INFO [1] Program - Console app was started! Passed arguments: config, --username, YOUR USERNAME, --password, YOURPASSWORD
+2019-12-01 13:59:35,171 INFO [1] Program - Data: YOUR USERNAMEYOURPASSWORD
+2019-12-01 14:00:22,345 INFO [1] Program - Console app was started! Passed arguments: config, --username, YOUR USERNAME, --password, YOURPASSWORD
+2019-12-01 14:00:22,548 INFO [1] Program - Data: YOUR USERNAMEYOURPASSWORD
+2019-12-01 14:02:29,104 INFO [1] Program - Console app was started! Passed arguments: config, --username, YOUR USERNAME, --password, YOURPASSWORD
+2019-12-01 14:02:29,362 INFO [1] Program - Data: YOUR USERNAMEYOURPASSWORD
+2019-12-01 14:20:34,845 INFO [1] Program - Console app was started! Passed arguments: server_list, --local
+2019-12-01 14:20:35,053 INFO [1] Program - Data: True
+2019-12-01 14:20:48,008 INFO [1] Program - Console app was started! Passed arguments: server_list
+2019-12-01 14:20:48,213 INFO [1] Program - Command Line parameters provided were not valid!
+2019-12-01 14:21:08,572 INFO [1] Program - Console app was started! Passed arguments: server_list
+2019-12-01 14:21:08,744 INFO [1] Program - Command Line parameters provided were not valid!
+2019-12-01 14:22:17,755 INFO [1] Program - Console app was started! Passed arguments: server_list
+2019-12-01 14:22:17,867 INFO [1] Program - Data: False
+2019-12-01 14:28:11,382 INFO [1] Program - Console app was started! Passed arguments: server_list
+2019-12-01 14:29:59,713 INFO [1] Program - Console app was started! Passed arguments: server_list
+2019-12-01 14:30:41,406 INFO [1] Program - Console app was started! Passed arguments: server_list
+2019-12-01 14:31:40,257 INFO [1] Program - Console app was started! Passed arguments: server_list
+2019-12-01 14:32:03,843 INFO [1] Program - Console app was started! Passed arguments: server_list
+2019-12-01 14:32:08,929 INFO [1] Program - Data: False
+2019-12-01 14:32:21,125 INFO [1] Program - Console app was started! Passed arguments: server_list, --local
+2019-12-01 14:32:23,363 INFO [1] Program - Data: True
+2019-12-01 14:35:48,267 INFO [1] Program - Console app was started! Passed arguments: server_list, --local
+2019-12-01 14:35:51,492 INFO [1] Program - Data: True
+2019-12-01 14:35:51,556 INFO [1] Program - There no data stored locally!
+2019-12-01 14:36:12,343 INFO [1] Program - Console app was started! Passed arguments: server_list, --local
+2019-12-01 14:36:14,878 INFO [1] Program - Data: True
+2019-12-01 14:36:14,941 INFO [1] Program - There no data stored locally
+2019-12-01 14:57:28,272 INFO [1] Program - Console app was started! Passed arguments: server_list, --local
+2019-12-01 14:57:28,391 INFO [1] Program - Data: True
+2019-12-01 14:57:28,441 INFO [1] Program - There no data stored locally
+2019-12-01 15:04:03,576 INFO [1] Program - Console app was started!
+2019-12-01 15:04:03,586 INFO [1] Program - Arguments: server_list, --local
+2019-12-01 15:04:03,743 INFO [1] Program - There is no data stored locally!
+2019-12-01 15:04:41,318 INFO [1] Program - Console app was started!
+2019-12-01 15:04:41,329 INFO [1] Program - Arguments: server_list
+2019-12-01 15:04:41,894 ERROR [1] Program - System.Net.Http.HttpRequestException: Response status code does not indicate success: 401 (Unauthorized).
+   at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()
+   at Tesonet.NetParty.Services.PlayGroundService.GetAuthenticationToken(User user) in C:\Users\lt0apvl\Desktop\Užklasine veikla\Tesonet.NetParty\Tesonet.NetParty.Services\PlayGroundService.cs:line 23
+   at Tesonet.NetParty.Program.serverListCommand(ServerListCommandArgs args) in C:\Users\lt0apvl\Desktop\Užklasine veikla\Tesonet.NetParty\Tesonet.NetParty\Program.cs:line 81
+   at CommandLine.ParserResultExtensions.WithParsed[T](ParserResult`1 result, Action`1 action)
+   at Tesonet.NetParty.Program.Main(String[] args) in C:\Users\lt0apvl\Desktop\Užklasine veikla\Tesonet.NetParty\Tesonet.NetParty\Program.cs:line 44
+2019-12-01 15:15:52,502 INFO [1] Program - Console app was started!
+2019-12-01 15:15:52,515 INFO [1] Program - Arguments: 
+2019-12-01 15:16:32,067 INFO [1] Program - Console app was started!
+2019-12-01 15:16:32,083 INFO [1] Program - Arguments: 
+2019-12-01 15:16:42,792 INFO [1] Program - Console app was started!
+2019-12-01 15:16:42,803 INFO [1] Program - Arguments: server_list
+2019-12-01 15:16:42,945 INFO [1] Program - Please enter your credentials!
+2019-12-01 15:16:43,345 ERROR [1] Program - System.Net.Http.HttpRequestException: Response status code does not indicate success: 401 (Unauthorized).
+   at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()
+   at Tesonet.NetParty.Services.PlayGroundService.GetAuthenticationToken(User user) in C:\Users\lt0apvl\Desktop\Užklasine veikla\Tesonet.NetParty\Tesonet.NetParty.Services\PlayGroundService.cs:line 23
+   at Tesonet.NetParty.Program.serverListCommand(ServerListCommandArgs args) in C:\Users\lt0apvl\Desktop\Užklasine veikla\Tesonet.NetParty\Tesonet.NetParty\Program.cs:line 100
+   at CommandLine.ParserResultExtensions.WithParsed[T](ParserResult`1 result, Action`1 action)
+   at Tesonet.NetParty.Program.Main(String[] args) in C:\Users\lt0apvl\Desktop\Užklasine veikla\Tesonet.NetParty\Tesonet.NetParty\Program.cs:line 40
+2019-12-01 15:17:32,718 INFO [1] Program - Console app was started!
+2019-12-01 15:17:32,730 INFO [1] Program - Arguments: server_list
+2019-12-01 15:17:32,884 INFO [1] Program - Please enter your credentials!
+2019-12-01 15:20:05,201 INFO [1] Program - Console app was started!
+2019-12-01 15:20:05,213 INFO [1] Program - Arguments: server_list
+2019-12-01 15:20:05,359 INFO [1] Program - To see server list you must enter your credentials or use!
+2019-12-01 15:20:05,361 INFO [1] Program - If you want to check locally stored data add "--local" parameter to this command.
+2019-12-01 15:25:22,359 INFO [1] Program - Console app was started!
+2019-12-01 15:25:22,368 INFO [1] Program - Arguments: server_list
+2019-12-01 15:25:31,141 INFO [1] Program - Console app was started!
+2019-12-01 15:25:31,150 INFO [1] Program - Arguments: 
+2019-12-01 15:25:44,614 INFO [1] Program - Console app was started!
+2019-12-01 15:25:44,623 INFO [1] Program - Arguments: --username, YOUR USERNAME, --password, YOUR PASSWORD
+2019-12-01 15:25:56,162 INFO [1] Program - Console app was started!
+2019-12-01 15:25:56,170 INFO [1] Program - Arguments: server_list
+2019-12-01 15:28:36,407 INFO [1] Program - Console app was started!
+2019-12-01 15:28:36,417 INFO [1] Program - Arguments: --username, YOUR USERNAME, --password, YOUR PASSWORD
+2019-12-01 15:28:48,566 INFO [1] Program - Console app was started!
+2019-12-01 15:28:48,575 INFO [1] Program - Arguments: config, --username, YOUR USERNAME, --password, YOUR PASSWORD
+2019-12-01 15:31:45,369 INFO [1] Program - Console app was started!
+2019-12-01 15:31:45,381 INFO [1] Program - Arguments: config, --username, YOUR USERNAME, --password, YOUR PASSWORD
+2019-12-01 15:32:27,347 INFO [1] Program - Console app was started!
+2019-12-01 15:32:27,349 INFO [1] Program - Arguments: config, --username, YOUR USERNAME, --password, YOUR PASSWORD
+2019-12-01 15:32:49,246 INFO [1] Program - Console app was started!
+2019-12-01 15:32:49,249 INFO [1] Program - Arguments: config, --username, YOUR USERNAME, --password, YOUR PASSWORD
+2019-12-01 15:43:47,426 INFO [1] Program - Console app was started!
+2019-12-01 15:43:47,437 INFO [1] Program - Arguments: config, --username, YOUR USERNAME, --password, YOUR PASSWORD
+2019-12-01 15:43:48,051 ERROR [1] Program - System.UnauthorizedAccessException: Attempted to perform an unauthorized operation.
+   at Tesonet.NetParty.Services.PlayGroundService.GetAuthenticationToken(User user) in C:\Users\lt0apvl\Desktop\Užklasine veikla\Tesonet.NetParty\Tesonet.NetParty.Services\PlayGroundService.cs:line 25
+   at Tesonet.NetParty.Program.getAccessToken(User user) in C:\Users\lt0apvl\Desktop\Užklasine veikla\Tesonet.NetParty\Tesonet.NetParty\Program.cs:line 126
+2019-12-01 15:49:20,610 INFO [1] Program - Console app was started!
+2019-12-01 15:49:20,619 INFO [1] Program - Arguments: config, --username, YOUR USERNAME, --password, YOUR PASSWORD
+2019-12-01 15:49:21,236 ERROR [1] Program - System.UnauthorizedAccessException: Attempted to perform an unauthorized operation.
+   at Tesonet.NetParty.Services.PlayGroundService.GetAuthenticationToken(User user) in C:\Users\lt0apvl\Desktop\Užklasine veikla\Tesonet.NetParty\Tesonet.NetParty.Services\PlayGroundService.cs:line 25
+   at Tesonet.NetParty.Program.getAccessToken(User user) in C:\Users\lt0apvl\Desktop\Užklasine veikla\Tesonet.NetParty\Tesonet.NetParty\Program.cs:line 128
+2019-12-01 15:50:18,014 INFO [1] Program - Console app was started!
+2019-12-01 15:50:18,023 INFO [1] Program - Arguments: --username, tesonet, --password, partyanimal
+2019-12-01 15:50:26,594 INFO [1] Program - Console app was started!
+2019-12-01 15:50:26,603 INFO [1] Program - Arguments: config, --username, tesonet, --password, partyanimal
+2019-12-01 15:50:34,805 INFO [1] Program - Console app was started!
+2019-12-01 15:50:34,814 INFO [1] Program - Arguments: server_list
+2019-12-01 15:58:38,309 INFO [1] Program - Console app was started!
+2019-12-01 15:58:38,318 INFO [1] Program - Arguments: server_list, --local
+2019-12-01 15:59:26,280 INFO [1] Program - Console app was started!
+2019-12-01 15:59:26,292 INFO [1] Program - Arguments: server_list, --local
+2019-12-01 16:12:06,178 INFO [1] Program - Console app was started!
+2019-12-01 16:12:06,191 INFO [1] Program - Arguments: config, --username, YOUR USERNAME, --password, YOUR PASSWORD
+2019-12-01 16:12:07,180 ERROR [1] Program - System.UnauthorizedAccessException: Attempted to perform an unauthorized operation.
+   at Tesonet.NetParty.Services.PlayGroundService.GetAuthenticationToken(User user) in C:\Users\lt0apvl\Desktop\Užklasine veikla\Tesonet.NetParty\Tesonet.NetParty.Services\PlayGroundService.cs:line 25
+   at Tesonet.NetParty.Program.getAccessToken(User user) in C:\Users\lt0apvl\Desktop\Užklasine veikla\Tesonet.NetParty\Tesonet.NetParty\Program.cs:line 126
