@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "partycli4": {
+      "commandName": "Project",
+      "commandLineArgs": "server_list"
+    }
+  }
+}
