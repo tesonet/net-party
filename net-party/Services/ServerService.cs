@@ -8,7 +8,7 @@ namespace net_party.Services
     {
         private readonly IMemoryCache _memoryCache;
 
-        public ServerService(IServiceProvider serviceProvider, IMemoryCache memoryCache) : base(serviceProvider)
+        public ServerService(IServiceProvider services, IMemoryCache memoryCache) : base(services)
         {
             _memoryCache = memoryCache;
         }

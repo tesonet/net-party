@@ -16,7 +16,7 @@ namespace net_party.Services
 
         #endregion Endpoints
 
-        public AuthService(IServiceProvider serviceProvider) : base(serviceProvider)
+        public AuthService(IServiceProvider services) : base(services)
         {
         }
 
