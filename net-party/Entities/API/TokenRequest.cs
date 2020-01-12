@@ -10,9 +10,7 @@ namespace net_party.Entities.API
         [JsonProperty("password")]
         public string Password { get; set; }
 
-        public TokenRequest()
-        {
-        }
+        public TokenRequest() { }
 
         public static TokenRequest New(string username, string password)
         {

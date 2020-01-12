@@ -1,13 +1,16 @@
-﻿using net_party.Entities.API;
+﻿using Dapper.Contrib.Extensions;
+using net_party.Entities.API;
+using net_party.Entities.Interfaces;
 using System;
 
 namespace net_party.Entities.Database
 {
-    public class AuthToken
+    public class AuthToken : IEntity
     {
-        public int Id { get; set; }
-        public DateTime AddedDate { get; set; }
+        [Key]
+        public long Id { get; set; }
 
+        public DateTime AddedDate { get; set; }
         public string Token { get; set; }
 
         public AuthToken()

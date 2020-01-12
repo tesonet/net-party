@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace net_party.Repositories.Contracts
 {
-    public interface IAuthTokenRepository : IBaseRepository<AuthToken>
+    public interface ICredentialRepository : IBaseRepository<Credential>
     {
-        Task<AuthToken> Get();
+        Task<Credential> Get(string username);
     }
 }

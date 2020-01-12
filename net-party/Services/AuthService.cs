@@ -1,5 +1,6 @@
 ﻿using net_party.Entities.API;
 using net_party.Entities.Database;
+using net_party.Services.Base;
 using net_party.Services.Contracts;
 using RestSharp;
 using System;
@@ -9,12 +10,7 @@ namespace net_party.Services
 {
     public class AuthService : BaseRestService, IAuthService
     {
-        #region Endpoints
-
-        private const string SERVER_LIST = "/servers";
         private const string TOKEN = "/tokens";
-
-        #endregion Endpoints
 
         public AuthService(IServiceProvider services) : base(services)
         {
