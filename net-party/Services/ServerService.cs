@@ -7,6 +7,8 @@ using net_party.Services.Contracts;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace net_party.Services
@@ -38,15 +40,60 @@ namespace net_party.Services
         {
             var token = await _authTokenRepository.Get();
 
+            if (token == null)
+            {
+                Console.WriteLine("No credentials found. Please authenticate first using the \"config\" command");
+                return Enumerable.Empty<Server>();
+            }
+
+            var response = await GetServers(token);
+            var servers = TransformFromResponse(response);
+
+            if (response == null)
+            {
+                Console.WriteLine("Attempt to get the remote server list failed.");
+
+                return Enumerable.Empty<Server>();
+            }
+
+            await StoreServersToStorage(servers);
+
+            return servers;
+        }
+
+        private async Task StoreServersToStorage(IEnumerable<Server> servers)
+        {
+            var connection = _services.GetService<SqlConnection>();
+            await connection.OpenAsync();
+
+            using (var transaction = connection.BeginTransaction())
+            {
+                try
+                {
+                    await _serverRepository.Truncate();
+                    await _serverRepository.AddMany(servers);
+
+                    transaction.Commit();
+                }
+                catch
+                {
+                    transaction.Rollback();
+                }
+                finally
+                {
+                    transaction.Dispose();
+                }
+            }
+        }
+
+        private async Task<IEnumerable<ServerListResponse>> GetServers(AuthToken token)
+        {
             var request = BaseRequest(SERVER_LIST, Method.GET);
             request.AddHeader("Authorization", $"Bearer {token.Token}");
             request.AddHeader("Content-Type", "application/json");
-
             var response = await ExecuteManyAsync<ServerListResponse>(request);
-            var servers = TransformFromResponse(response);
-            await _serverRepository.AddMany(servers);
 
-            return servers;
+            return response;
         }
 
         private IEnumerable<Server> TransformFromResponse(IEnumerable<ServerListResponse> serverResponse)

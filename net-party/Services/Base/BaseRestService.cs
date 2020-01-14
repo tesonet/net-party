@@ -10,7 +10,12 @@ namespace net_party.Services.Base
 {
     public abstract class BaseRestService : BaseService
     {
-        protected BaseRestService(IServiceProvider serviceProvider) : base(serviceProvider) { } 
+        private const string BASE_URL = "http://playground.tesonet.lt/v1";
+
+        protected BaseRestService(IServiceProvider serviceProvider) : base(serviceProvider)
+        {
+        }
+
         protected static RestRequest BaseRequest(string url, Method method)
         {
             var request = new RestRequest(url, method)
@@ -23,7 +28,7 @@ namespace net_party.Services.Base
 
         protected RestClient BaseClient()
         {
-            var uri = new Uri(_config.GetSection("Server:BaseUrl").Value);
+            var uri = new Uri(BASE_URL);
             var client = new RestClient(uri);
             client.UseSerializer(() => new JsonNetSerializer());
 
@@ -34,7 +39,12 @@ namespace net_party.Services.Base
         {
             var response = await BaseClient().ExecuteAsync(request, new CancellationToken());
 
-            return new JsonDeserializer().Deserialize<T>(response);
+            if (response.IsSuccessful)
+                return new JsonDeserializer().Deserialize<T>(response);
+
+            Console.WriteLine("Command failed.");
+
+            return default;
         }
 
         protected async Task<IEnumerable<T>> ExecuteManyAsync<T>(IRestRequest request)

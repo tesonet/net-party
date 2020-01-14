@@ -9,13 +9,15 @@ namespace net_party.Services
     public class PasswordService : BaseService, IPasswordService
     {
         public const int SALT_BYTE_SIZE = 24;
-        public const int HASH_BYTE_SIZE = 20; // to match the size of the PBKDF2-HMAC-SHA-1 hash 
+        public const int HASH_BYTE_SIZE = 20; // to match the size of the PBKDF2-HMAC-SHA-1 hash
         public const int PBKDF2_ITERATIONS = 1000;
         public const int ITERATION_INDEX = 0;
         public const int SALT_INDEX = 1;
         public const int PBKDF2_INDEX = 2;
 
-        public PasswordService(IServiceProvider services) : base(services) { }
+        public PasswordService(IServiceProvider services) : base(services)
+        {
+        }
 
         public string HashPassword(string password)
         {

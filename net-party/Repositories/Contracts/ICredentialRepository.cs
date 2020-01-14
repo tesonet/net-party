@@ -5,6 +5,6 @@ namespace net_party.Repositories.Contracts
 {
     public interface ICredentialRepository : IBaseRepository<Credential>
     {
-        Task<Credential> Get(string username);
+        Task<Credential> Get();
     }
 }

@@ -21,6 +21,7 @@ namespace net_party.Entities.Database
         {
             return new AuthToken()
             {
+                AddedDate = DateTime.UtcNow,
                 Token = response.Token
             };
         }

@@ -179,6 +179,7 @@
     <Compile Include="Repositories\Contracts\IServerRepository.cs" />
     <Compile Include="Repositories\CredentialRepository.cs" />
     <Compile Include="Repositories\ServerRepository.cs" />
+    <Compile Include="Repositories\Sql\TablesSql.cs" />
     <Compile Include="Services\AuthService.cs" />
     <Compile Include="Services\Base\BaseRestService.cs" />
     <Compile Include="Services\Base\BaseService.cs" />

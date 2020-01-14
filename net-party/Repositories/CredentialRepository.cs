@@ -7,11 +7,13 @@ namespace net_party.Repositories
 {
     public class CredentialRepository : BaseRepository<Credential>, ICredentialRepository
     {
-        public CredentialRepository(IServiceProvider serviceProvider) : base(serviceProvider) { }
-
-        public async Task<Credential> Get(string username)
+        public CredentialRepository(IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            var sql = $"SELECT TOP 1 * FROM {nameof(Credential)}s WHERE {nameof(Credential.Username)} = '{username}'";
+        }
+
+        public async Task<Credential> Get()
+        {
+            var sql = $"SELECT TOP 1 * FROM {nameof(Credential)}s";
             return await FirstOrNullAsync(sql);
         }
     }

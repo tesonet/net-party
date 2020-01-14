@@ -1,5 +1,6 @@
 ﻿using net_party.Entities.Database;
 using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
 
 namespace net_party.Repositories.Contracts
@@ -8,6 +9,8 @@ namespace net_party.Repositories.Contracts
     {
         Task<IEnumerable<Server>> Get();
 
-        Task<long> AddMany(IEnumerable<Server> entity);
+        Task Truncate(IDbTransaction transaction = null);
+
+        Task<long> AddMany(IEnumerable<Server> entity, IDbTransaction transaction = null);
     }
 }

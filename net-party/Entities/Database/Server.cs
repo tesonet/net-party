@@ -12,7 +12,9 @@ namespace net_party.Entities.Database
         public string Name { get; set; }
         public long Distance { get; set; }
 
-        public Server() { }
+        public Server()
+        {
+        }
 
         public static Server FromResponse(ServerListResponse response)
         {

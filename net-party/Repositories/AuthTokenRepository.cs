@@ -8,7 +8,9 @@ namespace net_party.Repositories
 {
     public class AuthTokenRepository : BaseRepository<AuthToken>, IAuthTokenRepository
     {
-        public AuthTokenRepository(IServiceProvider services) : base(services) { }
+        public AuthTokenRepository(IServiceProvider services) : base(services)
+        {
+        }
 
         public async Task<AuthToken> Get()
         {

@@ -24,21 +24,16 @@ namespace net_party.Repositories
             return await GetAsync(sql);
         }
 
-        public async Task<long> AddMany(IEnumerable<Server> entity)
+        public async Task Truncate(IDbTransaction transaction = null)
         {
-            if (_connection.State == ConnectionState.Broken || _connection.State == ConnectionState.Closed)
-                await _connection.OpenAsync();
+            var sql = $"TRUNCATE TABLE {nameof(Server)}s";
+            await SqlMapper.ExecuteAsync(_connection, sql, transaction);
+        }
 
+        public async Task<long> AddMany(IEnumerable<Server> entity, IDbTransaction transaction = null)
+        {
             long insertedRows;
-
-            using (var tr = _connection.BeginTransaction())
-            {
-                var sql = $"TRUNCATE TABLE {nameof(Server)}s";
-                await SqlMapper.ExecuteAsync(_connection, sql, transaction: tr);
-                insertedRows = await _connection.InsertAsync(entity, transaction: tr);
-
-                tr.Commit();
-            }
+            insertedRows = await _connection.InsertAsync(entity, transaction);
 
             return insertedRows;
         }

@@ -1,10 +1,9 @@
-﻿using net_party.Entities.Database;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace net_party.Services.Contracts
 {
     public interface IAuthService
     {
-        Task<AuthToken> AcquireNewToken();
+        Task AuthenticateCredentials(string username, string password);
     }
 }

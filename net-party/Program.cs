@@ -1,25 +1,24 @@
-﻿using Microsoft.Extensions.CommandLineUtils;
+﻿using Dapper;
+using Microsoft.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using net_party.Repositories;
 using net_party.Repositories.Contracts;
+using net_party.Repositories.Sql;
 using net_party.Services;
 using net_party.Services.Contracts;
 using System;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Security.Cryptography;
-using System.Threading.Tasks;
 
 namespace net_party
 {
     public class Program
     {
-        private static async Task Main(string[] args)
+        private static void Main(string[] args)
         {
             var services = new ServiceCollection()
-                .AddLogging()
-
                 // Repositories
                 .AddScoped<IAuthTokenRepository, AuthTokenRepository>()
                 .AddScoped<ICredentialRepository, CredentialRepository>()
@@ -32,7 +31,7 @@ namespace net_party
                 .AddSingleton<IRngService, RngService>()
                 .AddSingleton<RNGCryptoServiceProvider>()
                 .AddSingleton(provider => new ConfigurationBuilder()
-                    .AddJsonFile("appsettings.json", optional: false)
+                    .AddJsonFile("appsettings.json", optional: true)
                     .Build());
 
             using (var scope = services.BuildServiceProvider().CreateScope())
@@ -47,30 +46,29 @@ namespace net_party
 
             var serviceProvider = services.BuildServiceProvider();
 
-            var logger = serviceProvider.GetService<ILoggerFactory>()
-                .CreateLogger<Program>();
-
-            logger.LogDebug("Starting application");
-
             ExecuteApplication(args, serviceProvider);
-
-            Console.ReadLine();
-
-            logger.LogDebug("Application done!");
         }
 
         private static void ExecuteApplication(string[] args, ServiceProvider services)
         {
-            var logger = services.GetService<ILoggerFactory>().CreateLogger("Debug");
-
-            var app = new CommandLineApplication(throwOnUnexpectedArg: true);
-            app.Name = "net-party";
-            app.Description = "Application for getting a list of servers.";
+            var app = new CommandLineApplication(throwOnUnexpectedArg: true)
+            {
+                Name = "net-party",
+                Description = "Application for getting a list of servers."
+            };
             app.HelpOption("-?|-h|--help");
+
+            app.OnExecute(() =>
+            {
+                Console.WriteLine("Specify --help for a list of available options and commands.");
+
+                return 0;
+            });
+
+            #region server_list
 
             app.Command("server_list", (command) =>
             {
-                Console.WriteLine("server_list");
                 command.Description = "Get a list of servers.";
                 command.HelpOption("-?|-h|--help");
 
@@ -80,23 +78,29 @@ namespace net_party
 
                 command.OnExecute(async () =>
                 {
-                    logger.LogInformation("server_list is executing");
+                    Console.WriteLine("Searching for servers...");
 
                     bool isLocal = local.HasValue();
 
                     var serverService = services.GetService<IServerService>();
                     var serverList = await serverService.GetServers(isLocal);
 
-                    foreach(var server in serverList)
+                    Console.WriteLine("Servers:");
+
+                    foreach (var server in serverList)
                     {
-                        Console.WriteLine($"Server: {server.Name}");
-                        Console.WriteLine($"Distance: {server.Distance}");
+                        Console.WriteLine($"Server - {server.Name}");
+                        Console.WriteLine($"Distance - {server.Distance}");
                     }
 
-                    logger.LogInformation("server_list has finished");
+                    Console.WriteLine($"Total servers found: {serverList.Count()}");
                     return 0;
                 });
             });
+
+            #endregion server_list
+
+            #region config
 
             app.Command("config", (command) =>
             {
@@ -107,26 +111,58 @@ namespace net_party
                     "Username used for authentication.",
                     CommandOptionType.SingleValue);
 
-                var passwordOption = command.Option("--password <password>", "Password used for authentication", CommandOptionType.SingleValue);
+                var passwordOption = command.Option("--password <value>", "Password used for authentication", CommandOptionType.SingleValue);
 
                 command.OnExecute(async () =>
                 {
-                    logger.LogInformation("config is executing");
-
                     string username = usernameOption.Value();
                     string password = passwordOption.Value();
 
+                    if (!usernameOption.HasValue())
+                    {
+                        Console.WriteLine("Invalid argument: username");
+                        throw new ArgumentException();
+                    }
+
+                    if (!passwordOption.HasValue())
+                    {
+                        Console.WriteLine("Invalid argument: password");
+                        throw new ArgumentException();
+                    }
+
                     var authService = services.GetService<IAuthService>();
-                    //authService. TODO Set credentials;
-                    Console.WriteLine("executing config");
-                    logger.LogInformation("config has finished");
+                    await authService.AuthenticateCredentials(username, password);
+
                     return 0;
                 });
             });
 
+            #endregion config
+
+            #region setup_db
+
+            app.Command("setup_db", (command) =>
+            {
+                command.Description = "Runs a script on the connected database to create the required tables for persistent storage.";
+                command.HelpOption("-?|-h|--help");
+
+                command.OnExecute(async () =>
+                {
+                    Console.WriteLine("Begining database table setup...");
+
+                    var connection = services.GetService<SqlConnection>();
+                    await connection.OpenAsync();
+                    await SqlMapper.ExecuteAsync(connection, TablesSql.CreateTablesSql);
+
+                    Console.WriteLine("Database table setup has finished!");
+                    return 0;
+                });
+            });
+
+            #endregion setup_db
+
             try
             {
-                logger.LogInformation("Application has begun executing...");
                 app.Execute(args);
             }
             catch (CommandParsingException ex)
@@ -135,7 +171,7 @@ namespace net_party
             }
             catch (Exception ex)
             {
-                logger.LogInformation("Unable to execute application: {0}", ex.Message);
+                Console.WriteLine($"Unable to execute application: {ex.Message}");
             }
         }
     }
