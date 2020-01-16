@@ -34,9 +34,9 @@ namespace net_party.Services
                 return await GetServersFromApi();
         }
 
-        private async Task<IEnumerable<Server>> GetServersFromRepository() => await _serverRepository.Get();
+        public async Task<IEnumerable<Server>> GetServersFromRepository() => await _serverRepository.Get();
 
-        private async Task<IEnumerable<Server>> GetServersFromApi()
+        public async Task<IEnumerable<Server>> GetServersFromApi()
         {
             var token = await _authTokenRepository.Get();
 
@@ -61,7 +61,7 @@ namespace net_party.Services
             return servers;
         }
 
-        private async Task StoreServersToStorage(IEnumerable<Server> servers)
+        public async Task StoreServersToStorage(IEnumerable<Server> servers)
         {
             var connection = _services.GetService<SqlConnection>();
             await connection.OpenAsync();
@@ -75,8 +75,9 @@ namespace net_party.Services
 
                     transaction.Commit();
                 }
-                catch
+                catch(Exception ex)
                 {
+                    _log.Error(ex, $"{DateTime.UtcNow}: Transaction failed. Rolling back.");
                     transaction.Rollback();
                 }
                 finally
@@ -86,7 +87,7 @@ namespace net_party.Services
             }
         }
 
-        private async Task<IEnumerable<ServerListResponse>> GetServers(AuthToken token)
+        public async Task<IEnumerable<ServerListResponse>> GetServers(AuthToken token)
         {
             var request = BaseRequest(SERVER_LIST, Method.GET);
             request.AddHeader("Authorization", $"Bearer {token.Token}");
@@ -96,7 +97,7 @@ namespace net_party.Services
             return response;
         }
 
-        private IEnumerable<Server> TransformFromResponse(IEnumerable<ServerListResponse> serverResponse)
+        public IEnumerable<Server> TransformFromResponse(IEnumerable<ServerListResponse> serverResponse)
         {
             foreach (var item in serverResponse)
             {

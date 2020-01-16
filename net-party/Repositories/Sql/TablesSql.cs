@@ -4,7 +4,7 @@ namespace net_party.Repositories.Sql
 {
     public static class TablesSql
     {
-        public static string CreateTablesSql = $@"
+        public static readonly string CreateTablesSql = $@"
             CREATE TABLE [dbo].[{nameof(AuthToken)}s](
 	            [{nameof(AuthToken.Id)}] [int] IDENTITY(1,1) NOT NULL,
 	            [{nameof(AuthToken.AddedDate)}] [date] NOT NULL,

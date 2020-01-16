@@ -8,5 +8,7 @@ namespace net_party.Repositories.Contracts
         Task<long> Add(T entity);
 
         Task<bool> Update(T entity);
+
+        Task<bool> Delete(T entity);
     }
 }

@@ -53,6 +53,19 @@ namespace net_party.Repositories
             }
         }
 
+        public async Task<bool> Delete(T entity)
+        {
+            try
+            {
+                return await _connection.DeleteAsync(entity);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Command failed: {ex.Message}");
+                throw ex;
+            }
+        }
+
         protected async Task<T> FirstOrNullAsync(string query)
         {
             try

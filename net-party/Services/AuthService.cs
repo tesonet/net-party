@@ -44,7 +44,7 @@ namespace net_party.Services
             await HandleSuccessfulResponse(username, password, response);
         }
 
-        private async Task HandleSuccessfulResponse(string username, string password, TokenResponse response)
+        public async Task HandleSuccessfulResponse(string username, string password, TokenResponse response)
         {
             var token = AuthToken.FromTokenResponse(response);
 
@@ -75,6 +75,7 @@ namespace net_party.Services
                 {
                     transaction.Rollback();
                     Console.WriteLine($"Authentication failed: {ex.Message}");
+                    _log.Error(ex, $"{DateTime.UtcNow}: Transaction failed. Rolling back.");
                     throw ex;
                 }
                 finally
@@ -93,7 +94,6 @@ namespace net_party.Services
                 await _credentialRepository.Add(Credential.New(username, hashedPassword));
             else
             {
-                existing.Username = username;
                 existing.Password = hashedPassword;
                 await _credentialRepository.Update(existing);
             }
