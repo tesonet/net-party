@@ -51,7 +51,7 @@
     <Compile Include="Log\ILog.cs" />
     <Compile Include="Log\ILogProvider.cs" />
     <Compile Include="Log\Log.cs" />
-    <Compile Include="Log\Logger.cs" />
+    <Compile Include="Log\LogHelper.cs" />
     <Compile Include="Log\LogProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

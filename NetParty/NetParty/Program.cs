@@ -17,7 +17,7 @@ namespace NetParty
 
             if (args != null && args.Any())
             {
-                Logger.Debug("Program started. Args: {0}", string.Join(" ", args));
+                LogHelper.Debug("Program started. Args: {0}", string.Join(" ", args));
                 try
                 {
                     Type[] types = { typeof(ConfigOptions), typeof(ServerListOptions) };
@@ -82,7 +82,7 @@ namespace NetParty
 
         private static void Exit(string message, bool onError = false)
         {
-            Logger.Debug("Program Finished: onError {0}, Message: {1}", onError, message);
+            LogHelper.Debug("Program Finished: onError {0}, Message: {1}", onError, message);
             Console.BackgroundColor = onError ? ConsoleColor.Red : ConsoleColor.Green;
             Console.WriteLine($"{(onError ? "[ERROR]" : "[SUCCESS]")} {message}");
             Console.WriteLine("Press any key to exit.");
