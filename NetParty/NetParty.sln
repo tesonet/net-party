@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{8012D35A-9
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetParty.Tests", "test\NetParty.Tests\NetParty.Tests.csproj", "{BA6853E2-B7CC-41FA-9513-B09E70C6A57A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetParty.IntegrationTests", "test\NetParty.IntegrationTests\NetParty.IntegrationTests.csproj", "{0980106B-DED8-40E0-83E2-0B0EAA985E5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{BA6853E2-B7CC-41FA-9513-B09E70C6A57A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA6853E2-B7CC-41FA-9513-B09E70C6A57A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA6853E2-B7CC-41FA-9513-B09E70C6A57A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0980106B-DED8-40E0-83E2-0B0EAA985E5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0980106B-DED8-40E0-83E2-0B0EAA985E5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0980106B-DED8-40E0-83E2-0B0EAA985E5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0980106B-DED8-40E0-83E2-0B0EAA985E5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +38,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{E430C365-CC48-41D4-AE32-17FD28BC6083} = {C9E3AF23-8816-4ED5-BD05-CC7584B4E486}
 		{BA6853E2-B7CC-41FA-9513-B09E70C6A57A} = {8012D35A-93BB-42FC-9720-77A33047805E}
+		{0980106B-DED8-40E0-83E2-0B0EAA985E5A} = {8012D35A-93BB-42FC-9720-77A33047805E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DF74C2E6-0B0A-493E-B94A-F6E5A7D1C718}

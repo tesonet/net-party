@@ -18,9 +18,9 @@ namespace NetParty.Domain.User
 
         public async Task<Credentials> GetAsync()
         {
-            var result = Decrypt(await _repository.GetAsync());
+            var result = await _repository.GetAsync();
 
-            return JsonConvert.DeserializeObject<Credentials>(result);
+            return result.Length > 0 ? JsonConvert.DeserializeObject<Credentials>(Decrypt(result)) : null;
         }
 
         public async Task SaveAsync(Credentials credentials)

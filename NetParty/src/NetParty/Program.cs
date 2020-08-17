@@ -1,11 +1,10 @@
-﻿using System;
-using LightInject;
+﻿using LightInject;
 using NetParty.Application;
 using NetParty.Application.Commands;
 
 namespace NetParty
 {
-    internal class Program
+    public class Program
     {
         public static void Main(string[] args)
         {
@@ -15,11 +14,6 @@ namespace NetParty
 
                 app.Execute(args);
             }
-
-#if (DEBUG) 
-            Console.WriteLine("Press any key to exit");
-            Console.ReadKey();
-#endif
         }
     }
 }
