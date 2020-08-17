@@ -55,7 +55,7 @@ namespace NetParty.Data.Http
                 }
             }
 
-            throw new Exception("Couldn't load data from external source");
+            throw new Exception("Couldn't load data from external source.");
         }
     }
 }

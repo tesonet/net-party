@@ -65,5 +65,18 @@ namespace NetParty.Tests.Domain.User
             Assert.AreEqual(expected.UserName, result.UserName);
             Assert.AreEqual(expected.Password, result.Password);
         }
+
+        [Test]
+        public async Task GetAsync_ShouldReturnNull_IfRepoReturnsEmptyByteList()
+        {
+            // arrange
+            _credentialsRepoMock.Setup(_ => _.GetAsync()).ReturnsAsync(new byte[0]);
+
+            // act
+            var result = await _service.GetAsync();
+
+            // verify
+            Assert.IsNull(result);
+        }
     }
 }
