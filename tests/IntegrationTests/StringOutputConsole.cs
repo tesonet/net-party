@@ -6,15 +6,19 @@
 
     public class StringOutputConsole : IConsole
     {
+        private readonly TextWriter _out = new StringWriter();
+        private readonly TextWriter _error = new StringWriter();
+        private readonly TextReader _in = new StringReader(string.Empty);
+
 #pragma warning disable CS0067
         public event ConsoleCancelEventHandler? CancelKeyPress;
 #pragma warning restore CS0067
 
-        public TextWriter Out { get; } = new StringWriter();
+        public TextWriter Out => _out;
 
-        public TextWriter Error { get; } = new StringWriter();
+        public TextWriter Error => _error;
 
-        public TextReader In { get; } = new StringReader(string.Empty);
+        public TextReader In => _in;
 
         public bool IsInputRedirected { get; } = false;
 
@@ -31,6 +35,12 @@
         /// </summary>
         /// <returns></returns>
         public string StandardOutput => Out.ToString() ?? string.Empty;
+
+        /// <summary>
+        /// Standard error output.
+        /// </summary>
+        /// <returns></returns>
+        public string StandardError => Error.ToString() ?? string.Empty;
 
         public void ResetColor()
         {

@@ -1,52 +1,30 @@
 ﻿namespace TesonetDotNetParty.IntegrationTests
 {
-    using System.Diagnostics;
+    using System;
     using System.Threading.Tasks;
-    using Autofac;
-    using Autofac.Extensions.DependencyInjection;
-    using McMaster.Extensions.CommandLineUtils;
-    using McMaster.Extensions.Hosting.CommandLine.Custom;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
-    using Tesonet.ServerListApp.Infrastructure;
-    using Tesonet.ServerListApp.Infrastructure.Storage;
-    using Tesonet.ServerListApp.UserInterface.CommandHandlers;
+    using Microsoft.Extensions.Configuration;
     using Xunit;
 
+    [Collection("integration")]
     public class IntegrationTests
     {
-        private readonly StringOutputConsole _console = new();
-
         [Fact]
-        public async Task TestAsync()
+        public async Task ShouldSetConfigurationFileToProvidedValues()
         {
-            using var host = CreateHost(out var state, "asd");
-            await MigrateDatabase(host);
-            await host.RunAsync();
+            var args = "config --username user --password pass".Split(' ');
+            await using var application = new CommandLineApplication(args);
+            var returnCode = await application.RunAsync();
 
-            Debug.WriteLine(_console.StandardOutput);
-            Assert.Equal(255, state.ExitCode);
-        }
+            Assert.Equal(0, returnCode);
 
-        private IHost CreateHost(out CommandLineState appState, params string[] args)
-        {
-            var host = new HostBuilder()
-                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
-                .ConfigureContainer<ContainerBuilder>(ConfigurationBuilder.Container)
-                .ConfigureServices(ConfigurationBuilder.Services)
-                .ConfigureLogging(ConfigurationBuilder.Logging)
-                .ConfigureCommandLineApplication<RootCommandHandler>(args, out var state)
-                .ConfigureServices(collection => collection.AddSingleton<IConsole>(_console))
+            var config = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json")
                 .Build();
 
-            appState = state;
-            return host;
-        }
-
-        private async Task MigrateDatabase(IHost host)
-        {
-            var dbContext = host.Services.GetRequiredService<ServersDbContext>();
-            await dbContext.MigrateDatabase();
+            Assert.Equal("user", config.GetValue<string>("ServerListApi:Username"));
+            Assert.Equal("pass", config.GetValue<string>("ServerListApi:Password"));
+            Assert.Equal("https://playground.tesonet.lt/v1/", config.GetValue<string>("ServerListApi:BaseAddress"));
         }
     }
 }

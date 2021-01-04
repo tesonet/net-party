@@ -16,9 +16,9 @@
         {
             using var host = new HostBuilder()
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
-                .ConfigureContainer<ContainerBuilder>(ConfigurationBuilder.Container)
-                .ConfigureServices(ConfigurationBuilder.Services)
-                .ConfigureLogging(ConfigurationBuilder.Logging)
+                .ConfigureContainer<ContainerBuilder>(HostConfiguration.Container)
+                .ConfigureServices(HostConfiguration.Services)
+                .ConfigureLogging(HostConfiguration.Logging)
                 .ConfigureCommandLineApplication<RootCommandHandler>(args, out var applicationState)
                 .Build();
 

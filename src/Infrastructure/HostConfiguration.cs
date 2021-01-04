@@ -9,7 +9,7 @@
     using ServerListApi;
     using Storage;
 
-    public static class ConfigurationBuilder
+    public static class HostConfiguration
     {
         public static void Container(ContainerBuilder containerBuilder)
         {
