@@ -5,7 +5,7 @@
     using McMaster.Extensions.CommandLineUtils;
 
     [Command(Name = "partycli.exe", Description = "Tesonet .NET party application")]
-    [Subcommand(typeof(ConfigCommandHandler), typeof(ServerListCommandHandler))]
+    [Subcommand(typeof(ConfigCommandHandler), typeof(ServersListCommandHandler))]
     [UsedImplicitly]
     public class RootCommandHandler : BaseCommandHandler
     {

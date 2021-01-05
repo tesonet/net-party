@@ -5,12 +5,12 @@
     using System.Threading.Tasks;
     using Domain;
 
-    public class ServerList
+    public class ServersList
     {
         private readonly IServersListClient _serversListClient;
         private readonly IServersRepository _repository;
 
-        public ServerList(IServersListClient serversListClient, IServersRepository repository)
+        public ServersList(IServersListClient serversListClient, IServersRepository repository)
         {
             _serversListClient = serversListClient;
             _repository = repository;

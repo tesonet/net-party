@@ -1,4 +1,4 @@
-﻿namespace Tesonet.ServerListApp.UserInterface
+﻿namespace Tesonet.ServerListApp.Infrastructure
 {
     using System;
     using System.Collections.Generic;
@@ -6,35 +6,51 @@
     using Alba.CsConsoleFormat;
     using Application;
 
-    public static class ConsoleExtensions
+    public class ServersListRenderer
     {
+        private readonly bool _renderToCommandLine;
+
+        public ServersListRenderer(bool renderToCommandLine = true)
+        {
+            _renderToCommandLine = renderToCommandLine;
+        }
+
         /// <summary>
         /// Prints a table of servers to console window
         /// using the provided collection of <see cref="Server"/>.
         /// </summary>
         /// <param name="servers"></param>
-        public static void PrintToConsole(this IEnumerable<Server> servers)
+        public void Render(IEnumerable<Server> servers)
         {
             List<(string Name, int Count)> groupedServers = servers
                 .GroupBy(s => s.Name)
                 .Select(g => (g.Key, g.Count()))
                 .ToList();
 
-            var grid = CreateGrid()
-                .WithHeader()
-                .WithBody(groupedServers)
-                .WithFooter(groupedServers.Sum(s => s.Count));
+            var grid = CreateGrid();
+            grid = WithHeader(grid);
+            grid = WithBody(grid, groupedServers);
+            grid = WithFooter(grid, groupedServers.Sum(s => s.Count));
+            var document = new Document(grid);
 
-            RenderDocument(new Document(grid));
-        }
+            if (!_renderToCommandLine)
+            {
+                return;
+            }
 
-        private static void RenderDocument(Document document)
-        {
-            var target = (IRenderTarget)new ConsoleRenderTarget();
             var renderRect = new Rect?(ConsoleRenderer.DefaultRenderRect);
             var buffer = new ConsoleBuffer(renderRect.Value.Size.Width);
             ConsoleRenderer.RenderDocumentToBuffer(document, buffer, renderRect.Value);
+
+            IRenderTarget target = new ConsoleRenderTarget();
             target.Render(buffer);
+
+            /*
+             * How to render to string:
+             * TextRenderTargetBase target = new TextRenderTarget();
+             * target.Render(buffer);
+             * Output = target.OutputText;
+             */
         }
 
         private static Grid CreateGrid()
@@ -51,7 +67,7 @@
             };
         }
 
-        private static Grid WithHeader(this Grid grid)
+        private static Grid WithHeader(Grid grid)
         {
             grid.Children.Add(new Cell
             {
@@ -74,7 +90,7 @@
             return grid;
         }
 
-        private static Grid WithBody(this Grid grid, IEnumerable<(string Name, int Count)> groupedServers)
+        private static Grid WithBody(Grid grid, IEnumerable<(string Name, int Count)> groupedServers)
         {
             var random = new Random();
 
@@ -101,7 +117,7 @@
             return grid;
         }
 
-        private static Grid WithFooter(this Grid grid, int total)
+        private static Grid WithFooter(Grid grid, int total)
         {
             grid.Children.Add(new Cell
             {

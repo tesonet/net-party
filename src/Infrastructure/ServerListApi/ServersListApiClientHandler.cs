@@ -14,50 +14,33 @@
     using Microsoft.Extensions.Logging;
     using static ServersListApiConfig;
 
-    internal sealed class ServersListApiClientHandler : LoggingHttpClientHandler
+    internal class ServersListApiClientHandler : LoggingHttpClientHandler
     {
-        public delegate Task<HttpResponseMessage> SendAsyncDelegate(
-            HttpRequestMessage message,
-            CancellationToken ct);
-
         private readonly Credentials _credentials;
-        private readonly SendAsyncDelegate? _authDelegate;
-        private readonly SendAsyncDelegate? _serverListDelegate;
 
-        public ServersListApiClientHandler(
-            Credentials credentials,
-            ILogger logger)
+        public ServersListApiClientHandler(Credentials credentials, ILogger logger)
             : base(logger)
         {
             _credentials = credentials;
         }
 
-        public ServersListApiClientHandler(
-            Credentials credentials,
-            SendAsyncDelegate authDelegate,
-            SendAsyncDelegate serverListDelegate,
-            ILogger logger)
-            : base(logger)
+        public virtual Task<HttpResponseMessage> SendAsyncOverride(
+            HttpRequestMessage message,
+            CancellationToken ct)
         {
-            _credentials = credentials;
-            _authDelegate = authDelegate;
-            _serverListDelegate = serverListDelegate;
+            return base.SendAsync(message, ct);
         }
 
         protected override async Task<HttpResponseMessage> SendAsync(
             HttpRequestMessage request,
             CancellationToken ct)
         {
-            var baseAddress = request
-                .RequestUri
-                !.GetLeftPart(UriPartial.Authority);
+            var baseAddress = request.RequestUri!.GetLeftPart(UriPartial.Authority);
 
             var token = await Authorize(baseAddress, ct);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            return _serverListDelegate != null
-                ? await _serverListDelegate(request, ct)
-                : await base.SendAsync(request, ct);
+            return await SendAsyncOverride(request, ct);
         }
 
         private async Task<string> Authorize(string baseAddress, CancellationToken ct)
@@ -74,10 +57,7 @@
                 Content = content
             };
 
-            using var response = _authDelegate != null
-                ? await _authDelegate(requestMessage, ct)
-                : await base.SendAsync(requestMessage, ct);
-
+            using var response = await SendAsyncOverride(requestMessage, ct);
             response.EnsureSuccessStatusCode();
 
             var result = await response

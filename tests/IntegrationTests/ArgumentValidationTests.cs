@@ -10,7 +10,7 @@
         [InlineData("test")]
         [InlineData("definitely not")]
         [InlineData("bla bla bla")]
-        public async Task ShouldNotExecuteOnInvalidSubCommand(string args)
+        public async Task DoesNotExecuteOnInvalidSubCommand(string args)
         {
             const string ExpectedMessage = "Specify --help for a list of available options and commands.\r\n";
 
@@ -25,7 +25,9 @@
         [InlineData("config", "The --username field is required.\r\n")]
         [InlineData("config --password password", "The --username field is required.\r\n")]
         [InlineData("config --username --password", "The --password field is required.\r\n")]
-        public async Task ShouldNotExecuteConfigSubCommandWithoutRequiredOptions(string args, string errorMessage)
+        public async Task DoesNotExecuteOnConfigSubCommandWithoutRequiredOptions(
+            string args,
+            string errorMessage)
         {
             await using var application = new CommandLineApplication(args.Split(' '));
             var returnCode = await application.RunAsync();
@@ -38,7 +40,7 @@
         [InlineData("server_list asd")]
         [InlineData("server_list --option")]
         [InlineData("server_list bla bla bla")]
-        public async Task ShouldNotExecuteServerListSubCommandWithInvalidOption(string args)
+        public async Task DoesNotExecuteServerListSubCommandWithInvalidOption(string args)
         {
             const string ExpectedMessage = "Specify --help for a list of available options and commands.\r\n";
 

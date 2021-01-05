@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Alba.CsConsoleFormat.ColorfulConsole-NoXaml" Version="1.0.0" />
     <PackageReference Include="Autofac" Version="6.1.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="6.0.0" />
@@ -38,6 +39,9 @@
     </AssemblyAttribute>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>UnitTests</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>DynamicProxyGenAssembly2</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
 </Project>

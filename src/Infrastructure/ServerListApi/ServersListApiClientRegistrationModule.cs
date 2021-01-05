@@ -11,11 +11,11 @@
     {
         protected override void Load(ContainerBuilder builder)
         {
-            const string RegistrationName = nameof(IServersListClient);
-            var config = new PersistentJsonConfiguration().GetSection<ServersListApiConfig>("ServerListApi");
+            var config = new PersistentJsonConfiguration()
+                .GetSection<ServersListApiConfig>("ServerListApi");
 
             builder
-                .Register(ctx =>
+                .Register<HttpClientHandler>(ctx =>
                 {
                     var logger = ctx.Resolve<ILogger<IServersListClient>>();
                     var credentials = config.ClientCredentials;
@@ -28,26 +28,23 @@
 
                     return handler;
                 })
-                .SingleInstance()
-                .Named<HttpClientHandler>(RegistrationName);
+                .SingleInstance();
 
-            builder
-                .Register(ctx =>
+            builder.Register(ctx =>
+            {
+                var handler = ctx.Resolve<HttpClientHandler>();
+
+                return new HttpClient(handler, false)
                 {
-                    var handler = ctx.ResolveNamed<HttpClientHandler>(RegistrationName);
-
-                    return new HttpClient(handler, false)
-                    {
-                        BaseAddress = new Uri(config.BaseAddress)
-                    };
-                })
-                .Named<HttpClient>(RegistrationName);
+                    BaseAddress = new Uri(config.BaseAddress)
+                };
+            });
 
             builder
                 .RegisterType<ServersListClient>()
                 .WithParameter(
                     (pi, _) => pi.ParameterType == typeof(HttpClient),
-                    (_, ctx) => ctx.ResolveNamed<HttpClient>(RegistrationName))
+                    (_, ctx) => ctx.Resolve<HttpClient>())
                 .As<IServersListClient>();
         }
     }

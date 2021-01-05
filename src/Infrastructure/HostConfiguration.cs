@@ -24,7 +24,8 @@
                 .RegisterType<ServersRepository>()
                 .As<IServersRepository>();
 
-            containerBuilder.RegisterType<ServerList>();
+            containerBuilder.RegisterType<ServersList>();
+            containerBuilder.RegisterType<ServersListRenderer>();
         }
 
         public static void Services(IServiceCollection serviceCollection)
