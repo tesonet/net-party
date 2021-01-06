@@ -5,12 +5,14 @@ namespace Tesonet.ServerListApp.Infrastructure.Storage
     using System.Threading.Tasks;
     using Domain;
     using JetBrains.Annotations;
+    using Microsoft.Data.Sqlite;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Logging.Abstractions;
 
     public class ServersDbContext : DbContext
     {
+        private readonly string _connectionString;
         private readonly ILogger<ServersDbContext> _logger;
 
         [UsedImplicitly]
@@ -26,6 +28,12 @@ namespace Tesonet.ServerListApp.Infrastructure.Storage
             _logger = logger;
         }
 
+        public ServersDbContext(string connectionString, ILogger<ServersDbContext> logger = null)
+        {
+            _connectionString = connectionString;
+            _logger = logger ?? NullLogger<ServersDbContext>.Instance;
+        }
+
         /// <summary>
         /// Checks if any pending migrations exist and applies them, if necessary.
         /// </summary>
@@ -38,8 +46,6 @@ namespace Tesonet.ServerListApp.Infrastructure.Storage
             {
                 var message = $"Pending migrations: {string.Join(',', pendingMigrations)}";
                 _logger.LogInformation(message);
-
-                await Database.EnsureDeletedAsync();
                 await Database.MigrateAsync();
             }
         }
@@ -58,9 +64,18 @@ namespace Tesonet.ServerListApp.Infrastructure.Storage
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder
-                .UseSqlite("Data Source=servers.db")
-                .LogTo(message => _logger.LogInformation(message), LogLevel.Information);
+            if (_connectionString?.Contains("Mode=Memory") ?? false)
+            {
+                var inMemoryConnection = new SqliteConnection(_connectionString);
+                inMemoryConnection.Open();
+                optionsBuilder.UseSqlite(inMemoryConnection);
+            }
+            else
+            {
+                optionsBuilder
+                    .UseSqlite(_connectionString ?? "Data Source=servers.db")
+                    .LogTo(message => _logger.LogInformation(message), LogLevel.Information);
+            }
 
             base.OnConfiguring(optionsBuilder);
         }

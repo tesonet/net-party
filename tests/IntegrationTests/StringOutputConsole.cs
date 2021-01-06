@@ -6,19 +6,15 @@
 
     public class StringOutputConsole : IConsole
     {
-        private readonly TextWriter _out = new StringWriter();
-        private readonly TextWriter _error = new StringWriter();
-        private readonly TextReader _in = new StringReader(string.Empty);
-
 #pragma warning disable CS0067
         public event ConsoleCancelEventHandler? CancelKeyPress;
 #pragma warning restore CS0067
 
-        public TextWriter Out => _out;
+        public TextWriter Out { get; } = new StringWriter();
 
-        public TextWriter Error => _error;
+        public TextWriter Error { get; } = new StringWriter();
 
-        public TextReader In => _in;
+        public TextReader In { get; } = new StringReader(string.Empty);
 
         public bool IsInputRedirected { get; } = false;
 

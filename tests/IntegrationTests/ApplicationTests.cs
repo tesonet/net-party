@@ -9,11 +9,13 @@
     using FakeItEasy;
     using Microsoft.Extensions.Configuration;
     using Tesonet.ServerListApp.Domain;
+    using Tesonet.ServerListApp.Infrastructure.Configuration;
+    using Tesonet.ServerListApp.Infrastructure.ServerListApi;
     using Tesonet.ServerListApp.Infrastructure.Storage;
     using Xunit;
 
     [Collection("integration")]
-    public class IntegrationTests
+    public class ApplicationTests
     {
         [Fact]
         public async Task SetsConfigurationFileToProvidedValues()
@@ -24,19 +26,32 @@
 
             Assert.Equal(0, returnCode);
 
-            var config = new ConfigurationBuilder()
+            var config = new ServersListApiConfig();
+            new ConfigurationBuilder()
                 .SetBasePath(AppContext.BaseDirectory)
                 .AddJsonFile("appsettings.json")
-                .Build();
+                .Build()
+                .GetSection("ServerListApi")
+                .Bind(config);
 
-            Assert.Equal("user", config.GetValue<string>("ServerListApi:Username"));
-            Assert.Equal("pass", config.GetValue<string>("ServerListApi:Password"));
-            Assert.Equal("https://playground.tesonet.lt/v1/", config.GetValue<string>("ServerListApi:BaseAddress"));
+            Assert.Equal("user", config.Username);
+            Assert.Equal("pass", config.Password);
+            Assert.Equal("https://playground.tesonet.lt/v1/", config.BaseAddress);
         }
 
         [Fact]
         public async Task SavesServerListToPersistentStorage()
         {
+            await new PersistentJsonConfiguration().Save(new
+            {
+                ServerListApi = new
+                {
+                    Username = "user",
+                    Password = "pass",
+                    BaseAddress = "https://host/"
+                }
+            });
+
             var expectedServers = new[]
             {
                 new Server(Guid.NewGuid(), "Lithuania #1", 20),
@@ -75,9 +90,9 @@
             var returnCode = await application.RunAsync();
 
             await using var dbContext = new ServersDbContext();
-            foreach (var (guid, name, distance) in expectedServers)
+            foreach (var (id, name, distance) in expectedServers)
             {
-                var server = await dbContext.FindAsync<Server>(guid);
+                var server = await dbContext.FindAsync<Server>(id);
                 Assert.Equal(name, server.Name);
                 Assert.Equal(distance, server.Distance);
             }
@@ -89,7 +104,7 @@
         }
 
         [Fact]
-        public async Task LoadServerListFromPersistentStorage()
+        public async Task LoadsServerListFromPersistentStorage()
         {
             var expectedServers = new[]
             {
