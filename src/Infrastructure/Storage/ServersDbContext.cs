@@ -1,7 +1,8 @@
 ﻿#nullable disable
 namespace Tesonet.ServerListApp.Infrastructure.Storage
 {
-    using System.Linq;
+    using System;
+    using System.IO;
     using System.Threading.Tasks;
     using Domain;
     using JetBrains.Annotations;
@@ -40,14 +41,14 @@ namespace Tesonet.ServerListApp.Infrastructure.Storage
         /// <returns></returns>
         public async Task MigrateDatabase()
         {
-            var pendingMigrations = (await Database.GetPendingMigrationsAsync()).ToList();
+            var databaseFile = Path.Combine(AppContext.BaseDirectory, "servers.db");
 
-            if (pendingMigrations.Any())
+            if (!File.Exists(databaseFile))
             {
-                var message = $"Pending migrations: {string.Join(',', pendingMigrations)}";
-                _logger.LogInformation(message);
-                await Database.MigrateAsync();
+                await using var _ = File.Create(databaseFile);
             }
+
+            await Database.MigrateAsync();
         }
 
         /// <summary>
