@@ -20,3 +20,5 @@ dotnet_diagnostic.SA1201.severity = none
 
 # IDE0051: Remove unused private members
 dotnet_diagnostic.IDE0051.severity = none
+
+dotnet_diagnostic.SA1312.severity = none
