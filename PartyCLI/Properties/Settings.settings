@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="PartyCLI.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="TokenUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://playground.tesonet.lt/v1/tokens</Value>
+    </Setting>
+    <Setting Name="ServersListUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://playground.tesonet.lt/v1/servers</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
