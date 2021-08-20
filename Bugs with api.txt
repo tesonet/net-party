@@ -1,0 +1,10 @@
+POST /v1/tokens HTTP/1.1
+Host: playground.tesonet.lt
+Content-Type: application/json
+Content-Length: 50
+
+{"username": "tesonet", "password": "partyanimal"}
+
+sending raw post
+atsakymas
+Method not allowed. Must be one of: POST
